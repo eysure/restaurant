@@ -10,14 +10,8 @@
 include 'database.php';
 include 'test.php';
 
-// Session
 session_start();
-
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    // Judge which action is requested by user
-    if($_POST['action']=='login') login($_POST['username'],$_POST['pwd']);
-    elseif($_POST['action']=='signUp') signUp($_POST['username_s'],$_POST['pwd1_s'],$_POST['pwd2_s']);
-}
+answerRequest();
 
 /**
  * Insert a User Button
@@ -36,21 +30,6 @@ function insertUserButton() {
         <button class='user-btn btn btn-outline-light' id='user-btn'><i class='material-icons'>account_circle</i></button>
         ";
     }
-    echo "
-        <style>
-        button.user-btn {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            line-height: 0;
-            border: 0;
-            padding: 2px;
-        }
-        button.user-btn i {
-            font-size: 2em;
-        }
-        </style>
-    ";
     return null;
 }
 
@@ -60,6 +39,7 @@ function insertUserButton() {
 function insertLoginModal() {
     echo "
         <script src='sha256.js'></script>
+        <script src='user.js'></script>
         <div class='modal fade' id='loginModal' tabindex='-1' role='dialog' aria-labelledby='loginModalLabel' aria-hidden='true'>
             <div class='modal-dialog modal-sm' role='document'>
                 <div class='modal-content'>
@@ -81,11 +61,11 @@ function insertLoginModal() {
                             </div>
                             <div class='form-group'>
                                 <input class='form-control btn btn-primary' type='submit' value='Login'>
-                                <div style='display: none;' id='login-status' class='badge badge-danger'>
-                                    Wrong password or account doesn't exist.
+                                <div style='display: none;' id='login-badge' class='badge'>
+                                    Login message.
                                 </div>
                                 <small id='createAccountHelper' class='form-text text-muted'>
-                                    First come? <a href='#' onclick='switchToSignUp()'>Create Account</a>
+                                    First come? <a href='#' onclick='loginSignUpModalToggle(true)'>Create Account</a>
                                 </small>
                             </div>
                         </form>
@@ -93,37 +73,6 @@ function insertLoginModal() {
                 </div>
             </div>
         </div>
-        <script>
-        function loginAjax() {
-             var data = {
-                 'action': 'login',
-                 'username': $('input#username').val(),
-                 'pwd': sha256($('input#pwd').val())
-             };
-             
-             $.ajax({
-                 type: 'POST',
-                 data: data,
-                 url: 'user.php',
-                 success: function (d) {
-                     console.log('ajax: succeed!');
-                     console.log(d);
-                 },
-                 timeout: 2000
-             });
-             
-             return false;
-        }
-        
-        function switchToSignUp() {
-            $('#loginModal').modal('hide');
-            $('#signUpModal')
-                .on('shown.bs.modal', function () {
-                    $('#username_s').trigger('focus');
-                })
-                .modal('show');
-        }
-        </script>
     ";
     insertSignUpModal();
 }
@@ -134,6 +83,7 @@ function insertLoginModal() {
 function insertSignUpModal() {
     echo "
         <script src='sha256.js'></script>
+        <script src='user.js'></script>
         <div class='modal fade' id='signUpModal' tabindex='-1' role='dialog' aria-labelledby='signUpModalLabel' aria-hidden='true'>
             <div class='modal-dialog modal-sm' role='document'>
                 <div class='modal-content'>
@@ -160,8 +110,11 @@ function insertSignUpModal() {
                             <div class='form-group'>
                                 <input type='hidden' name='action' value='signUp'/>
                                 <input class='form-control btn btn-primary' type='submit' value='Sign Up'>
+                                <div style='display: none;' id='sign-up-badge' class='badge'>
+                                    Sign Up message.
+                                </div>
                                 <small id='switchToLoginHelpBlock' class='form-text text-muted'>
-                                    Already have an account? <a href='#' onclick='switchToLogin()'>Login</a>
+                                    Already have an account? <a href='#' onclick='loginSignUpModalToggle(false)'>Login</a>
                                 </small>
                             </div>
                         </form>
@@ -169,23 +122,20 @@ function insertSignUpModal() {
                 </div>
             </div>
         </div>
-        <script>
-        function signUpAjax() {
-            console.log('Sorry, SignUp function is in construction. Please come later.');
-            alert('Sorry, SignUp function is in construction. Please come later.');
-            return false;
-        }
-        
-        function switchToLogin() {
-            $('#signUpModal').modal('hide');
-            $('#loginModal')
-                .on('shown.bs.modal', function () {
-                    $('#username').trigger('focus');
-                })
-                .modal('show');
-        }
-        </script>
     ";
+}
+
+// -----------SERVER SIDE-----------
+
+/**
+ * Response the user HTTP request
+ * Judge which action is requested by user
+ */
+function answerRequest() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        if($_POST['action']=='login') login($_POST['username'],$_POST['pwd']);
+        elseif($_POST['action']=='signUp') signUp($_POST['username_s'],$_POST['pwd1_s'],$_POST['pwd2_s']);
+    }
 }
 
 /**
@@ -195,20 +145,33 @@ function insertSignUpModal() {
  */
 function login($input_username, $input_pwd) {
     $username = htmlspecialchars(strtolower($input_username));
-    $pwd = hash('sha256',$input_pwd);
+    $pwd = htmlspecialchars($input_pwd);
+    $result = loginDB($username,$pwd);
 
-    $user = loginDB($username,$pwd);
-
-    if($user) {
-        echo "php: connection ok.";
+    if(!$result) {
+        // Wrong password or no account
+        $res = (object) [
+            'status' => 1
+        ];
     }
-    else echo "php: connection not ok!";
-
-    if($user) {
-        echo "php: succeed!";
+    else if($result['status']==0) {
+        // Account is disabled
+        $res = (object) [
+            'status' => 2
+        ];
     }
-    else echo "php failed!";
+    else {
+        // Login successful
+        $res = (object) [
+            'status' => 0
+        ];
 
+        // Write session
+        $_SESSION['login_time'] = time();
+        $_SESSION['username'] = $username;
+
+    };
+    echo json_encode($res);
 }
 
 /**

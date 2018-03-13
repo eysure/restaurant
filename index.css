@@ -1,0 +1,13 @@
+/* Global site CSS */
+
+/* Header & User button */
+button.user-btn {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    line-height: 0;
+    padding: 2px;
+}
+button.user-btn i {
+    font-size: 2em;
+}

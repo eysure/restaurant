@@ -23,13 +23,11 @@ function getConnection() {
  */
 function loginDB($username, $hashed_pwd) {
     $con = getConnection();
-
     $username = mysqli_real_escape_string($con, $username);
     $hashed_pwd = mysqli_real_escape_string($con, $hashed_pwd);
     $query = "SELECT username,status,role FROM user WHERE username='$username' AND pwd='$hashed_pwd'";
     $result = mysqli_query($con,$query);
-    $user = mysqli_fetch_array($result);
-    return $user;
+    return mysqli_fetch_array($result);
 }
 
 //function signUpDB($username, $hashed_pwd) {
