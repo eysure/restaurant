@@ -40,6 +40,7 @@ function loginResponse(resJSON) {
     switch(resJSON['status']){
         case 0: {
             loginShowBadge('Login succeed. Welcome back!','success');
+            window.location.reload(false);
             break;
         }
         case 1: {
@@ -78,6 +79,26 @@ function loginShowBadge(msg,type='secondary') {
 function signUpAjax() {
     console.log('Sorry, SignUp function is in construction. Please come later.');
     alert('Sorry, SignUp function is in construction. Please come later.');
+    return false;
+}
+
+/**
+ * Deal with logout logic.
+ */
+function logoutAjax() {
+    let data = {
+        'action': 'logout'
+    };
+
+    $.ajax({
+        type: 'POST',
+        data: data,
+        url: 'user.php',
+        success: function(res) {
+            location.reload(false);
+        }
+    });
+
     return false;
 }
 

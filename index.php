@@ -2,6 +2,7 @@
     include 'header.php';
     include 'search.php';
     include 'footer.php';
+    session_start();
 ?>
 
 <!DOCTYPE html>

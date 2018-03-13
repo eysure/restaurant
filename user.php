@@ -15,22 +15,29 @@ answerRequest();
 
 /**
  * Insert a User Button
- * @return null
  */
 function insertUserButton() {
     if (!isset($_SESSION['username'])) {
         // User is not login
         echo "
-        <button class='user-btn btn btn-outline-light' id='user-btn' data-toggle='modal' data-target='#loginModal'><i class='material-icons'>play_for_work</i></button>
+        <button class='user-btn btn btn-outline-light' id='user-btn' data-toggle='modal' data-target='#loginModal'><i class='material-icons'>play_for_work</i><span>Login</span></button>
         ";
     }
     else {
         // User is login
         echo "
-        <button class='user-btn btn btn-outline-light' id='user-btn'><i class='material-icons'>account_circle</i></button>
+        <div class='dropdown'>
+        <button class='user-btn btn btn-outline-light dropdown-toggle' id='user-btn' data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class='material-icons'>account_circle</i><span>".$_SESSION['username']."</span></button>
+        <div class=\"dropdown-menu\" aria-labelledby=\"user-btn\">
+            <a class=\"dropdown-item\" href='order.php'><i class='material-icons'>description</i>My orders</a>
+            <a class=\"dropdown-item\" href='cart.php'><i class='material-icons'>shopping_cart</i>My Cart</a>
+            <div class=\"dropdown-divider\"></div>
+            <a class='dropdown-item' href='#' onclick='return logoutAjax()'><i class='material-icons'>exit_to_app</i>Logout</a>
+            <script src='user.js'></script>
+        </div>
+        </div>
         ";
     }
-    return null;
 }
 
 /**
@@ -133,8 +140,12 @@ function insertSignUpModal() {
  */
 function answerRequest() {
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
-        if($_POST['action']=='login') login($_POST['username'],$_POST['pwd']);
-        elseif($_POST['action']=='signUp') signUp($_POST['username_s'],$_POST['pwd1_s'],$_POST['pwd2_s']);
+        switch ($_POST['action']) {
+            case 'login': login($_POST['username'],$_POST['pwd']);break;
+            case 'signUp ': signUp($_POST['username_s'],$_POST['pwd1_s'],$_POST['pwd2_s']);break;
+            case 'logout': logout();break;
+            default: break;
+        }
     }
 }
 
@@ -167,11 +178,13 @@ function login($input_username, $input_pwd) {
         ];
 
         // Write session
+        session_regenerate_id();
         $_SESSION['login_time'] = time();
         $_SESSION['username'] = $username;
-
+        session_write_close();
     };
     echo json_encode($res);
+    exit(0);
 }
 
 /**
@@ -181,5 +194,15 @@ function login($input_username, $input_pwd) {
  * @param $input_pwd2
  */
 function signUp($input_username,$input_pwd1,$input_pwd2) {
+    exit(0);
+}
 
+/**
+ * Let user logout
+ */
+function logout() {
+    session_start();
+    session_destroy();
+    header("Location: index.php");
+    exit(0);
 }
