@@ -48,7 +48,7 @@ function insertLoginModal() {
         <script src='sha256.js'></script>
         <script src='user.js'></script>
         <div class='modal fade' id='loginModal' tabindex='-1' role='dialog' aria-labelledby='loginModalLabel' aria-hidden='true'>
-            <div class='modal-dialog modal-sm' role='document'>
+            <div class='modal-dialog' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h4 style='margin: 0;'>Login</h4>
@@ -59,8 +59,8 @@ function insertLoginModal() {
                     <div class='modal-body'>
                         <form class='form-group' id='login-form' onsubmit='return loginAjax()' method='post'>
                             <div class='form-group'>
-                                <label for='pwd'>Username</label>
-                                <input class='form-control' type='text' id='username' name='username' placeholder='Username'>
+                                <label for='pwd'>Account</label>
+                                <input class='form-control' type='text' id='username' name='username' placeholder='Username / mobile number / Email'>
                             </div>
                             <div class='form-group'>
                                 <label for='pwd'>Password</label>
@@ -92,7 +92,7 @@ function insertSignUpModal() {
         <script src='sha256.js'></script>
         <script src='user.js'></script>
         <div class='modal fade' id='signUpModal' tabindex='-1' role='dialog' aria-labelledby='signUpModalLabel' aria-hidden='true'>
-            <div class='modal-dialog modal-sm' role='document'>
+            <div class='modal-dialog' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h4 style='margin: 0;'>SignUp</h4>
@@ -151,13 +151,13 @@ function answerRequest() {
 
 /**
  * Deal with login request
- * @param $input_username: User input username
+ * @param $input_account: User input username
  * @param $input_pwd: user input password
  */
-function login($input_username, $input_pwd) {
-    $username = htmlspecialchars(strtolower($input_username));
+function login($input_account, $input_pwd) {
+    $account = htmlspecialchars(strtolower($input_account));
     $pwd = htmlspecialchars($input_pwd);
-    $result = loginDB($username,$pwd);
+    $result = loginDB($account,$pwd);
 
     if(!$result) {
         // Wrong password or no account
@@ -180,7 +180,7 @@ function login($input_username, $input_pwd) {
         // Write session
         session_regenerate_id();
         $_SESSION['login_time'] = time();
-        $_SESSION['username'] = $username;
+        $_SESSION['username'] = $result['username'];
         session_write_close();
     };
     echo json_encode($res);

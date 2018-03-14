@@ -17,15 +17,15 @@ function getConnection() {
 
 /**
  * Database action: login
- * @param $username: username
+ * @param $account: username
  * @param $hashed_pwd: user input password SHA256 hashed
  * @return array: user info
  */
-function loginDB($username, $hashed_pwd) {
+function loginDB($account, $hashed_pwd) {
     $con = getConnection();
-    $username = mysqli_real_escape_string($con, $username);
+    $account = mysqli_real_escape_string($con, $account);
     $hashed_pwd = mysqli_real_escape_string($con, $hashed_pwd);
-    $query = "SELECT username,status,role FROM user WHERE username='$username' AND pwd='$hashed_pwd'";
+    $query = "SELECT username,status,role FROM user WHERE (username='$account' OR mobile='$account' OR email='$account') AND pwd='$hashed_pwd'";
     $result = mysqli_query($con,$query);
     return mysqli_fetch_array($result);
 }
