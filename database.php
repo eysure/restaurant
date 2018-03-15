@@ -30,12 +30,40 @@ function loginDB($account, $hashed_pwd) {
     return mysqli_fetch_array($result);
 }
 
-//function signUpDB($username, $hashed_pwd) {
-//    $con = getConnection();
-//    $username = mysqli_real_escape_string($con, $username);
-//    $hashed_pwd = mysqli_real_escape_string($con, $hashed_pwd);
-//    $query = "SELECT username FROM user WHERE username='$username' AND pwd='$hashed_pwd'";
-//    $result = mysqli_query($con,$query);
-//    if($result->num_rows ==0) return false;
-//    else return true;
-//}
+/**
+ * Database action: sign up test
+ * test if a given value of specific field is unique or not
+ * @param $field: field of user
+ * @param $value: given value
+ * @return boolean: value is unique or not
+ */
+function signUpTestDB($field, $value) {
+    $con = getConnection();
+    $value = mysqli_real_escape_string($con, $value);
+    $query = "SELECT id FROM user WHERE $field='$value'";
+    $result = mysqli_query($con,$query);
+    return $result->num_rows==0;
+}
+
+/**
+ * Database action: sign up
+ * @param $username
+ * @param $pwd
+ * @param $email
+ * @param $mobile
+ * @param $first_name
+ * @param $last_name
+ * @return bool|mysqli_result
+ */
+function signUpDB($username,$pwd,$email,$mobile,$first_name,$last_name) {
+    $con = getConnection();
+    $username=mysqli_real_escape_string($con, $username);
+    $pwd=mysqli_real_escape_string($con, $pwd);
+    $email=mysqli_real_escape_string($con, $email);
+    $mobile=mysqli_real_escape_string($con, $mobile);
+    $first_name=mysqli_real_escape_string($con, $first_name);
+    $last_name=mysqli_real_escape_string($con, $last_name);
+    $query = "INSERT INTO user(username,pwd,email,mobile,first_name,last_name) values('$username','$pwd','$email','$mobile','$first_name','$last_name')";
+    $result = mysqli_query($con,$query);
+    return $result;
+}

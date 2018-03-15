@@ -19,6 +19,13 @@ if (typeof(signUpValidation) === "undefined")signUpValidation = {
 };
 
 $(document).ready(function() {
+    // DEBUG
+    $('body').on('keydown',function( event ) {
+        if (event.which === 120) {
+            debug();
+        }
+    });
+
     // AUTO FOCUS
     $('#loginModal')
         .on('shown.bs.modal', function () {
@@ -34,8 +41,9 @@ $(document).ready(function() {
         let div = $(this);
         div.find('input').each(function(){
             $(this)
-                .on('input',function(e){signUpFieldLocalValidation($(this),div);})
-                .on('blur',function(e){signUpFieldServerValidation($(this),div);});
+                .on('input',function(e){
+                    if(signUpFieldLocalValidation($(this),div))signUpFieldServerValidation($(this));
+                })
         });
     })
 });
@@ -58,6 +66,10 @@ function sendAjax(action,data=null) {
         url: 'user.php',
         success: function(res) {
             receiveAjaxResponse(res);
+        },
+        timeout: 5000,
+        error: function(res) {
+            errorAjax();
         }
     });
 }
@@ -67,12 +79,24 @@ function sendAjax(action,data=null) {
  * @param res
  */
 function receiveAjaxResponse(res) {
-    res = JSON.parse(res);
+    try {
+        res = JSON.parse(res);
+    } catch(err) {
+        alert(err);
+        alert(res);
+    }
     switch(res['action']) {
         case 'login': loginResponse(res);break;
-        case 'logout': window.location.reload();break;
+        case 'logout': window.location.reload(false);break;
+        case 'signUpTest': signUpFieldServerResponse(res['res']);break;
+        case 'signUp': signUpResponse(res['res']);break;
+        case 'unknown': console.log("UNKNOWN REQUEST: ",res);break;
         default: console.log("UNKNOWN RESPONSE: ",res);
     }
+}
+
+function errorAjax() {
+    alert("Sorry, Server time out, this cannot be done.");
 }
 
 // ---------------------------------------------------------------------------------------------------------------------    LOGIN (REQ/RES)
@@ -135,16 +159,16 @@ function signUpFieldLocalValidation(input, signUpDiv) {
         }
         case "username_s": {
             regex = /^[A-Za-z_][A-Za-z_\-0-9]{4,}$/;
-            errorMsg = "Make your username more than 5 characters.";
+            errorMsg = "Not a valid username, please see instruction.";
             break;
         }
         case "first_name": {
-            regex = /^[A-Za-z]+$/;
+            regex = /^[A-Za-z]{1,30}$/;
             errorMsg = "Please input your first name.";
             break;
         }
         case "last_name": {
-            regex = /^[A-Za-z]+$/;
+            regex = /^[A-Za-z]{1,30}$/;
             errorMsg = "Please input your last name.";
             break;
         }
@@ -160,15 +184,17 @@ function signUpFieldLocalValidation(input, signUpDiv) {
         inputDivStatusChange(signUpDiv,"","succeed");
         signUpValidation[input.attr('id')]=true;
         signUpButtonValidation();
+        return true;
     }
     else {
         inputDivStatusChange(signUpDiv,errorMsg,"error");
         signUpValidation[input.attr('id')]=false;
         signUpButtonValidation();
+        return false;
     }
 }
 
-function signUpFieldServerValidation(input, signUpDiv) {
+function signUpFieldServerValidation(input) {
     switch(input.attr("id")) {
         case "email": sendAjax("signUpTest",{testField:"email",value:input.val()});break;
         case "username_s": sendAjax("signUpTest",{testField:"username",value:input.val()});break;
@@ -177,7 +203,31 @@ function signUpFieldServerValidation(input, signUpDiv) {
     }
 }
 
-function signUpButtonValidation() {
+function signUpFieldServerResponse(res) {
+    let field = res['testField'];
+    let uni = res['unique'];
+    signUpValidation[field+'_server']=uni;
+
+    // Switch UI
+    switch(field) {
+        case "email":{
+            if(!uni)inputDivStatusChange($('input#email').parent(),"This email has been signed. login if It's your email.","error");
+            break;
+        }
+        case "username":{
+            if(!uni)inputDivStatusChange($('input#username_s').parent(),"Sorry, this username has been taken, change a new one","error");
+            break;
+        }
+        case "mobile":{
+            if(!uni)inputDivStatusChange($('input#mobile').parent().parent(),"This mobile number has been signed. login if It's your's.","error");
+            break;
+        }
+        default: break;
+    }
+    signUpButtonValidation();
+}
+
+function signUpButtonValidation(changeUI=true) {
     let result = false;
     for(let key in signUpValidation) {
         if(!signUpValidation[key]){
@@ -186,7 +236,70 @@ function signUpButtonValidation() {
         }
         else result = true;
     }
-    $("#sign-up-btn").attr("disabled",!result);
+    if(changeUI)$("#sign-up-btn").attr("disabled",!result);
+    return result;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------    SIGN UP
+
+function signUp() {
+    // Lock the inputs and button
+    $('div.sign-up-div').each(function() {
+        $(this).find('input').each(function(){
+            $(this).attr("disabled",true);
+        });
+    });
+    let button = $("#sign-up-btn");
+    button.attr("disabled",true).val('Wait..');
+
+
+    if(!signUpButtonValidation(false)){
+        changeBadge($("#sign-up-badge"),"Please check all the fields","error");
+        return false;
+    }
+    else {
+        button.attr("disabled",true).val('Wait...');
+        sendAjax("signUp",{
+            username:$('input#username_s').val(),
+            pwd:sha256($('input#pwd_s').val()),
+            email:$('input#email').val(),
+            mobile:$('input#mobile').val(),
+            first_name:$('input#first_name').val(),
+            last_name:$('input#last_name').val()
+        })
+    }
+
+    return false;
+}
+
+function signUpResponse(res) {
+    let badge = $("#sign-up-badge");
+    let button = $("#sign-up-btn");
+    if(res['successful']) {
+        changeBadge(badge,"Sign up succeed! Wait 5 second to redirect or click the green button","succeed");
+        $('form#sign-up-form').attr('onsubmit','return refresh()');
+        button.removeClass().addClass('form-control btn btn-success').val('Click to Login').attr("disabled",false);
+        setTimeout(function(){
+            window.location.reload(false);
+        },5000);
+    }
+    else {
+        $('div.sign-up-div').each(function() {
+            $(this).find('input').each(function(){
+                $(this).attr("disabled",false);
+            });
+        });
+        button.attr("disabled",false).val('Sign up');
+        if(!res['server_check'])changeBadge($("#sign-up-badge"),"Server check error. Please re sign and try again.","error");
+        else changeBadge($("#sign-up-badge"),"Server internal error. Please try again latter.","error");
+        console.log("### Sign up failed.");
+        console.log(res);
+    }
+}
+
+function refresh() {
+    window.location.reload(false);
+    return false;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------    UI
@@ -211,15 +324,12 @@ function inputDivStatusChange(inputDiv, msg, status){
  * @param type: 'error'->red / 'succeed'->green
  */
 function changeBadge(badge, msg, type='badge-secondary') {
-    if(msg==='' || msg===null) badge.fadeOut(300);
-    else {
-        badge
-            .removeClass()
-            .addClass('badge')
-            .addClass(type)
-            .text(msg);
-        if(badge.css('display')==='none') badge.fadeIn(300);
-    }
+    badge
+        .removeClass()
+        .addClass('badge')
+        .addClass(type)
+        .text(msg)
+        .fadeIn(300);
 }
 
 /**
@@ -255,4 +365,10 @@ function loginSignUpModalToggle(bool) {
             .modal('show');
         $('#signUpModal').modal('hide');
     }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------    DEBUG
+
+function debug() {
+    console.log("debug");
 }

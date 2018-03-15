@@ -8,7 +8,6 @@
  */
 
 include 'database.php';
-include 'test.php';
 
 session_start();
 answerRequest();
@@ -128,7 +127,7 @@ function insertSignUpModal() {
                             </button>
                         </div>
                         
-                        <form class='form-group' id='sign-up-form' onsubmit='return signUpAjax()' method='post'>
+                        <form class='form-group' id='sign-up-form' onsubmit='return signUp()' method='post'>
                         
                         <div class='row row-form'>
                             <div class='col-4'>
@@ -248,7 +247,9 @@ function answerRequest() {
         switch ($_POST['action']) {
             case 'login': login($_POST['data']);break;
             case 'logout': logout();break;
-            default: echo "UNKNOWN REQUEST: ".$_POST['action'];break;
+            case 'signUpTest': signUpTest($_POST['data']);break;
+            case 'signUp': signUp($_POST['data']);break;
+            default: echo json_encode((object)['action' => 'unknown','post'=>$_POST]);break;
         }
     }
 }
@@ -295,12 +296,47 @@ function logout() {
     echo json_encode((object)['action' => 'logout']);
 }
 
+function signUpTest($data) {
+    $field = htmlspecialchars($data['testField']);
+    $value = htmlspecialchars($data['value']);
+    $uni = signUpTestDB($field,$value);
+    echo json_encode((object)['action' => 'signUpTest','res'=>['testField'=>$field,'value'=>$value,'unique'=>$uni]]);
+}
+
 /**
  * Deal with sign up request
- * @param $input_username
- * @param $input_pwd1
- * @param $input_pwd2
+ * @param $data
  */
-function signUp($input_username,$input_pwd1,$input_pwd2) {
-    exit(0);
+function signUp($data) {
+    $username = htmlspecialchars(strtolower($data['username']));
+    $pwd = htmlspecialchars($data['pwd']);
+    $email = htmlspecialchars($data['email']);
+    $mobile = htmlspecialchars($data['mobile']);
+    $first_name = htmlspecialchars($data['first_name']);
+    $last_name = htmlspecialchars($data['last_name']);
+
+    $m1 = filter_var($email, FILTER_VALIDATE_EMAIL);
+    $m2 = preg_match('/^[A-Za-z_][A-Za-z_\-0-9]{4,}$/',$username);
+    $m3 = preg_match('/^\d{10}$/',$mobile);
+    $m4 = preg_match('/^[0-9a-f]{64}$/',$pwd);
+    $m5 = preg_match('/^[A-Za-z]{1,30}$/',$first_name);
+    $m6 = preg_match('/^[A-Za-z]{1,30}$/',$last_name);
+    $m7 = signUpTestDB("username",$username) && signUpTestDB("mobile",$mobile) && signUpTestDB("email",$email);
+
+    $server_check = $m1 && $m2 && $m3 && $m4 && $m5 && $m6 && $m7;
+    if($server_check) $result = signUpDB($username,$pwd,$email,$mobile,$first_name,$last_name);
+    else $result = false;
+
+    if($result) {
+        // Write session
+        session_regenerate_id();
+        $_SESSION['login_time'] = time();
+        $_SESSION['username'] = $username;
+        session_write_close();
+    }
+
+    echo json_encode((object)['action' => 'signUp','res'=>[
+        'server_check' => $server_check,
+        'successful' => $result
+    ]]);
 }
