@@ -10,6 +10,26 @@
  * Deal with login ajax logic.
  * @returns {boolean}
  */
+
+$(document).ready(function() {
+
+    // AUTO FOCUS
+    $('#loginModal')
+        .on('shown.bs.modal', function () {
+            $('#username').trigger('focus');
+        });
+
+    // NOT AVAILABLE FUNCTION
+    $('#anchor-find-my-account')
+        .tooltip()
+        .attr({
+            "data-toggle": "tool-tip",
+            "data-placement": "bottom",
+            "title": "Not ready now.",
+            "onclick": null
+        });
+});
+
 function loginAjax() {
     let data = {
         'action': 'login',
@@ -44,7 +64,7 @@ function loginResponse(resJSON) {
             break;
         }
         case 1: {
-            loginShowBadge('Wrong password or account is not exist','danger');
+            loginShowBadge('Oops, wrong password or account is not exist, try again?','danger');
             break;
         }
         case 2: {
@@ -73,12 +93,27 @@ function loginShowBadge(msg,type='secondary') {
 }
 
 /**
+ * Validation modal 1 and Pop up sign up modal 2
+ */
+function signUpNext() {
+    // Validation
+
+    // Pop up modal 2
+    alert("next!");
+}
+
+/**
  * Deal with sign up ajax logic.
  * @returns {boolean}
  */
 function signUpAjax() {
     console.log('Sorry, SignUp function is in construction. Please come later.');
     alert('Sorry, SignUp function is in construction. Please come later.');
+    return false;
+}
+
+function findMyAccount() {
+    alert('Sorry, Find my account is not available now. Please come later.');
     return false;
 }
 

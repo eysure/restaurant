@@ -26,3 +26,65 @@ button.user-btn span {
     font-size: 16px;
     margin: 4px;
 }
+
+/* Navigation Bar*/
+.navbar {
+    background: rgba(30,30,30,0.8);
+}
+
+/* Modal */
+.modal-content {
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 0 160px 80px rgba(0,0,0,0.4);
+}
+
+.modal-dialog {
+    margin-top: 100px;
+}
+
+.modal-body {
+    padding: 32px;
+}
+
+.modal-helper {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: aliceblue;
+}
+
+.form-control.lined {
+    border: 0;
+    border-bottom: 2px solid Grey;
+    border-radius: 0;
+}
+
+.form-control.lined:focus {
+    border: 0;
+    border-bottom: 2px solid #027BFF;
+    box-shadow: 0 4px 4px -3px rgba(2, 123, 255, 0.6);
+}
+
+div#login-helper {
+    position: absolute;
+    bottom: 0;
+}
+
+form#login-form {
+    margin: 0;
+}
+
+/* index */
+.container-fluid {
+    padding: 0;
+}
+.navbar-placeholder {
+    height: 56px;
+}
+
+.carousel-inner {
+    max-height: 400px;
+}
