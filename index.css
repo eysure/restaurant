@@ -5,15 +5,17 @@ button.user-btn {
     display: flex;
     display: -webkit-flex;
     align-items: center;
-    line-height: 0;
     padding: 2px;
-    border: 0;
 }
 button.user-btn i {
     font-size: 2em;
 }
 button.user-btn span {
-    margin: 4px;
+    padding: 0 8px;
+}
+
+button.no-border {
+    border:0;
 }
 
 /* Drop down menu items */
@@ -29,7 +31,7 @@ button.user-btn span {
 
 /* Navigation Bar*/
 .navbar {
-    background: rgba(30,30,30,0.8);
+    background: rgba(0,0,0,0.8);
 }
 
 /* Modal */
@@ -47,25 +49,42 @@ button.user-btn span {
     padding: 32px;
 }
 
-.modal-helper {
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    background-color: aliceblue;
-}
-
 .form-control.lined {
     border: 0;
     border-bottom: 2px solid Grey;
     border-radius: 0;
 }
 
+.form-control.succeed, .form-control.lined.succeed:focus {
+    border: 0;
+    border-bottom: 2px solid #009869;
+    box-shadow: 0 4px 4px -3px rgba(0, 152, 105, 0.6);
+}
+
+.form-control.error, .form-control.lined.error:focus {
+    border: 0;
+    border-bottom: 2px solid #C52B1E;
+    box-shadow: 0 4px 4px -3px rgba(197, 43, 30, 0.6);
+}
+
+
 .form-control.lined:focus {
     border: 0;
     border-bottom: 2px solid #027BFF;
     box-shadow: 0 4px 4px -3px rgba(2, 123, 255, 0.6);
+}
+
+
+.badge.succeed {
+    color: #009869;
+}
+
+.badge.error {
+    color: #C52B1E;
+}
+
+.row-form {
+    margin-bottom: 32px;
 }
 
 div#login-helper {

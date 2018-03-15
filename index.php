@@ -17,8 +17,6 @@
 
 <!-- Homepage Content -->
 <div class="container-fluid">
-    <!-- Nav bar place holder -->
-    <!-- <div class="navbar-placeholder"></div> -->
 
     <!-- Image -->
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
