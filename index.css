@@ -114,13 +114,14 @@ form#login-form {
     overflow: hidden;
 }
 
-#cart-view {
-    background: aliceblue;
-}
-
 /* ---------------------------------------------------
     Cart view
 ----------------------------------------------------- */
+#cart-view {
+
+}
+
+/* Drawer use */
 #cart-view {
     width: 400px;
     position: fixed;
@@ -148,7 +149,7 @@ form#login-form {
 
 @media (max-width: 800px) {
     #cart-view {
-        box-shadow: 0 0 100px 0px black;
+        box-shadow: 0 0 100px black;
     }
     #cart-view.active {
         box-shadow: 0 0 0 0;
