@@ -5,6 +5,7 @@
         });
 
         $('#cart-btn').on('click', function () {
+            $(this).toggleClass('active');
             $('#cart-view, #index-view').toggleClass('active');
             $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
@@ -15,8 +16,10 @@
 <div id="cart-view" class="col active">
     <div class="navbar-placeholder"></div>
 
-    <div class="cart-body">
-        <h1>My Cart</h1>
+    <div id="cart-container" class="container">
+        <div>
+            <h1>My Cart</h1>
+        </div>
     </div>
 
     <div id="checkout-container">

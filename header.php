@@ -10,8 +10,10 @@
 include "user.php";
 ?>
 
-<nav class="navbar navbar-expand-md navbar-dark justify-content-between fixed-top">
-    <div class="container">
+<div id="navbar-container" class="container-fluid fixed-top">
+<div id="navbar-row" class="row">
+<nav class="col navbar navbar-expand-md navbar-dark justify-content-between">
+    <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 	    </button>
@@ -39,11 +41,11 @@ include "user.php";
         <div class="inline">
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <?php insertUserButton(); ?>
-            <div class="btn-group mr-3" role="group">
-                <button class="user-btn btn btn-outline-light no-border" id="cart-btn"><i class="material-icons">shopping_cart</i></button>
-            </div>
         </div>
         </div>
     </div>
 </nav>
+<div id="cart-btn">
+    <i class="material-icons">shopping_cart</i>
+</div></div></div>
 <?php insertLoginModal(); ?>

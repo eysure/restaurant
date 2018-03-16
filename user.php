@@ -23,7 +23,7 @@ function insertUserButton() {
         <div class='btn-group mr-3' role=\"group\">
             <button class='user-btn btn btn-outline-light no-border' id='user-btn' data-toggle='modal' data-target='#loginModal'><i class='material-icons'>play_for_work</i><span>Login</span></button>
         </div>
-        <div class='btn-group mr-3' role='group'>
+        <div class='btn-group' role='group'>
             <button class='user-btn btn btn-outline-light' id='user-btn' data-toggle='modal' data-target='#signUpModal'><span>Sign Up</span></button>
         </div>
         ";
@@ -31,7 +31,7 @@ function insertUserButton() {
     else {
         // User is login
         echo "
-        <div class='btn-group mr-3' role=\"group\" aria-label=\"Basic example\">
+        <div class='btn-group' role=\"group\" aria-label=\"Basic example\">
             <div class='dropdown'>
                 <button class='user-btn btn btn-outline-light dropdown-toggle no-border' id='user-btn' data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class='material-icons'>account_circle</i><span>".$_SESSION['username']."</span></button>
                 <div class=\"dropdown-menu\" aria-labelledby=\"user-btn\">
