@@ -16,7 +16,7 @@ answerRequest();
  * Insert a User Button
  */
 function insertUserButton() {
-    echo "<div class=\"btn-toolbar\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">";
+    echo "";
     if (!isset($_SESSION['username'])) {
         // User is not login
         echo "
@@ -32,21 +32,27 @@ function insertUserButton() {
         // User is login
         echo "
         <div class='btn-group mr-3' role=\"group\" aria-label=\"Basic example\">
-        <div class='dropdown'>
-        <button class='user-btn btn btn-outline-light dropdown-toggle no-border' id='user-btn' data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class='material-icons'>account_circle</i><span>".$_SESSION['username']."</span></button>
-        <div class=\"dropdown-menu\" aria-labelledby=\"user-btn\">
-            <a class=\"dropdown-item\" href='order.php'><i class='material-icons'>description</i>My orders</a>
-            <a class=\"dropdown-item\" href='cart.php'><i class='material-icons'>shopping_cart</i>My Cart</a>
-            <div class=\"dropdown-divider\"></div>
-            <a class='dropdown-item' href='#' onclick='return sendAjax(\"logout\")'><i class='material-icons'>exit_to_app</i>Logout</a>
-            <script src='user.js'></script>
-        </div>
-        </div>
+            <div class='dropdown'>
+                <button class='user-btn btn btn-outline-light dropdown-toggle no-border' id='user-btn' data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class='material-icons'>account_circle</i><span>".$_SESSION['username']."</span></button>
+                <div class=\"dropdown-menu\" aria-labelledby=\"user-btn\">
+                    ".showRole()."
+                    <a class=\"dropdown-item\" href='order.php'><i class='material-icons'>description</i>My orders</a>
+                    <div class=\"dropdown-divider\"></div>
+                    <a class='dropdown-item' href='#' onclick='return sendAjax(\"logout\")'><i class='material-icons'>exit_to_app</i>Logout</a>
+                    <script src='user.js'></script>
+                </div>
+            </div>
         </div>
         ";
     }
-    echo "<div class='btn-group mr-3' role=\"group\">
-            <button class='user-btn btn btn-outline-light no-border' id='user-btn' onclick='toggleCart()'><i class='material-icons'>shopping_cart</i></button></div></div>";
+}
+
+/**
+ * Show user is admin or not
+ * @return string
+ */
+function showRole() {
+    if($_SESSION['role']==1)return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>Admin</h6>";
 }
 
 /**
@@ -282,6 +288,7 @@ function login($data) {
         session_regenerate_id();
         $_SESSION['login_time'] = time();
         $_SESSION['username'] = $result['username'];
+        $_SESSION['role'] = $result['role'];
         session_write_close();
     };
     echo json_encode($res);
@@ -296,6 +303,10 @@ function logout() {
     echo json_encode((object)['action' => 'logout']);
 }
 
+/**
+ * Test one field of sign up data in DB to check unique
+ * @param $data: including field to test and value
+ */
 function signUpTest($data) {
     $field = htmlspecialchars($data['testField']);
     $value = htmlspecialchars($data['value']);
@@ -332,6 +343,7 @@ function signUp($data) {
         session_regenerate_id();
         $_SESSION['login_time'] = time();
         $_SESSION['username'] = $username;
+        $_SESSION['role'] = 0;
         session_write_close();
     }
 
