@@ -40,19 +40,7 @@
             </div>
 
             <!-- Search -->
-            <form class='form-inline'>
-                <div class='input-group'>
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <?php include 'search.php'; ?>
 
             <?php include 'course.php' ?>
 

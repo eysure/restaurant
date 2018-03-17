@@ -198,3 +198,10 @@ form#login-form {
 div#cart-container {
     padding: 16px;
 }
+
+/* filter */
+
+.filter{
+    float: left;
+
+}
