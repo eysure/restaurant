@@ -25,19 +25,19 @@ if(isset($_COOKIE['cart'])){
 	    <div class="collapse navbar-collapse" id="navbarNav">
 	    	<ul class="navbar-nav">
 	    		<li class="nav-item active">
-	    			<a class="nav-link" href="#">Restaurant Name<span class="sr-only">(current)</span></a>
+	    			<a class="nav-link" href="http://eys.red/restaurant/">Restaurant Name<span class="sr-only">(current)</span></a>
 	    		</li>
 	    		<li class="nav-item">
 	    			<a class="nav-link" href="#">Menu</a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a class="nav-link" href="#">Location and Hours</a>
+	    			<a class="nav-link" href="#footer-container">Location and Hours</a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a class="nav-link" href="#">About</a>
+	    			<a class="nav-link" href="#footer-container">About</a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a class="nav-link" href="#">Contact</a>
+	    			<a class="nav-link" href="#footer-container">Contact</a>
 	    		</li>
 	    	</ul>
 	    </div>
