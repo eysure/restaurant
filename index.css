@@ -7,6 +7,9 @@ div#navbar-container {
 div#navbar-row {
     margin: 0;
 }
+div#footer-container {
+    padding: 0;
+}
 #cart-btn {
     display: flex;
     display: -webkit-flex;
@@ -204,15 +207,6 @@ form#login-form {
         filter: blur(0);
     }
 }
-
-/* ---------------------------------------------------
-    Card-deck inside
------------------------------------------------------ */
-
-#card-deck {
-    overflow: hidden;
-}
-
 
 /* ---------------------------------------------------
     Cart view inside

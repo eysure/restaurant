@@ -7,6 +7,8 @@
  */
 ?>
 
-<div class="navbar navbar-light bg-light">
-    <span class='text-center'>Designed by CS6314.001 Laurence, Ye Yao, Xinyang Zhu</span>
+<div id="footer-container" class="container-fluid">
+    <div class="navbar navbar-light bg-light">
+        <span class='text-center'>Designed by CS6314.001 Laurence, Ye Yao, Xinyang Zhu</span>
+    </div>
 </div>

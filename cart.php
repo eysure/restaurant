@@ -46,15 +46,6 @@
         <h2>Cart item</h2>
         <h2>Cart item</h2>
         <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
-        <h2>Cart item</h2>
     </div>
 
     <div id="checkout-container">
