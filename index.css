@@ -218,12 +218,6 @@ div#cart-container {
 /* ---------------------------------------------------
     Search & Filter Bar
 ----------------------------------------------------- */
-.filter{
-    float: left;
-    magin: 1%;
-    padding: 1%;
-}
-
 .cleandot{
     list-style: none;
     text-decoration: none;

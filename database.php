@@ -67,3 +67,24 @@ function signUpDB($username,$pwd,$email,$mobile,$first_name,$last_name) {
     $result = mysqli_query($con,$query);
     return $result;
 }
+
+/**
+ * Get dishes from DB
+ * @param null $criteria: Give criteria as JSON
+ * @return array|null
+ */
+function getDishesDB($criteria=null) {
+    if(!$criteria)$criStr = 'true';
+    else {
+        $criStrArr = array();
+        foreach ($criteria as $field => $value) {
+
+            array_push($criStrArr,$field."=".$value);
+        }
+        $criStr = implode(" AND ",$criStrArr);
+    }
+    $con = getConnection();
+    $query = "SELECT * FROM dish WHERE $criStr";
+    $result = mysqli_query($con,$query);
+    return mysqli_fetch_all($result);
+}
