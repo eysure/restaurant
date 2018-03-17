@@ -54,34 +54,49 @@
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
 
-            <div class="dish-content">
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
+            <div>
+                <div class="card-group">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <h1>some contents</h1>
+            <h1>some contents</h1>
+            <h1>some contents</h1>
+
+            <!-- PAGINATION -->
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                </ul>
+            </nav>
 
             <?php include 'footer.php' ?>
         </div>
