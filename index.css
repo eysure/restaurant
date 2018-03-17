@@ -168,7 +168,6 @@ form#login-form {
     right: 0;
     height: 100vh;
 }
-
 #cart-view.active {
     box-shadow: 0 0 0px grey;
     margin-right: -400px;
@@ -220,4 +219,17 @@ form#login-form {
 ----------------------------------------------------- */
 div#cart-container {
     padding: 16px;
+}
+
+/* filter */
+
+.filter{
+    float: left;
+    magin: 1%;
+    padding: 1%;
+}
+
+.cleandot{
+    list-style: none;
+    text-decoration: none;
 }
