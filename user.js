@@ -91,6 +91,10 @@ function receiveAjaxResponse(res) {
         case 'signUpTest': signUpFieldServerResponse(res['res']);break;
         case 'signUp': signUpResponse(res['res']);break;
         case 'unknown': console.log("UNKNOWN REQUEST: ",res);break;
+
+        // DEBUG
+        case 'session_debug': console.log("session",res['session']);break;
+        case 'cookie_debug': console.log("cookie",res['cookie']);break;
         default: console.log("UNKNOWN RESPONSE: ",res);
     }
 }
@@ -370,5 +374,6 @@ function loginSignUpModalToggle(bool) {
 // ---------------------------------------------------------------------------------------------------------------------    DEBUG
 
 function debug() {
-    console.log("debug");
+    sendAjax("session_debug");
+    sendAjax("cookie_debug");
 }

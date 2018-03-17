@@ -52,6 +52,7 @@ function insertUserButton() {
  * @return string
  */
 function showRole() {
+    $id = $_SESSION['user_id'];
     if($_SESSION['role']==1)return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>Admin</h6>";
 }
 
@@ -255,6 +256,8 @@ function answerRequest() {
             case 'logout': logout();break;
             case 'signUpTest': signUpTest($_POST['data']);break;
             case 'signUp': signUp($_POST['data']);break;
+            case 'session_debug': echo json_encode((object)['action'=>'session_debug','session'=>$_SESSION]);break;
+            case 'cookie_debug': echo json_encode((object)['action'=>'cookie_debug','cookie'=>$_COOKIE]);break;
             default: echo json_encode((object)['action' => 'unknown','post'=>$_POST]);break;
         }
     }
@@ -288,6 +291,7 @@ function login($data) {
         session_regenerate_id();
         $_SESSION['login_time'] = time();
         $_SESSION['username'] = $result['username'];
+        $_SESSION['user_id'] = $result['user_id'];
         $_SESSION['role'] = $result['role'];
         session_write_close();
     };
@@ -309,8 +313,8 @@ function logout() {
  */
 function signUpTest($data) {
     $field = htmlspecialchars($data['testField']);
-    $value = htmlspecialchars($data['value']);
-    $uni = signUpTestDB($field,$value);
+    $value = htmlspecialchars(strtolower($data['value']));
+    $uni = getUserID($field,$value)==null;
     echo json_encode((object)['action' => 'signUpTest','res'=>['testField'=>$field,'value'=>$value,'unique'=>$uni]]);
 }
 
@@ -332,7 +336,7 @@ function signUp($data) {
     $m4 = preg_match('/^[0-9a-f]{64}$/',$pwd);
     $m5 = preg_match('/^[A-Za-z]{1,30}$/',$first_name);
     $m6 = preg_match('/^[A-Za-z]{1,30}$/',$last_name);
-    $m7 = signUpTestDB("username",$username) && signUpTestDB("mobile",$mobile) && signUpTestDB("email",$email);
+    $m7 = getUserID("username",$username)==null && getUserID("mobile",$mobile)==null && getUserID("email",$email)==null;
 
     $server_check = $m1 && $m2 && $m3 && $m4 && $m5 && $m6 && $m7;
     if($server_check) $result = signUpDB($username,$pwd,$email,$mobile,$first_name,$last_name);
@@ -343,6 +347,7 @@ function signUp($data) {
         session_regenerate_id();
         $_SESSION['login_time'] = time();
         $_SESSION['username'] = $username;
+        $_SESSION['user_id'] = getUserID("username",$username);
         $_SESSION['role'] = 0;
         session_write_close();
     }

@@ -25,7 +25,7 @@ function loginDB($account, $hashed_pwd) {
     $con = getConnection();
     $account = mysqli_real_escape_string($con, $account);
     $hashed_pwd = mysqli_real_escape_string($con, $hashed_pwd);
-    $query = "SELECT username,status,role FROM user WHERE (username='$account' OR mobile='$account' OR email='$account') AND pwd='$hashed_pwd'";
+    $query = "SELECT user_id,username,status,role FROM user WHERE (username='$account' OR mobile='$account' OR email='$account') AND pwd='$hashed_pwd'";
     $result = mysqli_query($con,$query);
     return mysqli_fetch_array($result);
 }
@@ -37,12 +37,12 @@ function loginDB($account, $hashed_pwd) {
  * @param $value: given value
  * @return boolean: value is unique or not
  */
-function signUpTestDB($field, $value) {
+function getUserID($field, $value) {
     $con = getConnection();
     $value = mysqli_real_escape_string($con, $value);
-    $query = "SELECT id FROM user WHERE $field='$value'";
+    $query = "SELECT user_id FROM user WHERE $field='$value'";
     $result = mysqli_query($con,$query);
-    return $result->num_rows==0;
+    return mysqli_fetch_array($result)['user_id'];
 }
 
 /**

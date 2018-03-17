@@ -37,4 +37,7 @@ echo '
     
     <!-- Our own css -->
     <link rel="stylesheet" href="index.css">
+    
+    <!-- Our own js -->
+    <script src="index.js"></script>
     ';

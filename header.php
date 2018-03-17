@@ -8,6 +8,11 @@
  * Time: 16:45
  */
 include "user.php";
+
+if(isset($_COOKIE['cart'])){
+    $cart = $_COOKIE['cart'];
+}
+
 ?>
 
 <div id="navbar-container" class="container-fluid fixed-top">
@@ -45,7 +50,6 @@ include "user.php";
         </div>
     </div>
 </nav>
-<div id="cart-btn">
-    <i class="material-icons">shopping_cart</i>
-</div></div></div>
+<div id="cart-btn"><i class="material-icons">shopping_cart</i><span id="cart-amount"><?php echo $cart?></span></div>
+</div></div>
 <?php insertLoginModal(); ?>

@@ -54,6 +54,7 @@
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
 
+            <div class="dish-content">
             <h1>some contents</h1>
             <h1>some contents</h1>
             <h1>some contents</h1>
@@ -80,6 +81,7 @@
             <h1>some contents</h1>
             <h1>some contents</h1>
             <h1>some contents</h1>
+            </div>
 
             <?php include 'footer.php' ?>
         </div>
