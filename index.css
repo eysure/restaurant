@@ -212,5 +212,11 @@ div#cart-container {
 
 .filter{
     float: left;
+    magin: 1%;
+    padding: 1%;
+}
 
+.cleandot{
+    list-style: none;
+    text-decoration: none;
 }
