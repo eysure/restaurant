@@ -42,7 +42,7 @@
             <!-- Search -->
             <?php include 'search.php'; ?>
 
-            <?php include 'course.php' ?>
+            <?php include 'courseList.php' ?>
 
             <h1>some contents</h1>
             <h1>some contents</h1>

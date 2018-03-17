@@ -7,39 +7,12 @@
  */
 ?>
 
-<div>
-    <div class="card-deck m-2">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Card Title</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Card Title</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
-            </div>
-        </div>
-    </div>
-    <div class="card-deck m-2">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Card Title</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Card Title</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
-            </div>
-        </div>
+<div class="card" data-toggle="modal" data-target="#course">
+    <div class="card-body">
+        <h4 class="card-title">Card Title</h4>
+        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
     </div>
 </div>
-
-<!-- MODAL TRIGGER -->
-<button class="btn btn-primary" data-toggle="modal" data-target="#course">Launch Modal</button>
 
 <!-- MODAL -->
 <div class="modal" id="course">
