@@ -54,29 +54,37 @@
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
 
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
-            <h1>some contents</h1>
+            <div>
+                <div class="card-group">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Card Title</h4>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, quas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <h1>some contents</h1>
             <h1>some contents</h1>
             <h1>some contents</h1>
