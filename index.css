@@ -1,11 +1,29 @@
 /* Global site CSS */
 
-/* Header & User button */
+/* ---------------------------------------------------
+    Homepage & Carousel
+----------------------------------------------------- */
+#index-view {
+    padding: 0;
+}
+#homepage-carousel {
+    width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+/* ---------------------------------------------------
+    Header & User Btn & Cart Btn
+----------------------------------------------------- */
 div#navbar-container {
     padding: 0;
 }
 div#navbar-row {
     margin: 0;
+}
+.navbar {
+    background: rgba(0,0,0,0.8);
 }
 div#footer-container {
     padding: 0;
@@ -40,7 +58,10 @@ div#footer-container {
     font-family: Menlo, serif;
     transition: all 0.3s;
 }
-
+.navbar-placeholder {
+    background: yellow;
+    height: 56px;
+}
 button.user-btn {
     display: flex;
     display: -webkit-flex;
@@ -53,7 +74,6 @@ button.user-btn i {
 button.user-btn span {
     padding: 0 8px;
 }
-
 button.no-border {
     border:0;
 }
@@ -73,12 +93,9 @@ button.no-border {
     margin: 4px;
 }
 
-/* Navigation Bar*/
-.navbar {
-    background: rgba(0,0,0,0.8);
-}
-
-/* Modal */
+/* ---------------------------------------------------
+    Modal & Colorful Input
+----------------------------------------------------- */
 .modal-content {
     border: 0;
     border-radius: 0;
@@ -111,13 +128,11 @@ button.no-border {
     box-shadow: 0 4px 4px -3px rgba(197, 43, 30, 0.6);
 }
 
-
 .form-control.lined:focus {
     border: 0;
     border-bottom: 2px solid #027BFF;
     box-shadow: 0 4px 4px -3px rgba(2, 123, 255, 0.6);
 }
-
 
 .badge.succeed {
     color: #009869;
@@ -138,21 +153,6 @@ div#login-helper {
 
 form#login-form {
     margin: 0;
-}
-
-/* index */
-#index-view {
-    padding: 0;
-}
-
-.navbar-placeholder {
-    background: yellow;
-    height: 56px;
-}
-
-#homepage-carousel {
-    max-height: 300px;
-    overflow: hidden;
 }
 
 /* ---------------------------------------------------
@@ -215,8 +215,9 @@ div#cart-container {
     padding: 16px;
 }
 
-/* filter */
-
+/* ---------------------------------------------------
+    Search & Filter Bar
+----------------------------------------------------- */
 .filter{
     float: left;
     magin: 1%;

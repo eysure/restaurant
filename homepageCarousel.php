@@ -7,6 +7,7 @@
  */
 ?>
 
+
 <div id="homepage-carousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
