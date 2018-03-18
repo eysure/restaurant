@@ -22,12 +22,11 @@
 
 <!-- Homepage Content -->
 <div class="container-fluid">
-
     <div class="row">
         <div id="index-view" class="col active">
             <div class="container-fluid">
                 <div class="row">
-                    <!-- Order list-->
+                    <?php include 'OrderList.php'?>
                 </div>
                 <div class="row">
                     <?php include 'footer.php' ?>
