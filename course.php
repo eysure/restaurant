@@ -7,19 +7,15 @@
  */
 ?>
 
-<div class="card" data-toggle="modal" data-target="#course">
-    <div class="card-body p-0">
+<div class="card dish-card" data-toggle="modal" data-target="#course">
+    <img class="card-img-top" src="assets/img/course/generaltsoschicken.jpeg" alt="food picture">
+    <div class="card-body">
         <div class="row">
-            <div class="col-sm-4">
-                <img src="assets/img/course/generaltsoschicken.jpeg" alt="food picture">
-            </div>
-
             <div class="col-sm-8 my-auto">
                 <h4 class="card-title">General Tso's Chicken</h4>
                 <p class="card-text text-danger">Today's special!</p>
                 <strong>$</strong>
                 <strong>10.95</strong>
-
             </div>
         </div>
     </div>

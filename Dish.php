@@ -7,16 +7,18 @@
  */
 
 class Dish {
-    private $name;
-    private $price;
-    private $description;
-    private $img;
-    private $category;
-    private $calorie;
-    private $vegetarian;
+    public $name;
+    public $price;
+    public $description;
+    public $img;
+    public $category;
+    public $calorie;
+    public $vegetarian;
+    public $inventory;
+    public $availability;
 
     /**
-     * Dish constructor.
+     * Dish init.
      * @param $name
      * @param $price
      * @param $description
@@ -24,9 +26,10 @@ class Dish {
      * @param $category
      * @param $calorie
      * @param $vegetarian
+     * @param $inventory
+     * @param $availability
      */
-    public function __construct($name, $price, $description, $img, $category, $calorie, $vegetarian)
-    {
+    public function init($name, $price, $description, $img, $category, $calorie, $vegetarian, $inventory, $availability) {
         $this->name = $name;
         $this->price = $price;
         $this->description = $description;
@@ -34,5 +37,26 @@ class Dish {
         $this->category = $category;
         $this->calorie = $calorie;
         $this->vegetarian = $vegetarian;
+        $this->inventory = $inventory;
+        $this->availability = $availability;
     }
+
+    /**
+     * init a dish by dish array type (mostly from database)
+     * @param $db_single
+     */
+    public function init_from_arr($db_single) {
+        $this->init(
+            $db_single['name'],
+            $db_single['price'],
+            $db_single['description'],
+            $db_single['img'],
+            $db_single['category'],
+            $db_single['calorie'],
+            $db_single['vegetarian'],
+            $db_single['inventory'],
+            $db_single['availability']
+        );
+    }
+
 }

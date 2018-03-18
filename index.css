@@ -8,9 +8,8 @@
 }
 #homepage-carousel {
     width: 100%;
-    max-height: 300px;
+    max-height: 400px;
     overflow: hidden;
-    margin-bottom: 16px;
 }
 
 /* ---------------------------------------------------
@@ -82,6 +81,8 @@ button.no-border {
 .dropdown-item,
 .dropdown-header
 {
+    font-size: 16px;
+    font-weight: 400;
     display: flex;
     display: -webkit-flex;
     align-items: center;
@@ -218,7 +219,66 @@ div#cart-container {
 /* ---------------------------------------------------
     Search & Filter Bar
 ----------------------------------------------------- */
-.cleandot{
+div#search-bar-container.col-2 {
+    background-color: #f9f9f9;
+    padding: 0;
+    flex: none;
+    max-width: 240px;
+}
+#search-bar {
+    padding: 16px;
+}
+#search-bar li{
     list-style: none;
     text-decoration: none;
+}
+
+/* ---------------------------------------------------
+    Dish list & Dish card
+----------------------------------------------------- */
+#dish-list-container {
+    padding: 0;
+}
+#dish-list {
+    padding: 16px;
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: center;
+    transition: all 0.3s;
+}
+.dish-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+
+    background: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    transition: all 0.5s;
+    min-height: 200px;
+
+    font-size: 16px;
+    font-weight: 500;
+
+}
+.dish-card:hover {
+    background: #fcfcfc;
+    box-shadow: 0 0 16px #dddddd;
+    cursor: pointer;
+}
+@media (max-width: 1340px){
+    #dish-list {
+        grid: auto / minmax(100px,600px);
+    }
+}
+@media (min-width:1340px) and (max-width: 1740px){
+    #dish-list {
+        grid: auto / minmax(300px,600px) minmax(300px,600px);
+    }
+}
+@media (min-width:1740px) {
+    #dish-list {
+        grid: auto / minmax(300px,600px) minmax(300px,600px) minmax(300px,600px);
+    }
 }

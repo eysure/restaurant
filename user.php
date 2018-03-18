@@ -38,6 +38,7 @@ function insertUserButton() {
                     ".showRole()."
                     <a class=\"dropdown-item\" href='order.php'><i class='material-icons'>description</i>My orders</a>
                     <div class=\"dropdown-divider\"></div>
+                    ".showCustomizedBar()."
                     <a class='dropdown-item' href='#' onclick='return sendAjax(\"logout\")'><i class='material-icons'>exit_to_app</i>Logout</a>
                     <script src='user.js'></script>
                 </div>
@@ -52,9 +53,26 @@ function insertUserButton() {
  * @return string
  */
 function showRole() {
-    $id = $_SESSION['user_id'];
-    if($_SESSION['role']==1)return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>Admin</h6>";
+    $role = $_SESSION['role'];
+    switch ($role) {
+        case 1: return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>Admin</h6>";
+        case 0: return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>User</h6>";
+        case 1024: return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>Developer</h6>";
+        default: break;
+    }
 }
+
+function showCustomizedBar() {
+    if($_SESSION['role']==1024) {
+        return "
+            <a class='dropdown-item' href='#' data-toggle=\"modal\" data-target=\"#debugModal\"><i class='material-icons'>bug_report</i>Debug</a>
+            <a class='dropdown-item' href='#' onclick='toggleSearchBar()'><i class='material-icons'>bug_report</i>Toggle search bar</a>
+            <div class=\"dropdown-divider\"></div>
+        ";
+    }
+}
+
+showDebugModal();
 
 /**
  * Insert a login modal on the top of the page
@@ -356,4 +374,36 @@ function signUp($data) {
         'server_check' => $server_check,
         'successful' => $result
     ]]);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------    DEBUG
+
+function showDebugModal() {
+    echo "
+    <!-- Debug Modal -->
+    <div class=\"modal fade\" id=\"debugModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"debugModalLabel\" aria-hidden=\"true\">
+    <div class=\"modal-dialog\" role=\"document\">
+    <div class=\"modal-content\">
+    <div class='modal-header'><h3>Debug</h3><hr></div>
+    <div class=\"modal-body\">";
+
+    debug();
+
+    echo "</div></div></div></div>";
+}
+
+function debug() {
+    include 'Dish.php';
+    $dish_arr = getDishesDB(["id>3","price<10"]);
+    $dishClass_arr = [];
+    foreach ($dish_arr as $dish) {
+        $singleDish = new Dish();
+        $singleDish->init_from_arr($dish);
+        array_push($dishClass_arr,$singleDish);
+    }
+
+    foreach ($dishClass_arr as $dishClass) {
+        echo $dishClass->description;
+        echo "<br>";
+    }
 }

@@ -7,13 +7,13 @@
  * Time: 18:08
  */
 ?>
-<div class="filter">
+<div id="search-bar">
     <div>
         <form class='form-inline'>
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
         </form>
-        </br>
+        <br>
     </div>
 
     <div>
@@ -25,7 +25,7 @@
             <li>Category 4</li>
             <li>Category 5</li>
         </ul>
-        </br>
+        <br>
     </div>
 
     <div>
@@ -36,7 +36,7 @@
             <li><input type="checkbox" name="ten_to_twty"> $10 - $20</li>
             <li><input type="checkbox" name="twty_up"> $20 ↑</li>
         </ul>
-        </br>
+        <br>
     </div>
 
     <div>
@@ -46,7 +46,7 @@
             <li><input type="checkbox" name="fivehd_to_tenhd"> 500 - 1000 calories</li>
             <li><input type="checkbox" name="ten_to_twty"> 1000 calories ↑</li>
         </ul>
-        </br>
+        <br>
     </div>
 
     <div>
@@ -54,6 +54,6 @@
         <ul class="cleandot">
             <li><input type="checkbox" name="vege_or_not"> Show vegetarian dishes</li>
         </ul>
-        </br>
+        <br>
     </div>
 </div>

@@ -7,13 +7,24 @@
  */
 ?>
 
-<div id="card-deck">
-    <div class="card-deck m-2">
-
-        <?php include 'course.php' ?>
-
-    </div>
-
+<div id="dish-list">
+    <?php include 'course.php' ?>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test<br>Test<br>Test<br>Test<br>Test<br>Tes<br>tTes<br>tTest<br>Test<br>Test<br>Test<br>TestTestTestTestTestTestTestTestTestTest</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
+    <div class="dish-card">Test</div>
 </div>
 
 <!-- PAGINATION -->

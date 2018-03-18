@@ -377,3 +377,9 @@ function debug() {
     sendAjax("session_debug");
     sendAjax("cookie_debug");
 }
+
+function toggleSearchBar() {
+    let bar = $("#search-bar-container");
+    if(bar.css("display")==="none")bar.show(400);
+    else bar.hide(400);
+}

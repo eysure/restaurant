@@ -21,10 +21,10 @@
                     <?php include 'homepageCarousel.php' ?>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div id="search-bar-container" class="col-2">
                         <?php include 'search.php'; ?>
                     </div>
-                    <div class="col">
+                    <div id="dish-list-container" class="col">
                         <?php include 'courseList.php' ?>
                     </div>
                 </div>
