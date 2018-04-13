@@ -6,7 +6,7 @@
  * Time: 9:59 AM
  */
 
-include 'Database.php';
+include 'database.php';
 
 // Answer User call
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -22,9 +22,13 @@ else header("Location: index.php");
  * Get dishes from database and convert to object array
  */
 function getDishes() {
-    $criStr = 'true';
     $con = getConnection();
-    $query = "SELECT * FROM dish WHERE $criStr";
+    $query = "SELECT * FROM dish";
     $result = mysqli_query($con,$query);
-    return mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+    $dish_arr = [];
+    while($row=mysqli_fetch_assoc($result)){
+        array_push($dish_arr, $row);
+    }
+    return $dish_arr;
 }

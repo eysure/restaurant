@@ -7,22 +7,7 @@
  */
 ?>
 
-<div id="dish-list">
-    <?php
-    foreach($GLOBALS["dishes"] as $dish) {
-        echo "
-        <div class=\"card dish-card\" data-toggle=\"modal\" data-target=\"#course_detail\" data-id=\"".$dish->id."\">
-            <img class=\"card-img-top\" src=\"".$dish->img."\" alt=\"food picture\">
-            <div class=\"card-body\">
-                <h4 class=\"card-title\">".$dish->name."</h4>
-                        <strong>$</strong>
-                        <strong>".$dish->price."</strong>
-            </div>
-        </div>
-        ";
-    }
-    ?>
-</div>
+<div id="dish-list"></div>
 
 <div class="modal" id="course_detail">
     <div class="modal-dialog">
@@ -44,13 +29,13 @@
 
                             <div class="row justify-content-start">
                                 <div class="input-group p-0 col-9">
-                                    <span class="input-group-btn">
+                                    <span class="input-group-btn input-group-prepend">
                                         <button class="btn btn-danger btn-number" type="button" data-type="minus" data-field="quant[2]">
                                             <h4>-</h4>
                                         </button>
                                     </span>
-                                    <input type="text" name="quant[2]" class="form-control input-number text-center" value="1" min="1" max="10">
-                                    <span class="input-group-btn">
+                                    <input id="dish-quantity" type="text" name="quant[2]" class="form-control input-number text-center" value="1" min="1" max="10">
+                                    <span class="input-group-btn input-group-append">
                                         <button class="btn btn-success btn-number" type="button" data-type="plus" data-field="quant[2]">
                                             <h4>+</h4>
                                         </button>
@@ -66,7 +51,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <button class="btn btn-primary btn-block">Add to bag</button>
+                            <button id="add-to-cart" class="btn btn-primary btn-block">Add to bag</button>
                         </div>
 
                         <div class="col">

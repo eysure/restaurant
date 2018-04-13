@@ -165,7 +165,7 @@ form#login-form {
     Cart view
 ----------------------------------------------------- */
 #cart-view {
-    background: rgba(240,240,240,0.9);
+    background: rgba(220,220,220,0.9);
     padding: 0;
     box-shadow: 0 0 64px grey;
 }
@@ -217,8 +217,18 @@ form#login-form {
 /* ---------------------------------------------------
     Cart view inside
 ----------------------------------------------------- */
-div#cart-container {
+div#cart-list {
+    padding: 0;
+}
+
+div.cart-item {
     padding: 16px;
+    border-bottom: 1px solid grey;
+    background: #eeeeee;
+    transition: 0.3s;
+}
+div.cart-item:hover {
+    background: #ffffff;
 }
 
 /* ---------------------------------------------------
