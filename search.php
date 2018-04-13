@@ -6,12 +6,13 @@
  * Date: 3/10/18
  * Time: 18:08
  */
+
 ?>
 <div id="search-bar">
-    <div>
-        <form class='form-inline'>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+    <div id="searchForm">
+        <form class="form-inline">
+            <input id="searchInput" class="form-control" type="search" placeholder="Search..." aria-label="Search">
+            <span id="searchButton"><i id="searchIcon" class="material-icons">search</i></span>
         </form>
         <br>
     </div>
@@ -19,11 +20,16 @@
     <div>
         <h1>Category</h1>
         <ul class="cleandot">
-            <li>Category 1</li>
-            <li>Category 2</li>
-            <li>Category 3</li>
-            <li>Category 4</li>
-            <li>Category 5</li>
+            <li><input class="box" type="checkbox" name="Combo"> Combo</li>
+            <li><input class="box" type="checkbox" name="Meat"> Meat</li>
+            <li><input class="box" type="checkbox" name="Seafood"> Seafood</li>
+            <li><input class="box" type="checkbox" name="Vegetable"> Vegetable</li>
+            <li><input class="box" type="checkbox" name="Soy"> Soy</li>
+            <li><input class="box" type="checkbox" name="Mushroom"> Mushroom</li>
+            <li><input class="box" type="checkbox" name="Wheat"> Wheat</li>
+            <li><input class="box" type="checkbox" name="Base"> Base</li>
+            <li><input class="box" type="checkbox" name="Sauce"> Sauce</li>
+            <li><input class="box" type="checkbox" name="Drink"> Drink</li>
         </ul>
         <br>
     </div>
