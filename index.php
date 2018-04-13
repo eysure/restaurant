@@ -33,7 +33,7 @@ function getDishes() {
 <?php include 'header.php' ?>
 
 <!-- Homepage Content -->
-<div class="container-fluid">
+<div id="homepage" class="container-fluid">
 
     <div class="row">
         <div id="index-view" class="col active">

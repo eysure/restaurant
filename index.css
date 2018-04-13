@@ -3,6 +3,9 @@
 /* ---------------------------------------------------
     Homepage & Carousel
 ----------------------------------------------------- */
+#homepage {
+    background-color: #240201;
+}
 #index-view {
     padding: 0;
 }
@@ -22,10 +25,12 @@ div#navbar-row {
     margin: 0;
 }
 .navbar {
-    background: rgba(0,0,0,0.8);
+    background: #240201;
 }
 div#footer-container {
     padding: 0;
+    background-color: #240201;
+    color: #FDEFDC;
 }
 #cart-btn {
     display: flex;
@@ -220,7 +225,8 @@ div#cart-container {
     Search & Filter Bar
 ----------------------------------------------------- */
 div#search-bar-container.col-2 {
-    background-color: #f9f9f9;
+    background-color: #240201;
+    color: #FDEFDC;
     padding: 0;
     flex: none;
     max-width: 240px;
@@ -237,6 +243,7 @@ div#search-bar-container.col-2 {
     Dish list & Dish card
 ----------------------------------------------------- */
 #dish-list-container {
+    background-color: #850523;
     padding: 0;
 }
 #dish-list {
@@ -252,7 +259,7 @@ div#search-bar-container.col-2 {
     align-items: center;
     margin: 8px;
 
-    background: #f9f9f9;
+    background-color: #FDEFDC;
     border: 1px solid #dddddd;
     border-radius: 4px;
     transition: all 0.5s;
@@ -263,7 +270,7 @@ div#search-bar-container.col-2 {
 
 }
 .dish-card:hover {
-    background: #fcfcfc;
+    background-: #fcfcfc;
     box-shadow: 0 0 16px #dddddd;
     cursor: pointer;
 }

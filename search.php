@@ -31,10 +31,10 @@
     <div>
         <h1>Price</h1>
         <ul class="cleandot">
-            <li><input type="checkbox" name="five_down"> $5 ↓</li>
-            <li><input type="checkbox" name="five_to_ten"> $5 - $10</li>
-            <li><input type="checkbox" name="ten_to_twty"> $10 - $20</li>
-            <li><input type="checkbox" name="twty_up"> $20 ↑</li>
+            <li><input class="box" type="checkbox" name="five_down"> $5 ↓</li>
+            <li><input class="box" type="checkbox" name="five_to_ten"> $5 - $10</li>
+            <li><input class="box" type="checkbox" name="ten_to_twty"> $10 - $20</li>
+            <li><input class="box" type="checkbox" name="twty_up"> $20 ↑</li>
         </ul>
         <br>
     </div>
@@ -42,9 +42,9 @@
     <div>
         <h1>Calories</h1>
         <ul class="cleandot">
-            <li><input type="checkbox" name="fivehd_down"> 500 calories ↓</li>
-            <li><input type="checkbox" name="fivehd_to_tenhd"> 500 - 1000 calories</li>
-            <li><input type="checkbox" name="ten_to_twty"> 1000 calories ↑</li>
+            <li><input class="box" type="checkbox" name="fivehd_down"> 500 calories ↓</li>
+            <li><input class="box" type="checkbox" name="fivehd_to_tenhd"> 500 - 1000 calories</li>
+            <li><input class="box" type="checkbox" name="ten_to_twty"> 1000 calories ↑</li>
         </ul>
         <br>
     </div>
@@ -52,7 +52,7 @@
     <div>
         <h1>Vegetarian</h1>
         <ul class="cleandot">
-            <li><input type="checkbox" name="vege_or_not"> Show vegetarian dishes</li>
+            <li><input class="box" type="checkbox" name="vege_or_not"> Show vegetarian dishes</li>
         </ul>
         <br>
     </div>

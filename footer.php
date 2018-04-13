@@ -11,7 +11,7 @@ function testFunc() {
 ?>
 
 <div id="footer-container" class="container-fluid">
-    <div class="bg-light">
+    <div>
         <p class='text-center'>Hours: 00:00 - 06:00</p>
         <p class='text-center'>Contact us: 123-456-7890</p>
         <p class='text-center'>Location: 800 W Campbell Rd, Richardson, TX 75080</p>
