@@ -5,22 +5,9 @@
  * Date: 3/17/18
  * Time: 1:06 PM
  */
+
+
 ?>
-
-<div class="card dish-card" data-toggle="modal" data-target="#course">
-    <img class="card-img-top" src="assets/img/course/generaltsoschicken.jpeg" alt="food picture">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-8 my-auto">
-                <h4 class="card-title">General Tso's Chicken</h4>
-                <p class="card-text text-danger">Today's special!</p>
-                <strong>$</strong>
-                <strong>10.95</strong>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- MODAL -->
 <div class="modal" id="course">
     <div class="modal-dialog">
@@ -82,15 +69,9 @@
 
                     </div>
                 </div>
-
-
-
-
             </div>
-
         </div>
     </div>
 </div>
 
 <script src="quantity.js"></script>
-

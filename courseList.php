@@ -8,23 +8,27 @@
 ?>
 
 <div id="dish-list">
-    <?php include 'course.php' ?>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test<br>Test<br>Test<br>Test<br>Test<br>Tes<br>tTes<br>tTest<br>Test<br>Test<br>Test<br>TestTestTestTestTestTestTestTestTestTest</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
-    <div class="dish-card">Test</div>
+    <?php
+    include 'course.php';
+    foreach($GLOBALS["dishes"] as $dish) {
+        echo "
+            <div class=\"card dish-card\" data-toggle=\"modal\" data-target=\"#course\">
+            <img class=\"card-img-top\" src=\"".$dish->img."\" alt=\"food picture\">
+            <div class=\"card-body\">
+            <div class=\"row\">
+            <div class=\"col-sm-8 my-auto\">
+                <h4 class=\"card-title\">".$dish->name."</h4>
+                <p class=\"card-text text-danger\">Today's special!</p>
+                        <strong>$</strong>
+                        <strong>".$dish->price."</strong>
+                        <small>".$dish->img."</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ";
+    }
+    ?>
 </div>
 
 <!-- PAGINATION -->

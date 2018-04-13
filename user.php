@@ -72,8 +72,6 @@ function showCustomizedBar() {
     }
 }
 
-showDebugModal();
-
 /**
  * Insert a login modal on the top of the page
  */
@@ -279,6 +277,9 @@ function answerRequest() {
             default: echo json_encode((object)['action' => 'unknown','post'=>$_POST]);break;
         }
     }
+    else {
+        showDebugModal();
+    }
 }
 
 /**
@@ -385,25 +386,6 @@ function showDebugModal() {
     <div class=\"modal-dialog\" role=\"document\">
     <div class=\"modal-content\">
     <div class='modal-header'><h3>Debug</h3><hr></div>
-    <div class=\"modal-body\">";
-
-    debug();
-
+    <div id='debug_div' class=\"modal-body\">";
     echo "</div></div></div></div>";
-}
-
-function debug() {
-    include 'Dish.php';
-    $dish_arr = getDishesDB(["id>3","price<10"]);
-    $dishClass_arr = [];
-    foreach ($dish_arr as $dish) {
-        $singleDish = new Dish();
-        $singleDish->init_from_arr($dish);
-        array_push($dishClass_arr,$singleDish);
-    }
-
-    foreach ($dishClass_arr as $dishClass) {
-        echo $dishClass->description;
-        echo "<br>";
-    }
 }

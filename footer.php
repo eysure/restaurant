@@ -5,6 +5,9 @@
  * Date: 3/10/18
  * Time: 18:12
  */
+function testFunc() {
+    echo "test ok";
+}
 ?>
 
 <div id="footer-container" class="container-fluid">

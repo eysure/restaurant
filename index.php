@@ -1,4 +1,26 @@
-<?php session_start(); ?>
+<?php
+session_start();
+$GLOBALS["dishes"] = [];
+/**
+ * Get dishes from database and convert to object array
+ */
+function getDishes() {
+    include 'Dish.php';
+    $criStr = 'true';
+    $con = getConnection();
+    $query = "SELECT * FROM dish WHERE $criStr";
+    $result = mysqli_query($con,$query);
+    $dish_arr = mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+    # Establish dishes data
+    foreach ($dish_arr as $dish) {
+        $dish_of_class = new Dish();
+        $dish_of_class -> init_from_arr($dish);
+        array_push($GLOBALS["dishes"], $dish_of_class);
+    }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +47,10 @@
                         <?php include 'search.php'; ?>
                     </div>
                     <div id="dish-list-container" class="col">
-                        <?php include 'courseList.php' ?>
+                        <?php
+                        getDishes();
+                        include 'courseList.php';
+                        ?>
                     </div>
                 </div>
                 <div class="row">

@@ -50,7 +50,7 @@ class Dish {
             $db_single['name'],
             $db_single['price'],
             $db_single['description'],
-            $db_single['img'],
+            $db_single['photo'],
             $db_single['category'],
             $db_single['calorie'],
             $db_single['vegetarian'],

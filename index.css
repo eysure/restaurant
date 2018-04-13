@@ -267,17 +267,17 @@ div#search-bar-container.col-2 {
     box-shadow: 0 0 16px #dddddd;
     cursor: pointer;
 }
-@media (max-width: 1340px){
+@media (max-width: 1300px){
     #dish-list {
         grid: auto / minmax(100px,600px);
     }
 }
-@media (min-width:1340px) and (max-width: 1740px){
+@media (min-width:1300px) and (max-width: 1600px){
     #dish-list {
         grid: auto / minmax(300px,600px) minmax(300px,600px);
     }
 }
-@media (min-width:1740px) {
+@media (min-width:1600px) {
     #dish-list {
         grid: auto / minmax(300px,600px) minmax(300px,600px) minmax(300px,600px);
     }
