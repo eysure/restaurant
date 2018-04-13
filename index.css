@@ -25,7 +25,7 @@ div#navbar-row {
     margin: 0;
 }
 .navbar {
-    background: #240201;
+    background: rgba(36, 2, 1, 0.7);;
 }
 div#footer-container {
     padding: 0;
@@ -172,18 +172,18 @@ form#login-form {
 
 /* Drawer use */
 #cart-view {
-    width: 400px;
+    width: 300px;
     position: fixed;
     right: 0;
     height: 100vh;
 }
 #cart-view.active {
-    box-shadow: 0 0 0px grey;
-    margin-right: -400px;
+    box-shadow: 0 0 0 grey;
+    margin-right: -300px;
 }
 
 #index-view {
-    width: calc(100% - 400px);
+    width: calc(100% - 300px);
     min-height: 100vh;
     position: absolute;
     left: 0;
@@ -255,14 +255,14 @@ div#search-bar-container.col-2 {
 }
 .dish-card {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 8px;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    margin: 16px;
 
     background-color: #FDEFDC;
-    border: 1px solid #dddddd;
+    border: 1px solid #240201;
     border-radius: 4px;
-    transition: all 0.5s;
+    transition: all 0.3s;
     min-height: 200px;
 
     font-size: 16px;
@@ -270,7 +270,8 @@ div#search-bar-container.col-2 {
 
 }
 .dish-card:hover {
-    background-: #fcfcfc;
+    margin: 12px;
+    border: 0;
     box-shadow: 0 0 16px #dddddd;
     cursor: pointer;
 }

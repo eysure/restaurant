@@ -9,27 +9,78 @@
 
 <div id="dish-list">
     <?php
-    include 'course.php';
     foreach($GLOBALS["dishes"] as $dish) {
         echo "
-            <div class=\"card dish-card\" data-toggle=\"modal\" data-target=\"#course\">
+        <div class=\"card dish-card\" data-toggle=\"modal\" data-target=\"#course_detail\" data-id=\"".$dish->id."\">
             <img class=\"card-img-top\" src=\"".$dish->img."\" alt=\"food picture\">
             <div class=\"card-body\">
-            <div class=\"row\">
-            <div class=\"col-sm-8 my-auto\">
                 <h4 class=\"card-title\">".$dish->name."</h4>
-                <p class=\"card-text text-danger\">Today's special!</p>
                         <strong>$</strong>
                         <strong>".$dish->price."</strong>
-                        <small>".$dish->img."</small>
-                    </div>
-                </div>
             </div>
         </div>
         ";
     }
     ?>
 </div>
+
+<div class="modal" id="course_detail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row mb-4">
+                        <div class="col">
+                            <img id="dish-img" src="#" alt="food picture">
+                        </div>
+
+                        <div class="col">
+                            <h5 id="dish-name" class="modal-title"></h5>
+                            <p id="dish-description"></p>
+                            <div class="row mb-4">
+                                <strong>$</strong>
+                                <strong id="dish-price"></strong>
+                            </div>
+
+                            <div class="row justify-content-start">
+                                <div class="input-group p-0 col-9">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-danger btn-number" type="button" data-type="minus" data-field="quant[2]">
+                                            <h4>-</h4>
+                                        </button>
+                                    </span>
+                                    <input type="text" name="quant[2]" class="form-control input-number text-center" value="1" min="1" max="10">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success btn-number" type="button" data-type="plus" data-field="quant[2]">
+                                            <h4>+</h4>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary btn-block">Add to bag</button>
+                        </div>
+
+                        <div class="col">
+                            <button class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="quantity.js"></script>
 
 <!-- PAGINATION -->
 <nav>

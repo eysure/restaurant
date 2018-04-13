@@ -19,13 +19,6 @@ if (typeof(signUpValidation) === "undefined")signUpValidation = {
 };
 
 $(document).ready(function() {
-    // DEBUG
-    $('body').on('keydown',function( event ) {
-        if (event.which === 120) {
-            debug();
-        }
-    });
-
     // AUTO FOCUS
     $('#loginModal')
         .on('shown.bs.modal', function () {

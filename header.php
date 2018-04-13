@@ -28,7 +28,7 @@ if(isset($_COOKIE['cart'])){
 	    			<a class="nav-link" href="./index.php">Restaurant Name<span class="sr-only">(current)</span></a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a class="nav-link" href="#">Menu</a>
+	    			<a id="navbar-menu" class="nav-link" href="#">Menu</a>
 	    		</li>
 	    		<li class="nav-item">
 	    			<a class="nav-link" href="#footer-container">Location and Hours</a>

@@ -1,32 +1,11 @@
-<?php
-session_start();
-$GLOBALS["dishes"] = [];
-/**
- * Get dishes from database and convert to object array
- */
-function getDishes() {
-    include 'Dish.php';
-    $criStr = 'true';
-    $con = getConnection();
-    $query = "SELECT * FROM dish WHERE $criStr";
-    $result = mysqli_query($con,$query);
-    $dish_arr = mysqli_fetch_all($result,MYSQLI_ASSOC);
-
-    # Establish dishes data
-    foreach ($dish_arr as $dish) {
-        $dish_of_class = new Dish();
-        $dish_of_class -> init_from_arr($dish);
-        array_push($GLOBALS["dishes"], $dish_of_class);
-    }
-}
-
-?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include 'head.php' ?>
     <title>Restaurant</title>
+    <script src="index.js"></script>
 </head>
 <body>
 <!-- Header(Navigation bar) -->
@@ -47,10 +26,7 @@ function getDishes() {
                         <?php include 'search.php'; ?>
                     </div>
                     <div id="dish-list-container" class="col">
-                        <?php
-                        getDishes();
-                        include 'courseList.php';
-                        ?>
+                        <?php include 'courseList.php'; ?>
                     </div>
                 </div>
                 <div class="row">
