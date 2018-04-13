@@ -12,7 +12,7 @@
     <div id="searchForm">
         <form class="form-inline">
             <input id="searchInput" class="form-control" type="search" placeholder="Search..." aria-label="Search">
-            <span id="searchButton"><i id="searchIcon" class="material-icons">search</i></span>
+            <i id="searchIcon" class="material-icons btn">search</i>
         </form>
         <br>
     </div>
