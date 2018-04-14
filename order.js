@@ -8,13 +8,13 @@ $(document).ready(function() {
         },
         url: 'orderCtrl.php',
         success: function(res) {
-            receive(res);
+            order_receive(res);
         },
         timeout: 5000
     });
 });
 
-function receive(res) {
+function order_receive(res) {
     try {
         res = JSON.parse(res);
     } catch(err) {
@@ -46,13 +46,16 @@ function showOrderCard(orders){
                 break;
         }
         $("#order-list").append(
-            "<div class='card dish-card' data-id='"+order['order_id']+"'>\n" +
-            "   <h1>Order Number: "+order['order_id']+"</h1>\n" +
+            "<div class='card dish-card'>\n" +
+            "    <h1>Dish: "+order['dish_id']+"</h1>\n" +
+            "    <h1>Quantity: "+order['dish_quantity']+"</h1>\n" +
+            "</div>"
+            /**"   <h1>Order Number: "+order['order_id']+"</h1>\n" +
             "   <h3>Built Time: "+order['built_time']+"</h3>\n" +
             "   <h3>Message: "+order['user_message']+"</h3>\n" +
             "   <h3>Tip: "+order['tip']+"</h3>\n" +
             "   <h3>Delivery: "+s+"</h3>\n" +
-            "</div>"
+            "</div>"**/
         );
     }
 }
