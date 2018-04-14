@@ -69,15 +69,34 @@ function signUpDB($username,$pwd,$email,$mobile,$first_name,$last_name) {
 }
 
 /**
- * Get dishes from DB
- * @param null $criteria: Give criteria as JSON
- * @return array|null: all dishes
+ * Database - Add dish to cart
+ * @param $dish_id: id of the dish
+ * @param $quantity: quantity of the dish want to add, 0 or negative means delete this dish
+ * @param $user_id: user id in session
+ * @return array: return the updated array of cart [{dish_id:quantity}...]
  */
-function getDishesDB($criteria=null) {
-    if(!$criteria)$criStr = 'true';
-    else $criStr = implode(" AND ",$criteria);
+function addToCartDB($dish_id, $quantity, $user_id) {
     $con = getConnection();
-    $query = "SELECT * FROM dish WHERE $criStr";
-    $result = mysqli_query($con,$query);
-    return mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+    // First, Execute the add, update or delete sql
+    if($quantity<0) $q1 = "DELETE FROM cart where user_id=$user_id and dish_id=$dish_id";
+    else $q1 = "INSERT INTO cart(user_id, dish_id, dish_qty) VALUES($user_id, $dish_id, $quantity) ON DUPLICATE KEY UPDATE user_id=$user_id, dish_id=$dish_id, dish_qty=$quantity";
+    mysqli_query($con, $q1);
+
+    // Then, get the update cart array
+    return getCartDB($user_id);
+}
+
+/**
+ * Database - Get cart array of specific user
+ * @param $user_id: user id in session
+ * @return array: return the array of cart [{dish_id:quantity}...]
+ */
+function getCartDB($user_id) {
+    $cart_item = [];
+    $con = getConnection();
+    $q = "SELECT dish_id,dish_qty FROM cart WHERE user_id=$user_id";
+    $r = mysqli_query($con, $q);
+    while($row = mysqli_fetch_assoc($r)) $cart_item[$row['dish_id']] = $row['dish_qty'];
+    return $cart_item;
 }

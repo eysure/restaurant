@@ -222,13 +222,18 @@ div#cart-list {
 }
 
 div.cart-item {
-    padding: 16px;
+    padding: 8px;
     border-bottom: 1px solid grey;
     background: #eeeeee;
     transition: 0.3s;
 }
 div.cart-item:hover {
     background: #ffffff;
+}
+
+img.img-tn {
+    max-width: 64px;
+    border-radius: 4px;
 }
 
 /* ---------------------------------------------------

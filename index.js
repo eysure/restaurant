@@ -1,4 +1,5 @@
 let dishes = null;
+let cart = null;
 
 $(document).ready(function() {
 
@@ -31,11 +32,13 @@ $(document).ready(function() {
         $('#dish-description').text(thisDish['description']);
         $('#dish-price').text(thisDish['price']);
 
+        let counter = $('#dish-quantity');
+        counter.val(1);                                         // Reset the quantity counter
+
+
         // Add to cart
         $('#add-to-cart').on('click', function () {
-            let counter = $('#dish-quantity');
             addToCart(thisDish,counter.val());
-            counter.val(1);                                     // Reset the quantity counter
             course_detail.modal('hide');                        // Close the modal
             controlCartView(1);                                 // Open the cart view
         });
@@ -50,6 +53,17 @@ $(document).ready(function() {
         type: 'POST',
         data: {
             'action': 'getDishes'
+        },
+        url: 'dishCtrl.php',
+        success: function(res) {
+            receive(res);
+        },
+        timeout: 5000
+    });
+    $.ajax({
+        type: 'POST',
+        data: {
+            'action': 'getCart'
         },
         url: 'dishCtrl.php',
         success: function(res) {
@@ -73,6 +87,13 @@ function receive(res) {
             showDishCard();
             break;
         }
+        case 'getCart': {
+            cart = res['data'];
+            showCart();
+            break;
+        }
+        case 'addToCart': addToCart_res(res); break;
+        default: break;
     }
 }
 
@@ -110,9 +131,51 @@ function controlCartView(mode=2) {
 }
 
 function addToCart(dish, quantity) {
-    // Debug
+    // TODO: Debug
     console.log(quantity+" "+dish['name']+" add to cart!");
-    $('div#cart-list').append(
-        "<div class='cart-item'>"+dish['name']+" x "+quantity+"</div>"
-    );
+
+    $.ajax({
+        type: 'POST',
+        data: {
+            'action': 'addToCart',
+            'dish': dish['id'],
+            'quantity': quantity
+        },
+        url: 'dishCtrl.php',
+        success: function(res) {
+            receive(res);
+        },
+        timeout: 5000
+    });
+}
+
+function addToCart_res(res) {
+    // TODO: Debug
+    console.log(res);
+    if(!res['result']) {
+        switch (res['reason']) {
+            case 1: alert("Sorry, you need to login before order."); break;
+            default: alert("Sorry, add failed. And we don't know why.");
+        }
+    }
+    else {
+        cart = res["cart"];
+        showCart();
+    }
+}
+
+function showCart() {
+    let cartList = $('div#cart-list');
+    cartList.empty();
+    $.each(cart,function(dish_id ,quantity) {
+        let thisDish = null;
+        for (let dish of dishes) {
+            if(dish['id'] === dish_id.toString()) {
+                thisDish = dish;
+                console.log(thisDish);
+                break;
+            }
+        }
+        cartList.append("<div class='cart-item'><img class='img-tn' src='"+thisDish['photo']+"'>"+thisDish['name']+" x "+quantity+"</div>");
+    });
 }
