@@ -165,70 +165,72 @@ function addToCart_res(res) {
 
 function updateCart() {
     let cartList = $('div#cart-list');
-    if(Object.keys(cart).length>0) cartList.empty();
-    $.each(cart,function(dish_id ,quantity) {
-        let thisDish = getDishByID(dish_id);
-        cartList.append(
-            "<div class='cart-item'>" +
-            "   <div class='row' style='align-items: center'>" +
-            "       <div class='col-3'>" +
-            "           <img class='ci-img' src='"+thisDish['photo']+"'>" +
-            "       </div>" +
-            "       <div class='col'>" +
-            "           <div class='ci-first-line d-flex justify-content-between'>" +
-            "               <strong>"+thisDish['name']+" </strong>"+
-            "           </div>" +
-            "           <div class='ci-second-line d-flex justify-content-between'>" +
-            "               <div id='ci-price'>$ "+thisDish['price']+"</div>"+
-            "               <div>" +
-            "                   <div data-id='"+thisDish['id']+"' class='ci-counter input-group input-group-sm'>"+
-            "                       <div class='input-group-prepend'>" +
-            "                           <button class='btn btn-outline-secondary ci-btn btn-dec' style='line-height: 0'>-</button>" +
-            "                       </div>" +
-            "                       <input class='ci-counter-input input-group-text' value='"+quantity+"' type='text'>" +
-            "                       <div class='input-group-append'>" +
-            "                           <button class='btn btn-outline-secondary ci-btn btn-add' style='line-height: 0'>+</button>" +
-            "                       </div>" +
-            "                   </div>" +
-            "               </div>" +
-            "           </div>" +
-            "       </div>" +
-            "   </div>" +
-            "</div>"
-        );
-
-    });
-
-    $('div.ci-counter').each(function() {
-        let ctrlPanel = $(this);
-        let decBtn = ctrlPanel.find("button.btn-dec");
-        let counter = ctrlPanel.find("input");
-        let addBtn = ctrlPanel.find("button.btn-add");
-        let dishID = ctrlPanel.data("id");
-        let thisDish = getDishByID(dishID);
-
-        if(counter.val()==='1') decBtn.addClass("ci-btn-delete").html('&times;');
-        else decBtn.css("background","transparent").html("-");
-
-        counter.on("change", function() {
-            if(isNaN(parseInt(counter.val()))) {
-                alert("Please input number");
-                updateCart();
-            } else {
-                console.log(thisDish['name']+" change to "+parseInt(counter.val()));
-                cartItemQuantityChange(dishID, counter.val());
-            }
+    cartList.empty();
+    if(Object.keys(cart).length===0)
+        cartList.append("<div class='cart-warning'><i class='material-icons'>warning</i><br>No items in your cart</div>");
+    else {
+        $.each(cart,function(dish_id ,quantity) {
+            let thisDish = getDishByID(dish_id);
+            cartList.append(
+                "<div class='cart-item'>" +
+                "   <div class='row' style='align-items: center'>" +
+                "       <div class='col-3'>" +
+                "           <img class='ci-img' src='"+thisDish['photo']+"'>" +
+                "       </div>" +
+                "       <div class='col'>" +
+                "           <div class='ci-first-line d-flex justify-content-between'>" +
+                "               <strong>"+thisDish['name']+" </strong>"+
+                "           </div>" +
+                "           <div class='ci-second-line d-flex justify-content-between'>" +
+                "               <div id='ci-price'>$ "+thisDish['price']+"</div>"+
+                "               <div>" +
+                "                   <div data-id='"+thisDish['id']+"' class='ci-counter input-group input-group-sm'>"+
+                "                       <div class='input-group-prepend'>" +
+                "                           <button class='btn btn-outline-secondary ci-btn btn-dec' style='line-height: 0'>-</button>" +
+                "                       </div>" +
+                "                       <input class='ci-counter-input input-group-text' value='"+quantity+"' type='text'>" +
+                "                       <div class='input-group-append'>" +
+                "                           <button class='btn btn-outline-secondary ci-btn btn-add' style='line-height: 0'>+</button>" +
+                "                       </div>" +
+                "                   </div>" +
+                "               </div>" +
+                "           </div>" +
+                "       </div>" +
+                "   </div>" +
+                "</div>"
+            );
         });
-        decBtn.on("click", function () {
-            console.log(thisDish['name']+" change to "+counter.val());
-            cartItemQuantityChange(dishID, parseInt(counter.val())-1);
-        });
-        addBtn.on("click", function () {
-            console.log(thisDish['name']+" change to "+counter.val());
-            cartItemQuantityChange(dishID, parseInt(counter.val())+1);
-        });
-    });
 
+        $('div.ci-counter').each(function() {
+            let ctrlPanel = $(this);
+            let decBtn = ctrlPanel.find("button.btn-dec");
+            let counter = ctrlPanel.find("input");
+            let addBtn = ctrlPanel.find("button.btn-add");
+            let dishID = ctrlPanel.data("id");
+            let thisDish = getDishByID(dishID);
+
+            if(counter.val()==='1') decBtn.addClass("ci-btn-delete").html('&times;');
+            else decBtn.css("background","transparent").html("-");
+
+            counter.on("change", function() {
+                if(isNaN(parseInt(counter.val()))) {
+                    alert("Please input number");
+                    updateCart();
+                } else {
+                    console.log(thisDish['name']+" change to "+parseInt(counter.val()));
+                    cartItemQuantityChange(dishID, counter.val());
+                }
+            });
+            decBtn.on("click", function () {
+                console.log(thisDish['name']+" change to "+counter.val());
+                cartItemQuantityChange(dishID, parseInt(counter.val())-1);
+            });
+            addBtn.on("click", function () {
+                console.log(thisDish['name']+" change to "+counter.val());
+                cartItemQuantityChange(dishID, parseInt(counter.val())+1);
+            });
+        });
+    }
 }
 
 function cartItemQuantityChange(dishID, quantity) {
