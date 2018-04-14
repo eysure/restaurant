@@ -17,13 +17,7 @@ $(document).ready(function() {
         let card = $(event.relatedTarget);                    // Button that triggered the modal
         let id = card.data('id');                             // Extract info from data-* attributes
 
-        let thisDish = null;
-        for (let dish of dishes) {
-            if(dish['id'] === id.toString()) {
-                thisDish = dish;
-                break;
-            }
-        }
+        let thisDish = getDishByID(id);
 
         // Inflate the modal
         // TODO: Add the admin mode there
@@ -34,7 +28,6 @@ $(document).ready(function() {
 
         let counter = $('#dish-quantity');
         counter.val(1);                                         // Reset the quantity counter
-
 
         // Add to cart
         $('#add-to-cart').on('click', function () {
@@ -60,18 +53,6 @@ $(document).ready(function() {
         },
         timeout: 5000
     });
-    $.ajax({
-        type: 'POST',
-        data: {
-            'action': 'getCart'
-        },
-        url: 'dishCtrl.php',
-        success: function(res) {
-            receive(res);
-        },
-        timeout: 5000
-    });
-
 });
 
 function receive(res) {
@@ -89,7 +70,7 @@ function receive(res) {
         }
         case 'getCart': {
             cart = res['data'];
-            showCart();
+            if(cart!==null) updateCart();
             break;
         }
         case 'addToCart': addToCart_res(res); break;
@@ -118,6 +99,19 @@ function showDishCard(dishes) {
             "            </div>\n" +
             "        </div>");
     }
+
+    // Request Cart
+    $.ajax({
+        type: 'POST',
+        data: {
+            'action': 'getCart'
+        },
+        url: 'dishCtrl.php',
+        success: function(res) {
+            receive(res);
+        },
+        timeout: 5000
+    });
 }
 
 /**
@@ -135,8 +129,11 @@ function controlCartView(mode=2) {
 }
 
 function addToCart(dish, quantity) {
-    // TODO: Debug
-    console.log(quantity+" "+dish['name']+" add to cart!");
+    // Get the quantity already in cart, add them together
+    if(cart) {
+        let dishOldQuantity = cart[dish['id']];
+        if(dishOldQuantity) quantity = parseInt(quantity) + parseInt(dishOldQuantity);
+    }
 
     $.ajax({
         type: 'POST',
@@ -154,32 +151,105 @@ function addToCart(dish, quantity) {
 }
 
 function addToCart_res(res) {
-    // TODO: Debug
-    console.log(res);
     if(!res['result']) {
         switch (res['reason']) {
             case 1: alert("Sorry, you need to login before order."); break;
-            default: alert("Sorry, add failed. And we don't know why.");
+            default: alert("Sorry, add failed. And we don't know why."); break;
         }
     }
     else {
         cart = res["cart"];
-        showCart();
+        updateCart();
     }
 }
 
-function showCart() {
+function updateCart() {
     let cartList = $('div#cart-list');
-    cartList.empty();
+    if(Object.keys(cart).length>0) cartList.empty();
     $.each(cart,function(dish_id ,quantity) {
-        let thisDish = null;
-        for (let dish of dishes) {
-            if(dish['id'] === dish_id.toString()) {
-                thisDish = dish;
-                console.log(thisDish);
-                break;
-            }
-        }
-        cartList.append("<div class='cart-item'><img class='img-tn' src='"+thisDish['photo']+"'>"+thisDish['name']+" x "+quantity+"</div>");
+        let thisDish = getDishByID(dish_id);
+        cartList.append(
+            "<div class='cart-item'>" +
+            "   <div class='row' style='align-items: center'>" +
+            "       <div class='col-3'>" +
+            "           <img class='ci-img' src='"+thisDish['photo']+"'>" +
+            "       </div>" +
+            "       <div class='col'>" +
+            "           <div class='ci-first-line d-flex justify-content-between'>" +
+            "               <strong>"+thisDish['name']+" </strong>"+
+            "           </div>" +
+            "           <div class='ci-second-line d-flex justify-content-between'>" +
+            "               <div id='ci-price'>$ "+thisDish['price']+"</div>"+
+            "               <div>" +
+            "                   <div data-id='"+thisDish['id']+"' class='ci-counter input-group input-group-sm'>"+
+            "                       <div class='input-group-prepend'>" +
+            "                           <button class='btn btn-outline-secondary ci-btn btn-dec' style='line-height: 0'>-</button>" +
+            "                       </div>" +
+            "                       <input class='ci-counter-input input-group-text' value='"+quantity+"' type='text'>" +
+            "                       <div class='input-group-append'>" +
+            "                           <button class='btn btn-outline-secondary ci-btn btn-add' style='line-height: 0'>+</button>" +
+            "                       </div>" +
+            "                   </div>" +
+            "               </div>" +
+            "           </div>" +
+            "       </div>" +
+            "   </div>" +
+            "</div>"
+        );
+
     });
+
+    $('div.ci-counter').each(function() {
+        let ctrlPanel = $(this);
+        let decBtn = ctrlPanel.find("button.btn-dec");
+        let counter = ctrlPanel.find("input");
+        let addBtn = ctrlPanel.find("button.btn-add");
+        let dishID = ctrlPanel.data("id");
+        let thisDish = getDishByID(dishID);
+
+        if(counter.val()==='1') decBtn.addClass("ci-btn-delete").html('&times;');
+        else decBtn.css("background","transparent").html("-");
+
+        counter.on("change", function() {
+            if(isNaN(parseInt(counter.val()))) {
+                alert("Please input number");
+                updateCart();
+            } else {
+                console.log(thisDish['name']+" change to "+parseInt(counter.val()));
+                cartItemQuantityChange(dishID, counter.val());
+            }
+        });
+        decBtn.on("click", function () {
+            console.log(thisDish['name']+" change to "+counter.val());
+            cartItemQuantityChange(dishID, parseInt(counter.val())-1);
+        });
+        addBtn.on("click", function () {
+            console.log(thisDish['name']+" change to "+counter.val());
+            cartItemQuantityChange(dishID, parseInt(counter.val())+1);
+        });
+    });
+
+}
+
+function cartItemQuantityChange(dishID, quantity) {
+    $.ajax({
+        type: 'POST',
+        data: {
+            'action': 'addToCart',
+            'dish': dishID,
+            'quantity': quantity
+        },
+        url: 'dishCtrl.php',
+        success: function(res) {
+            receive(res);
+        },
+        timeout: 5000
+    });
+}
+
+function getDishByID(dishID) {
+    for (let dish of dishes) {
+        if(dish['id'] === dishID.toString()) return dish;
+    }
+    return null;
 }

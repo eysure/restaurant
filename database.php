@@ -79,7 +79,7 @@ function addToCartDB($dish_id, $quantity, $user_id) {
     $con = getConnection();
 
     // First, Execute the add, update or delete sql
-    if($quantity<0) $q1 = "DELETE FROM cart where user_id=$user_id and dish_id=$dish_id";
+    if($quantity<=0) $q1 = "DELETE FROM cart where user_id=$user_id and dish_id=$dish_id";
     else $q1 = "INSERT INTO cart(user_id, dish_id, dish_qty) VALUES($user_id, $dish_id, $quantity) ON DUPLICATE KEY UPDATE user_id=$user_id, dish_id=$dish_id, dish_qty=$quantity";
     mysqli_query($con, $q1);
 
