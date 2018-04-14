@@ -84,7 +84,7 @@ function receive(res) {
     switch (res['action']) {
         case 'getDishes': {
             dishes = res['data'];
-            showDishCard();
+            showDishCard(dishes);
             break;
         }
         case 'getCart': {
@@ -97,12 +97,16 @@ function receive(res) {
     }
 }
 
+function emptyDishCard() {
+    $("#dish-list").empty();
+}
+
 /**
  * Show all cards of dishes to the dish list
  * TODO: Need to be changed to pagination
  * TODO: Need to merge search
  */
-function showDishCard() {
+function showDishCard(dishes) {
     for (let dish of dishes) {
         $("#dish-list").append(
             "        <div class='card dish-card' data-toggle='modal' data-target='#course_detail' data-id='"+dish['id']+"'>\n" +

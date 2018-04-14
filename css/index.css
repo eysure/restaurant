@@ -268,8 +268,17 @@ div#search-bar-container.col-2 {
     background-color: #850523;
 }
 
+#searchIcon:hover {
+    filter: brightness(60%);
+}
+
 .cleandot {
     padding-left: 10px;
+}
+
+.checkbox:hover {
+    cursor: pointer;
+    filter: brightness(70%);
 }
 
 /* ---------------------------------------------------

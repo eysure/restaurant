@@ -5,7 +5,8 @@
 <head>
     <?php include 'head.php' ?>
     <title>Restaurant</title>
-    <script src="index.js"></script>
+    <script src="javascript/index.js"></script>
+    <script src="javascript/search.js"></script>
 </head>
 <body>
 <!-- Header(Navigation bar) -->

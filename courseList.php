@@ -65,7 +65,7 @@
     </div>
 </div>
 
-<script src="quantity.js"></script>
+<script src="javascript/quantity.js"></script>
 
 <!-- PAGINATION -->
 <nav>
