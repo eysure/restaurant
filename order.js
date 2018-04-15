@@ -36,12 +36,12 @@ function order_receive(res) {
 
     // Show orders to front-end
     switch (res['action']) {
-        case 'getOrders': showOrderCard(res['data']); break;
+        case 'getOrders': showOrderCard(res['data']['arr1'],res['data']['arr2']); break;
         default: break;
     }
 }
 
-function showOrderCard(orders){
+function showOrderCard(orders, dishes){
     for (let order of orders) {
         //Processing status
         var s = null;
@@ -55,20 +55,29 @@ function showOrderCard(orders){
             default:
                 break;
         }
-        //tmp.order_id, tmp.dish_id, tmp.dish_quantity, tmp.name, o.user_id, o.built_time, o.user_message, o.tip, o.processed_status, o.subtotal, o.delivery_fee
+
         $("#order-list").append(
-            "<div class='card dish-card'>\n" +
-            "    <h1>Order Number: "+order['order_id']+"</h1>\n" +
-            //"    <h1>Dish ID: "+order['dish_id']+"</h1>\n" +
-            //"    <h1>Dish Quantity: "+order['dish_quantity']+"</h1>\n" +
-            //"    <h1>Dish Name: "+order['name']+"</h1>\n" +
-            "    <h1>Built Time: "+order['built_time']+"</h1>\n" +
-            "    <h1>Message: "+order['user_message']+"</h1>\n" +
-            "    <h1>Tip: "+order['tip']+"</h1>\n" +
-            "    <h1>Order Status: "+s+"</h1>\n" +
-            "    <h1>Subtotal: "+order['subtotal']+"</h1>\n" +
-            "    <h1>Delivery Fee: "+order['delivery_fee']+"</h1>\n" +
+            "<div class='card dish-card' id='order"+order['order_id']+"'>\n" +
+            "    <div>\n" +
+            "       <h1>Order Number: "+order['order_id']+"</h1>\n" +
+            "       <h1>Built Time: "+order['built_time']+"</h1>\n" +
+            "       <h2>Message: "+order['user_message']+"</h2>\n" +
+            "       <h2>Tip: "+order['tip']+"</h2>\n" +
+            "       <h2>Order Status: "+s+"</h2>\n" +
+            "       <h2>Subtotal: "+order['subtotal']+"</h2>\n" +
+            "       <h2>Delivery Fee: "+order['delivery_fee']+"</h2>\n" +
+            "    </div>" +
             "</div>"
         );
+        for (let dish of dishes) {
+            if(dish['order_id'] == order['order_id']){
+                $("#order"+order['order_id']).append(
+                    "<div>\n" +
+                    "    <h4>Dish Name: "+dish['name']+"</h4>\n" +
+                    "    <h4>Dish Quantity: "+dish['dish_quantity']+"</h4>\n" +
+                    "</div>"
+                );
+            }
+        }
     }
 }
