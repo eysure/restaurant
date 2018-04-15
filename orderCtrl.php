@@ -29,27 +29,7 @@ else {
 function getOrders() {
     $con = getConnection();
     $u_id = $_SESSION['user_id'];
-
-    /**
-    $query =
-            "SELECT tmp.order_id, tmp.dish_id, tmp.dish_quantity, tmp.name, o.built_time, o.user_message, o.tip, o.processed_status, o.subtotal, o.delivery_fee
-            FROM restaurant.order AS o
-            RIGHT JOIN
-                (
-                    SELECT * 
-                    FROM restaurant.dish AS d 
-                    RIGHT JOIN restaurant.ordered_dish_qty AS odq
-                    ON d.id = odq.dish_id
-                ) AS tmp
-            ON tmp.order_id = o.order_id
-            WHERE o.user_id = $u_id";
-
-    $result = mysqli_query($con,$query);
-    while($row = mysqli_fetch_assoc($result)){
-        array_push($all_info, $row);
-    }
-    **/
-
+    
     $all_info = [];
     $order_id = [];
     $dish_detail = [];
