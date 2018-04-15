@@ -55,17 +55,20 @@ function showOrderCard(orders){
             default:
                 break;
         }
+        //tmp.order_id, tmp.dish_id, tmp.dish_quantity, tmp.name, o.user_id, o.built_time, o.user_message, o.tip, o.processed_status, o.subtotal, o.delivery_fee
         $("#order-list").append(
             "<div class='card dish-card'>\n" +
-            "    <h1>Dish: "+order['dish_id']+"</h1>\n" +
-            "    <h1>Quantity: "+order['dish_quantity']+"</h1>\n" +
+            "    <h1>Order Number: "+order['order_id']+"</h1>\n" +
+            //"    <h1>Dish ID: "+order['dish_id']+"</h1>\n" +
+            //"    <h1>Dish Quantity: "+order['dish_quantity']+"</h1>\n" +
+            //"    <h1>Dish Name: "+order['name']+"</h1>\n" +
+            "    <h1>Built Time: "+order['built_time']+"</h1>\n" +
+            "    <h1>Message: "+order['user_message']+"</h1>\n" +
+            "    <h1>Tip: "+order['tip']+"</h1>\n" +
+            "    <h1>Order Status: "+s+"</h1>\n" +
+            "    <h1>Subtotal: "+order['subtotal']+"</h1>\n" +
+            "    <h1>Delivery Fee: "+order['delivery_fee']+"</h1>\n" +
             "</div>"
-            /**"   <h1>Order Number: "+order['order_id']+"</h1>\n" +
-            "   <h3>Built Time: "+order['built_time']+"</h3>\n" +
-            "   <h3>Message: "+order['user_message']+"</h3>\n" +
-            "   <h3>Tip: "+order['tip']+"</h3>\n" +
-            "   <h3>Delivery: "+s+"</h3>\n" +
-            "</div>"**/
         );
     }
 }
