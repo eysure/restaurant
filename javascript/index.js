@@ -1,5 +1,6 @@
 let dishes = null;
 let cart = null;
+let tip = 2;
 
 $(document).ready(function() {
 
@@ -11,7 +12,7 @@ $(document).ready(function() {
         controlCartView();
     });
 
-    // Course detail ON/OFF
+    // Hook: Course detail ON/OFF
     let course_detail = $('#course_detail');
     course_detail.on('show.bs.modal', function (event) {
         let card = $(event.relatedTarget);                    // Button that triggered the modal
@@ -41,6 +42,45 @@ $(document).ready(function() {
         $('#add-to-cart').off('click');
     });
 
+    // Hook: Tip Button or customize
+    $('button.tip-opt').each(function () {
+        $(this).on('click', function () {
+            if(!$(this).hasClass('active')){
+                $('#cb-tip-x').val('');
+                $('.tip-opt').each(function () {
+                    $(this).removeClass('active');
+                });
+                $(this).addClass('active');
+                tip = $(this).data('tip');
+                updateCart();
+            }
+        });
+    });
+    $('#cb-tip-x').on('input', function () {
+        let tip_cus = parseFloat($(this).val());
+        if(isNaN(tip_cus) || tip_cus<0) {
+            $(this).val(null);
+            $('.tip-opt').each(function () {
+                $(this).removeClass('active');
+            });
+            $('#cb-tip-2').addClass('active');
+            tip = 2;
+        }
+        else {
+            $(this).addClass('active');
+            $('button.tip-opt').each(function () {
+                $(this).removeClass('active');
+            });
+            tip = tip_cus;
+        }
+        updateCart();
+    });
+
+    // Hook: Check-out Button
+    $('#checkout-btn').on('click',function () {
+        checkOut();
+    });
+
     // Require all dishes
     $.ajax({
         type: 'POST',
@@ -51,7 +91,11 @@ $(document).ready(function() {
         success: function(res) {
             receive(res);
         },
-        timeout: 5000
+        timeout: 5000,
+        error: function(request, status, err) {
+            if (status === "timeout") alert("Sorry, get dishes time out. Please check network connection.");
+            else console.log("error: " + request + status + err);
+        }
     });
 });
 
@@ -70,22 +114,18 @@ function receive(res) {
         }
         case 'getCart': {
             cart = res['data'];
-            if(cart!==null) updateCart();
+            updateCart();
             break;
         }
         case 'addToCart': addToCart_res(res); break;
+        case 'checkout': checkOut_res(res); break;
         default: break;
     }
-}
-
-function emptyDishCard() {
-    $("#dish-list").empty();
 }
 
 /**
  * Show all cards of dishes to the dish list
  * TODO: Need to be changed to pagination
- * TODO: Need to merge search
  */
 function showDishCard(dishes) {
     for (let dish of dishes) {
@@ -169,15 +209,26 @@ function updateCart() {
     let subtotal_span = $('#cb-subtotal');
     let deliver_fee_span = $('#cb-deliver-fee');
     let tax_span = $('#cb-tax');
+    let tip_span = $('#cb-tip');
     let total_span = $('#cb-total');
 
+    // Cart Initialize
     cartList.empty();
-    if(Object.keys(cart).length===0) {
+    subtotal_span.html("0.00");
+    deliver_fee_span.html("5.00");
+    tax_span.html("0.00");
+    total_span.html("0.00");
+
+    // When no item in cart, show warning and hide checkout section
+    if(!cart || Object.keys(cart).length===0) {
         check_out_container.hide();
         cartList.append("<div class='cart-warning'><i class='material-icons'>warning</i><br>No items in your cart</div>");
     }
     else {
         check_out_container.show();
+
+        // Show each cart item in cart list, compute subTotal
+        let subTotal = 0.00;
         $.each(cart,function(dish_id ,quantity) {
             let thisDish = getDishByID(dish_id);
             cartList.append(
@@ -208,10 +259,22 @@ function updateCart() {
                 "   </div>" +
                 "</div>"
             );
-
+            subTotal += parseFloat(thisDish['price']) * quantity;
         });
 
-        // Add item counter function
+        // Compute fees
+        let deliverFee = subTotal>=50?0.00:5.00;
+        let tax = 0.0625 * (subTotal + deliverFee);
+        let total = subTotal + deliverFee + tax + tip;
+
+        // update UI w/ currency format
+        subtotal_span.html(subTotal.toLocaleString('en-US', {style: 'currency',currency: 'USD'}));
+        deliver_fee_span.html(deliverFee.toLocaleString('en-US', {style: 'currency',currency: 'USD'}));
+        tax_span.html(tax.toLocaleString('en-US', {style: 'currency',currency: 'USD'}));
+        tip_span.html(tip.toLocaleString('en-US', {style: 'currency',currency: 'USD'}));
+        total_span.html(total.toLocaleString('en-US', {style: 'currency',currency: 'USD'}));
+
+        // Change item quantity in cart
         $('div.ci-counter').each(function() {
             let ctrlPanel = $(this);
             let decBtn = ctrlPanel.find("button.btn-dec");
@@ -219,16 +282,15 @@ function updateCart() {
             let addBtn = ctrlPanel.find("button.btn-add");
             let dishID = ctrlPanel.data("id");
 
+            // When item's quantity is 1, change the "-" to "x" to warning user
             if(counter.val()==='1')
                 decBtn.removeClass("btn-outline-secondary").addClass("btn-outline-danger").html('&times;');
-            else
-                decBtn.removeClass("btn-outline-danger").addClass("btn-outline-secondary").html("-");
+            else decBtn.removeClass("btn-outline-danger").addClass("btn-outline-secondary").html("-");
 
-            counter.on("change", function() {
-                if(isNaN(parseInt(counter.val()))) {
-                    alert("Please input number");
-                    updateCart();
-                } else cartItemQuantityChange(dishID, counter.val());
+            // Control the add & decrease function. (delete item when quantity below zero, this logic is at server-side)
+            counter.on("input", function() {
+                if(isNaN(parseInt(counter.val()))) updateCart();
+                else cartItemQuantityChange(dishID, counter.val());
             });
             decBtn.on("click", function () {
                 cartItemQuantityChange(dishID, parseInt(counter.val())-1);
@@ -261,4 +323,31 @@ function getDishByID(dishID) {
         if(dish['id'] === dishID.toString()) return dish;
     }
     return null;
+}
+
+function checkOut() {
+    // Check cart info
+    $.each(cart,function(dish_id ,quantity) {
+        if(!quantity || quantity<=0 || !tip || tip<0) {
+            console.log("Sorry, your cart or tip has some problem, please check before check out.");
+            return false;
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        data: {
+            'action': 'checkout',
+            'cart': cart,
+            'tip': tip,
+        },
+        url: 'orderCtrl.php',
+        success: function (res) {
+            receive(res);
+        },
+        timeout: 5000
+    });
+}
+
+function checkOut_res(res) {
+    console.log(res);
 }

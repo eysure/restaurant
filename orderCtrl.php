@@ -8,6 +8,15 @@
 include 'database.php';
 session_start();
 
+// Answer User call
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    switch ($_POST['action']) {
+        case 'checkout': checkout($_POST['cart'],$_POST['tip']); break;
+        default: break;
+    }
+}
+else header("Location: index.php");
+
 if (!isset($_SESSION['username'])) {
     // User does not log in
     echo json_encode((object)['action' => $_POST['action'], 'error' => 1]);
@@ -52,4 +61,9 @@ function getOrders() {
         }
     }
     return ((object)['arr1' => $all_info, 'arr2' => $dish_detail]);
+}
+
+function checkout($cart, $tip) {
+    
+    echo json_encode((object)['action' => 'checkout', 'error' => 0, 'meta-data'=>$_POST]);
 }

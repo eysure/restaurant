@@ -292,6 +292,30 @@ button.ci-btn {
     font-family: Menlo, monospace;
 }
 
+#tip-container {
+    align-items: center;
+}
+#tip-container strong {
+    padding-left: 4px;
+}
+.tip-opt:hover {
+    color: #6c757d;
+    background: #dddddd;
+}
+.tip-opt.active {
+    background: #6c757d;
+}
+
+#cb-tip-x {
+    width: 54px;
+    background: transparent;
+    border: 1px solid #6c757d;
+    transition: 0.3s;
+}
+#cb-tip-x.active {
+    color: #ffffff;
+    background: #6c757d;
+}
 /* ---------------------------------------------------
     Search & Filter Bar
 ----------------------------------------------------- */

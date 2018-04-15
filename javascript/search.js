@@ -8,7 +8,7 @@ $(document).ready(function() {
 // check filters
 function filter(input){
 
-    emptyDishCard();
+    $("#dish-list").empty();
 
     let dishesFiltered = [];
 
