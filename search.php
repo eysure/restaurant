@@ -37,20 +37,20 @@
     <div id="price">
         <h1>Price</h1>
         <ul class="cleandot">
-            <li><input class="checkbox" type="checkbox" name="five_down" onchange="filter(this)"> $5 ↓</li>
-            <li><input class="checkbox" type="checkbox" name="five_to_ten" onchange="filter(this)"> $5 - $10</li>
-            <li><input class="checkbox" type="checkbox" name="ten_to_twty" onchange="filter(this)"> $10 - $20</li>
-            <li><input class="checkbox" type="checkbox" name="twty_up" onchange="filter(this)"> $20 ↑</li>
+            <li><input class="checkbox" type="checkbox" name="five_down" low="0" high="5" onchange="filter(this)"> $4.99 ↓</li>
+            <li><input class="checkbox" type="checkbox" name="five_to_ten" low="5" high="10" onchange="filter(this)"> $5 - $9.99</li>
+            <li><input class="checkbox" type="checkbox" name="ten_to_twty" low="10" high="20" onchange="filter(this)"> $10 - $19.99</li>
+            <li><input class="checkbox" type="checkbox" name="twty_up" low="20" high="65535" onchange="filter(this)"> $20 ↑</li>
         </ul>
         <br>
     </div>
 
-    <div id="calory">
+    <div id="calorie">
         <h1>Calories</h1>
         <ul class="cleandot">
-            <li><input class="checkbox" type="checkbox" name="fivehd_down" onchange="filter(this)"> 500 calories ↓</li>
-            <li><input class="checkbox" type="checkbox" name="fivehd_to_tenhd" onchange="filter(this)"> 500 - 1000 calories</li>
-            <li><input class="checkbox" type="checkbox" name="ten_to_twty" onchange="filter(this)"> 1000 calories ↑</li>
+            <li><input class="checkbox" type="checkbox" name="fivehd_down" low="-1" high="500" onchange="filter(this)"> 500 cal. ↓</li>
+            <li><input class="checkbox" type="checkbox" name="fivehd_to_tenhd" low="500" high="1000" onchange="filter(this)"> 501 - 1000 cal.</li>
+            <li><input class="checkbox" type="checkbox" name="ten_to_twty" low="1000" high="65535" onchange="filter(this)"> 1001 cal. ↑</li>
         </ul>
         <br>
     </div>
@@ -58,7 +58,7 @@
     <div id="vegetarian">
         <h1>Vegetarian</h1>
         <ul class="cleandot">
-            <li><input class="box" type="checkbox" name="vege_or_not" onchange="filter(this)"> Show vegetarian dishes</li>
+            <li><input class="checkbox" type="checkbox" name="vege_or_not" onchange="filter(this)"> Show vegetarian food</li>
         </ul>
         <br>
     </div>
