@@ -59,8 +59,7 @@ function showOrderCard(orders, dishes){
         $("#order-list").append(
             "<div class='card dish-card' id='order"+order['order_id']+"'>\n" +
             "    <div>\n" +
-            "       <h1>Order Number: "+order['order_id']+"</h1>\n" +
-            "       <h1>Built Time: "+order['built_time']+"</h1>\n" +
+            "       <h2>Built Time: "+order['built_time']+"</h2>\n" +
             "       <h2>Message: "+order['user_message']+"</h2>\n" +
             "       <h2>Tip: "+order['tip']+"</h2>\n" +
             "       <h2>Order Status: "+s+"</h2>\n" +
@@ -73,8 +72,7 @@ function showOrderCard(orders, dishes){
             if(dish['order_id'] == order['order_id']){
                 $("#order"+order['order_id']).append(
                     "<div>\n" +
-                    "    <h4>Dish Name: "+dish['name']+"</h4>\n" +
-                    "    <h4>Dish Quantity: "+dish['dish_quantity']+"</h4>\n" +
+                    "    <h2>Dish: "+dish['name']+" *"+dish['dish_quantity']+"</h2>\n" +
                     "</div>"
                 );
             }

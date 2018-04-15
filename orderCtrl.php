@@ -29,7 +29,7 @@ else {
 function getOrders() {
     $con = getConnection();
     $u_id = $_SESSION['user_id'];
-    
+
     $all_info = [];
     $order_id = [];
     $dish_detail = [];
