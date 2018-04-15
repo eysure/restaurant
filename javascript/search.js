@@ -1,12 +1,36 @@
 
 $(document).ready(function() {
     $('#searchInput').on('input', function() {
-        let keyword = $(this).val();
-        console.log(keyword);
-
-
+        filter($(this));
     });
 });
+
+// check filters
+function filter(input){
+
+    emptyDishCard();
+
+    let dishesFiltered = [];
+
+    // add dishes in checked categories
+    checkCatStatus(dishesFiltered);
+
+    // remove dishes in unchecked price ranges
+    checkPriceStatus(dishesFiltered);
+
+    // remove dishes in unchecked calorie ranges
+    checkCalStatus(dishesFiltered);
+
+    // show vegetarian food only
+    checkVegStatus(dishesFiltered);
+
+    // filter against the keyword in search box
+    checkSearch(dishesFiltered);
+
+    // show filtered dishes
+    showDishCard(dishesFiltered);
+
+}
 
 function checkCatStatus(dishesFiltered){
 
@@ -59,8 +83,8 @@ function checkPriceStatus(dishesFiltered){
         } else {
             // filter out dishes in this price range
             let dishesRemoved = dishesFiltered.filter(function(dish) {
-                    let priceValue = dish['price'];
-                    return priceValue >= low && priceValue < high;
+                let priceValue = dish['price'];
+                return priceValue >= low && priceValue < high;
             });
 
             for (let elem of dishesRemoved) {
@@ -133,28 +157,36 @@ function checkVegStatus(dishesFiltered) {
 
 }
 
+function checkSearch(dishesFiltered) {
+    let keyword = $('#searchInput').val().toString().trim().toLowerCase();
 
-// check filters
-function filter(box){
+    if (keyword ==  "") {
+        // console.log("keyword is null.");
 
-    emptyDishCard();
+    } else {
+        // console.log("keyword is: " + keyword);
 
-    let dishesFiltered = [];
+        // filter out dishes not searched for
+        let dishesNotSearched = dishesFiltered.filter(function (dish) {
+            let keywordInName = isKeyword(keyword, dish['name']);
+            let keywordInDesc = isKeyword(keyword, dish['description']);
+            let keywordInCat = isKeyword(keyword, dish['category']);
+            return !keywordInName && !keywordInDesc && !keywordInCat;
+        });
 
-    // add dishes in checked categories
-    checkCatStatus(dishesFiltered);
-
-    // remove dishes in unchecked price ranges
-    checkPriceStatus(dishesFiltered);
-
-    // remove dishes in unchecked calorie ranges
-    checkCalStatus(dishesFiltered);
-
-    // show vegetarian food only
-    checkVegStatus(dishesFiltered);
-
-    // show filtered dishes
-    showDishCard(dishesFiltered);
-
+        for (let elem of dishesNotSearched) {
+            let index = dishesFiltered.indexOf(elem);
+            if (index >= 0) {
+                dishesFiltered.splice(index, 1);
+            }
+        }
+    }
 }
 
+function isKeyword(word, sentence) {
+    word = word.trim().toLowerCase();
+    sentence = sentence.toLowerCase();
+    let index = sentence.indexOf(word);
+    if (index < 0) return false;
+    else return true;
+}

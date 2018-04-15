@@ -312,20 +312,21 @@ div#search-bar-container.col-2 {
 
 #searchForm {
     height: 50px;
-    margin-top: 5px;
-    padding-left:5px;
+    margin: 17px 0px 8px 0px;
+    padding-left:10px;
 }
 
 #searchInput {
-    width: 148px;
+    width: 188px;
 }
 
 #searchIcon {
-    background-color: #850523;
+    /*background-color: #850523;*/
 }
 
 #searchIcon:hover {
-    filter: brightness(60%);
+    /*filter: brightness(60%);*/
+    /*cursor: default;*/
 }
 
 .cleandot {
