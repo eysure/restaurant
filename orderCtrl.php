@@ -10,13 +10,14 @@ session_start();
 
 if (!isset($_SESSION['username'])) {
     // User does not log in
-    header("Location: index.php");
+    echo json_encode((object)['action' => $_POST['action'], 'error' => 1]);
+    exit(0);
 }
 else {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         switch ($_POST['action']) {
             case 'getOrders':
-                echo json_encode((object)['action' => $_POST['action'], 'data' => getOrders()]);
+                echo json_encode((object)['action' => $_POST['action'], 'error' => 0, 'data' => getOrders()]);
                 break;
             default:
                 break;
@@ -28,22 +29,19 @@ else {
 function getOrders() {
     $con = getConnection();
     $all_info = [];
+    $u_id = $_SESSION['user_id'];
+
     //Query for order details
-    $id = $_SESSION['user_id'];
-    $query1 = "SELECT * FROM restaurant.order WHERE user_id = '$id'";
+    $query1 = "SELECT * FROM restaurant.order WHERE user_id=$u_id";
     $result1 = mysqli_query($con,$query1);
+
     $order_detail = [];
+    $order_id = [];
     while($row = mysqli_fetch_assoc($result1)){
         array_push($order_detail, $row);
+        array_push($order_id, $row['order_id']);
     }
 
-    //Query for dish quantity
-    $query2_1 = "SELECT order_id FROM restaurant.order WHERE user_id = '$id'";
-    $result2_1 = mysqli_query($con,$query2_1);
-    $order_id = [];
-    while($row = mysqli_fetch_assoc($result2_1)){
-        array_push($order_id, $row);
-    }
     $dish_qty = [];
     foreach($order_id as $oid){
         $query2_2 = "SELECT dish_id, dish_quantity FROM restaurant.ordered_dish_qty WHERE order_id = $oid";

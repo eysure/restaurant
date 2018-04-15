@@ -165,10 +165,19 @@ function addToCart_res(res) {
 
 function updateCart() {
     let cartList = $('div#cart-list');
+    let check_out_container = $('#checkout-container');
+    let subtotal_span = $('#cb-subtotal');
+    let deliver_fee_span = $('#cb-deliver-fee');
+    let tax_span = $('#cb-tax');
+    let total_span = $('#cb-total');
+
     cartList.empty();
-    if(Object.keys(cart).length===0)
+    if(Object.keys(cart).length===0) {
+        check_out_container.hide();
         cartList.append("<div class='cart-warning'><i class='material-icons'>warning</i><br>No items in your cart</div>");
+    }
     else {
+        check_out_container.show();
         $.each(cart,function(dish_id ,quantity) {
             let thisDish = getDishByID(dish_id);
             cartList.append(
@@ -199,34 +208,32 @@ function updateCart() {
                 "   </div>" +
                 "</div>"
             );
+
         });
 
+        // Add item counter function
         $('div.ci-counter').each(function() {
             let ctrlPanel = $(this);
             let decBtn = ctrlPanel.find("button.btn-dec");
             let counter = ctrlPanel.find("input");
             let addBtn = ctrlPanel.find("button.btn-add");
             let dishID = ctrlPanel.data("id");
-            let thisDish = getDishByID(dishID);
 
-            if(counter.val()==='1') decBtn.addClass("ci-btn-delete").html('&times;');
-            else decBtn.css("background","transparent").html("-");
+            if(counter.val()==='1')
+                decBtn.removeClass("btn-outline-secondary").addClass("btn-outline-danger").html('&times;');
+            else
+                decBtn.removeClass("btn-outline-danger").addClass("btn-outline-secondary").html("-");
 
             counter.on("change", function() {
                 if(isNaN(parseInt(counter.val()))) {
                     alert("Please input number");
                     updateCart();
-                } else {
-                    console.log(thisDish['name']+" change to "+parseInt(counter.val()));
-                    cartItemQuantityChange(dishID, counter.val());
-                }
+                } else cartItemQuantityChange(dishID, counter.val());
             });
             decBtn.on("click", function () {
-                console.log(thisDish['name']+" change to "+counter.val());
                 cartItemQuantityChange(dishID, parseInt(counter.val())-1);
             });
             addBtn.on("click", function () {
-                console.log(thisDish['name']+" change to "+counter.val());
                 cartItemQuantityChange(dishID, parseInt(counter.val())+1);
             });
         });

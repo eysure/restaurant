@@ -17,16 +17,26 @@ $(document).ready(function() {
 function order_receive(res) {
     try {
         res = JSON.parse(res);
+        console.log(res);
     } catch(err) {
-        alert(err);
-        alert(res);
+        console.error("JSON parse error");
+        console.log(err);
+        console.log(res);
     }
-    switch (res['action']) {
-        case 'getOrders': {
-            orders = res['data'];
-            showOrderCard(orders);
-            break;
+
+    // Checking if there is an error in server-side
+    switch (res['error']) {
+        case 1: {
+            alert("Please login to see your order history.");
+            window.location = "./index.php";
+            return;
         }
+        default: break;
+    }
+
+    // Show orders to front-end
+    switch (res['action']) {
+        case 'getOrders': showOrderCard(res['data']); break;
         default: break;
     }
 }
