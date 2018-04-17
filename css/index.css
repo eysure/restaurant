@@ -119,8 +119,21 @@ button.no-border {
     border: 0;
     border-bottom: 2px solid Grey;
     border-radius: 0;
+    background: transparent;
 }
 
+.lined {
+    color: grey;
+}
+
+label.lined {
+    font-size: 0.5em;
+    margin: 0;
+    color: grey;
+    font-weight: 500;
+    position: relative;
+    top: 8px;
+}
 .form-control.succeed, .form-control.lined.succeed:focus {
     border: 0;
     border-bottom: 2px solid #009869;
@@ -137,6 +150,7 @@ button.no-border {
     border: 0;
     border-bottom: 2px solid #027BFF;
     box-shadow: 0 4px 4px -3px rgba(2, 123, 255, 0.6);
+    background: transparent;
 }
 
 .badge.succeed {
@@ -224,21 +238,19 @@ form#login-form {
     margin-top: 1px;
 }
 #checkout-btn {
-    border-top: 1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
-    background: #efefef;
+    margin: 8px;
     padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: 0.3s;
 }
 #checkout-btn i {
     margin-right: 8px;
 }
 #checkout-btn:hover {
-    background: #ffffff;
+    color: white;
+    background: dodgerblue;
 }
 
 /* ---------------------------------------------------
@@ -315,6 +327,22 @@ button.ci-btn {
 #cb-tip-x.active {
     color: #ffffff;
     background: #6c757d;
+}
+
+#user-info-container {
+    display: none;
+    padding: 16px;
+    border: 2px dashed rgba(220,220,220,0.9);
+    box-shadow: none;
+    margin-bottom: 32px;
+}
+
+img.img-btn {
+    transition: 0.3s;
+}
+img.img-btn:hover {
+    cursor: pointer;
+    filter: brightness(110%);
 }
 /* ---------------------------------------------------
     Search & Filter Bar

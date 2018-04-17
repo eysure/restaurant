@@ -64,6 +64,12 @@ function getOrders() {
 }
 
 function checkout($cart, $tip) {
-    
-    echo json_encode((object)['action' => 'checkout', 'error' => 0, 'meta-data'=>$_POST]);
+    // TODO: inspect cart check if there is any item which is unavailable or sold-out, in the meanwhile, add to the subtotal
+    $dishes = getDishesDB();
+
+    $subtotal = 0;
+    foreach($cart as $dish_id=>$quantity){
+
+    }
+    echo json_encode((object)['action' => 'checkout', 'error' => 0, 'debug'=>$_POST]);
 }

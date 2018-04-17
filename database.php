@@ -69,6 +69,21 @@ function signUpDB($username,$pwd,$email,$mobile,$first_name,$last_name) {
 }
 
 /**
+ * Get dishes from database and convert to object array
+ */
+function getDishesDB() {
+    $con = getConnection();
+    $query = "SELECT * FROM dish";
+    $result = mysqli_query($con,$query);
+
+    $dish_arr = [];
+    while($row=mysqli_fetch_assoc($result)){
+        array_push($dish_arr, $row);
+    }
+    return $dish_arr;
+}
+
+/**
  * Database - Add dish to cart
  * @param $dish_id: id of the dish
  * @param $quantity: quantity of the dish want to add, 0 or negative means delete this dish
@@ -99,4 +114,12 @@ function getCartDB($user_id) {
     $r = mysqli_query($con, $q);
     while($row = mysqli_fetch_assoc($r)) $cart_item[$row['dish_id']] = $row['dish_qty'];
     return $cart_item;
+}
+
+function checkOutDB($user_id, $user_msg, $cart, $tip, $delivery_fee) {
+    $con = getConnection();
+
+
+    $q = "INSERT INTO restaurant.order(user_id,user_message,tip, subtotal,delivery_fee) VALUES ($user_id, $user_msg, $tip, 30.33, $delivery_fee)";
+    mysqli_query($con, $q);
 }

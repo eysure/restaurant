@@ -1,6 +1,7 @@
 let dishes = null;
 let cart = null;
 let tip = 2;
+let total = 0;
 
 $(document).ready(function() {
 
@@ -265,7 +266,7 @@ function updateCart() {
         // Compute fees
         let deliverFee = subTotal>=50?0.00:5.00;
         let tax = 0.0625 * (subTotal + deliverFee);
-        let total = subTotal + deliverFee + tax + tip;
+        total = subTotal + deliverFee + tax + tip;
 
         // update UI w/ currency format
         subtotal_span.html(subTotal.toLocaleString('en-US', {style: 'currency',currency: 'USD'}));
@@ -327,12 +328,34 @@ function getDishByID(dishID) {
 
 function checkOut() {
     // Check cart info
+    if(cart==null || total<=0) return false;
     $.each(cart,function(dish_id ,quantity) {
         if(!quantity || quantity<=0 || !tip || tip<0) {
             console.log("Sorry, your cart or tip has some problem, please check before check out.");
             return false;
         }
     });
+
+    // UI transition
+    $("#checkout-btn").off().fadeOut(300, function () {
+        $("#user-info-container").fadeIn(300);
+        $("#cart-view").mCustomScrollbar("scrollTo","bottom");
+    });
+
+
+    // Paypal link (Just kidding...)
+    $("#paypal").on("click", function () {
+       window.open("https://paypal.me/eysure/"+total.toFixed(2));
+    });
+
+    // Hook: confirm
+    $("#checkout-confirm-btn").on("click", function () {
+        checkOutConfirm();
+    });
+}
+
+function checkOutConfirm() {
+
     $.ajax({
         type: 'POST',
         data: {
@@ -347,6 +370,7 @@ function checkOut() {
         timeout: 5000
     });
 }
+
 
 function checkOut_res(res) {
     console.log(res);

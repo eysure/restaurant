@@ -12,28 +12,13 @@ session_start();
 // Answer User call
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     switch ($_POST['action']) {
-        case 'getDishes': echo json_encode((object)['action' => $_POST['action'], 'data' => getDishes()]); break;
+        case 'getDishes': echo json_encode((object)['action' => $_POST['action'], 'data' => getDishesDB()]); break;
         case 'getCart': echo json_encode((object)['action' => $_POST['action'], 'data' => getCart()]); break;
         case 'addToCart': addToCart($_POST['dish'],$_POST['quantity']); break;
         default: break;
     }
 }
 else header("Location: index.php");
-
-/**
- * Get dishes from database and convert to object array
- */
-function getDishes() {
-    $con = getConnection();
-    $query = "SELECT * FROM dish";
-    $result = mysqli_query($con,$query);
-
-    $dish_arr = [];
-    while($row=mysqli_fetch_assoc($result)){
-        array_push($dish_arr, $row);
-    }
-    return $dish_arr;
-}
 
 function addToCart($dish_id, $quantity) {
     if(!isset($_SESSION['username'])){
