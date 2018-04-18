@@ -69,11 +69,13 @@ function signUpDB($username,$pwd,$email,$mobile,$first_name,$last_name) {
 }
 
 /**
- * Get dishes from database and convert to object array
+ * Get dishes from database
+ * @param $criteria: if there is some criteria need
+ * @return array: Dishes array from database
  */
-function getDishesDB() {
+function getDishesDB($criteria=null) {
     $con = getConnection();
-    $query = "SELECT * FROM dish";
+    $query = "SELECT * FROM dish ".$criteria;
     $result = mysqli_query($con,$query);
 
     $dish_arr = [];
@@ -114,12 +116,4 @@ function getCartDB($user_id) {
     $r = mysqli_query($con, $q);
     while($row = mysqli_fetch_assoc($r)) $cart_item[$row['dish_id']] = $row['dish_qty'];
     return $cart_item;
-}
-
-function checkOutDB($user_id, $user_msg, $cart, $tip, $delivery_fee) {
-    $con = getConnection();
-
-
-    $q = "";
-    mysqli_query($con, $q);
 }

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <?php include 'head.php' ?>
-    <title>Restaurant</title>
+    <title>Dalao Hotpot - My orders</title>
     <script src="order.js"></script>
 </head>
 <body>

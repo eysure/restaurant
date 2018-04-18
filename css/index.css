@@ -18,6 +18,10 @@
 /* ---------------------------------------------------
     Header & User Btn & Cart Btn
 ----------------------------------------------------- */
+img.logo-img {
+    height: 28px;
+}
+
 div#navbar-container {
     padding: 0;
 }

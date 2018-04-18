@@ -12,7 +12,7 @@ session_start();
 // Answer User call
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     switch ($_POST['action']) {
-        case 'getDishes': echo json_encode((object)['action' => $_POST['action'], 'data' => getDishesDB()]); break;
+        case 'getDishes': echo json_encode((object)['action' => $_POST['action'], 'data' => getDishes()]); break;
         case 'getCart': echo json_encode((object)['action' => $_POST['action'], 'data' => getCart()]); break;
         case 'addToCart': addToCart($_POST['dish'],$_POST['quantity']); break;
         default: break;
@@ -36,6 +36,18 @@ function addToCart($dish_id, $quantity) {
             'cart' => $cart
         ]); exit(0);
     }
+}
+
+function getDishes() {
+    if(isset($_SESSION['role'])) {
+        switch ($_SESSION['role']) {
+            case 1: return getDishesDB();
+            case 1024: return getDishesDB();
+            default: return getDishesDB("WHERE availability=1");   // As normal user
+        }
+    }
+    // Not login
+    else return getDishesDB("WHERE availability=1");
 }
 
 function getCart() {

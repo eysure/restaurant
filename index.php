@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <?php include 'head.php' ?>
-    <title>Restaurant</title>
+    <title>Dalao Hotpot</title>
     <script src="javascript/index.js"></script>
     <script src="javascript/search.js"></script>
 </head>
