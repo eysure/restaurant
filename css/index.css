@@ -444,3 +444,11 @@ div#search-bar-container.col-2 {
         grid: auto / minmax(300px,600px) minmax(300px,600px) minmax(300px,600px);
     }
 }
+
+/* ---------------------------------------------------
+    Order History
+----------------------------------------------------- */
+
+@media (max-width: 500px){
+
+}

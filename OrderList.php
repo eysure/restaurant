@@ -13,12 +13,13 @@
         </br>
         </br>
     </div>
-    <div class="row">
-        <div>
-            <h1>Order History</h1>
+    <br class="row container-fluid">
+        <div class="container-fluid">
+            <h1 class="text-center">Order History</h1>
         </div>
+        </br>
     </div>
-    <div class="row">
-        <div id = "order-list"></div>
+    <div class="row container-fluid mw-50">
+        <div id = "order-list" class="container-fluid"></div>
     </div>
 </div>

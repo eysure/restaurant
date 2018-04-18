@@ -57,7 +57,7 @@ function showOrderCard(orders, dishes){
         }
 
         $("#order-list").append(
-            "<div>"+
+            "<div class='w-50 container-fluid'>"+
             "    <div>\n"+
             "       <ul class=\"list-group\">"+
             "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Built-Time: "+order['built_time']+"</li>"+
@@ -66,7 +66,7 @@ function showOrderCard(orders, dishes){
             "       </ul>"+
             "    </div>"+
             "</div>"+
-            "<div id='order"+order['order_id']+"'>"+
+            "<div class='w-50 container-fluid' id='order"+order['order_id']+"'>"+
             "   <ul class=\"list-group\" id='listed_dish"+order['order_id']+"'>"+
             "   </ul>"+
             "</div>"
@@ -101,7 +101,8 @@ function showOrderCard(orders, dishes){
             "           </li>"+
             "       </ul>"+
             "    </div>"+
-            "</div>"
+            "</div>"+
+            "</br>"
         );
     }
 }
