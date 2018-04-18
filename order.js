@@ -59,23 +59,29 @@ function showOrderCard(orders, dishes){
         $("#order-list").append(
             "<div class='card dish-card' id='order"+order['order_id']+"'>\n" +
             "    <div>\n" +
-            "       <h2>Built Time: "+order['built_time']+"</h2>\n" +
-            "       <h2>Message: "+order['user_message']+"</h2>\n" +
-            "       <h2>Tip: "+order['tip']+"</h2>\n" +
-            "       <h2>Order Status: "+s+"</h2>\n" +
-            "       <h2>Subtotal: "+order['subtotal']+"</h2>\n" +
-            "       <h2>Delivery Fee: "+order['delivery_fee']+"</h2>\n" +
+            "       <h3>Built Time: "+order['built_time']+"</h3>\n" +
+            "       <h3>Message: "+order['user_message']+"</h3>\n" +
+            "       <h3>Tip: "+order['tip']+"</h3>\n" +
+            "       <h3>Order Status: "+s+"</h3>\n" +
+            "       <h3>Delivery Fee: "+order['delivery_fee']+"</h3>\n" +
             "    </div>" +
             "</div>"
         );
+        var subtotal = 0;
         for (let dish of dishes) {
             if(dish['order_id'] == order['order_id']){
+                subtotal = subtotal + dish['dish_quantity']*dish['dish_price_that_time'];
                 $("#order"+order['order_id']).append(
                     "<div>\n" +
-                    "    <h2>Dish: "+dish['name']+" *"+dish['dish_quantity']+"</h2>\n" +
+                    "    <h3>Dish: "+dish['name']+"*"+dish['dish_quantity']+", Dish Per Price: "+dish['dish_price_that_time']+"</h3>\n" +
                     "</div>"
                 );
             }
         }
+        $("#order"+order['order_id']).append(
+            "<div>\n" +
+            "    <h3>Subtotal: "+subtotal+"</h3>\n" +
+            "</div>"
+        );
     }
 }

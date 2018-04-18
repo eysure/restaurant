@@ -50,7 +50,7 @@ function getOrders() {
     }
     foreach($order_id as $oid){
         $query2 =
-            "SELECT o.order_id, d.name, o.dish_quantity
+            "SELECT o.order_id, d.name, o.dish_quantity, o.dish_price_that_time
             FROM restaurant.dish AS d
             RIGHT JOIN restaurant.ordered_dish_qty AS o
             ON d.id = o.dish_id
