@@ -16,12 +16,15 @@ $(document).ready(function() {
 
     // Hook: Course detail ON/OFF
     let course_detail = $('#dish-detail');
+    let course_detail_admin = $('#dish-detail-admin');
+    let thisDish = null;
 
     course_detail.on('show.bs.modal', function (event) {
+
         let card = $(event.relatedTarget);                    // Button that triggered the modal
         let id = card.data('id');                             // Extract info from data-* attributes
 
-        let thisDish = getDishByID(id);
+        thisDish = getDishByID(id);
 
         // Inflate the modal
         // TODO: Add the admin mode there
@@ -29,6 +32,8 @@ $(document).ready(function() {
         $('#detail-admin').empty();
 
         let admin = true;
+        console.log(admin);
+
         if (admin) {
             $('#detail-admin').append('<div class="row" id="btn-line-space"></div>\n' +
                 '                        <div class="row">\n' +
@@ -40,10 +45,11 @@ $(document).ready(function() {
                 '                                </div>\n' +
                 '                            </div>\n' +
                 '                        </div>');
+
         }
 
-        $('#dish-name').text(thisDish['name']);
         $('#dish-img').attr("src",thisDish['photo']);
+        $('#dish-name').text(thisDish['name']);
         $('#dish-description').text(thisDish['description']);
         $('#dish-price').text(thisDish['price']);
 
@@ -57,10 +63,42 @@ $(document).ready(function() {
             controlCartView(1);                                 // Open the cart view
         });
 
+        // Click 'Edit' button
+        $('#edit').on('click', editDish(course_detail, course_detail_admin));
+
     });
+
     course_detail.on('hide.bs.modal', function () {
         $('#add-to-cart').off('click');
     });
+
+
+    // Hook: Course detail (admin) ON/OFF
+    course_detail_admin.on('show.bs.modal', function () {
+
+        //$('body').attr('overflow', 'hidden');
+
+        $('#dish-img-admin').attr("src",thisDish['photo']);
+        $('#dish-name-admin').val(thisDish['name']);
+        $('#dish-description-admin').val(thisDish['description']);
+        $('#dish-cat-admin').val(thisDish['category']);
+        $('#dish-price-admin').val(thisDish['price']);
+        $('#dish-cal-admin').val(thisDish['calorie']);
+        let veg = thisDish['vegetarian'];
+        if (veg == 1) {
+            document.getElementById('veg-yes').checked = true;
+        } else {
+            document.getElementById('veg-no').checked = true;
+        }
+
+        $('#dish-inventory-admin').val(thisDish['inventory']);
+        $('#dish-avail-admin').val(thisDish['availability']);
+
+        // Click 'Update' button
+        //$('#update').on('click', updateDish(course_detail, course_detail_admin, thisDish));
+    });
+
+
 
     // Hook: Tip Button or customize
     $('button.tip-opt').each(function () {
@@ -413,4 +451,54 @@ function checkOut_res(res) {
         controlCartView(0);
         $("#checkout-success-modal").modal('show');
     }
+}
+
+
+function editDish(userModal, adminModal) {
+    console.log('edit button clicked');
+    userModal.modal('hide');
+    adminModal.modal('show');
+}
+
+function updateDish(userModal, adminModal, updatedDish) {
+    console.log('update button clicked');
+    adminModal.modal('hide');
+    userModal.modal('show');
+
+    updatedDish['name'] = $('#dish-name-admin').val();
+    updatedDish['description'] = $('#dish-description-admin').val();
+    updatedDish['category'] = $('#dish-cat-admin').val();
+    updatedDish['price'] = $('#dish-price-admin').val();
+    updatedDish['calorie'] = $('#dish-calorie-admin').val();
+    updatedDish['vegetarian'] = $('#veg-yes').checked;
+    updatedDish['inventory'] = $('#dish-inventory-admin').val();
+    updatedDish['availability'] = $('#dish-avail-admin').val();
+
+    console.log(updatedDish);
+
+    //updateDish('update', updatedDishData);
+}
+
+/**
+ * Send update dish ajax to dishCtrl.php
+ * @param action: update
+ * @param data
+ * @returns object
+ */
+function updateDishData(action,data=null) {
+    $.ajax({
+        type: 'POST',
+        data: {
+            action: action,
+            data: data
+        },
+        url: 'user.php',
+        success: function(res) {
+            receiveAjaxResponse(res);
+        },
+        timeout: 5000,
+        error: function(res) {
+            errorAjax();
+        }
+    });
 }

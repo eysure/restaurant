@@ -120,13 +120,14 @@ button.no-border {
     background-color: #FDEFDC;
 }
 
-#dish-img {
+.detail-img {
     display: block;
     width: 100%;
-    max-height: 400px;
+    height: 100%;
 }
 
-#detail-middle {
+
+.detail-middle {
     margin-top: 20px;
     margin-bottom: 25px
 }
@@ -166,7 +167,7 @@ button.no-border {
     border-color: lightgrey;
 }
 
-#detail-bottom {
+.detail-bottom {
     margin-top: 25px;
 }
 
@@ -211,13 +212,13 @@ button.no-border {
     right: 0;
 }
 
-#cancel {
+.cancel {
     background-color: grey;
     color: white;
     opacity: 0.8;
 }
 
-#cancel:hover {
+.cancel:hover {
     opacity: 1;
 }
 

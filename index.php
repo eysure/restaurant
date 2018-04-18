@@ -28,6 +28,7 @@
                     </div>
                     <div id="dish-list-container" class="col">
                         <?php include 'dish.php'; ?>
+                        <?php include 'dishAdmin.php'; ?>
                     </div>
                 </div>
                 <div class="row">

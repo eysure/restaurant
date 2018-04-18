@@ -13,15 +13,15 @@
 <div class="modal fade" role="dialog" id="dish-detail">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body" id="detail-body">
+            <div class="modal-body detail-body">
 
-                <div class="container " id="detail-top">
+                <div class="container detail-top">
                     <div class="row border justify-content-center">
-                        <img src="#" alt="food picture" id="dish-img">
+                        <img class="detail-img" src="#" alt="food picture" id="dish-img">
                     </div>
                 </div>
 
-                <div class="container" id="detail-middle">
+                <div class="container detail-middle">
 
                     <div class="row" id="detail-name">
                         <h5 class="modal-title" id="dish-name"></h5>
@@ -61,13 +61,13 @@
 
                 <hr id="detail-divider"/>
 
-                <div class="container" id="detail-bottom">
+                <div class="container detail-bottom">
 
-                    <div class="row" id="detail-buttons">
+                    <div class="row detail-buttons">
 
                         <div class="col-3">
                             <div class="row btn-left">
-                                <button id="cancel" class="btn btn-block" data-dismiss="modal">Cancel</button>
+                                <button class="btn btn-block cancel" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
 
@@ -93,7 +93,6 @@
 
 
 <script src="javascript/quantity.js"></script>
-<script src="javascript/admin.js"></script>
 
 <!-- PAGINATION -->
 <nav>
