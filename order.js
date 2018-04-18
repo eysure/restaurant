@@ -47,7 +47,7 @@ function showOrderCard(orders, dishes){
         var s = null;
         switch(order['processed_status']){
             case '0':
-                s = "Processing...";
+                s = "Processing ............";
                 break;
             case '1':
                 s = "Delivered.";
@@ -57,14 +57,14 @@ function showOrderCard(orders, dishes){
         }
 
         $("#order-list").append(
-            "<div class='card dish-card' id='order"+order['order_id']+"'>\n" +
-            "    <div>\n" +
-            "       <h3>Built Time: "+order['built_time']+"</h3>\n" +
-            "       <h3>Message: "+order['user_message']+"</h3>\n" +
-            "       <h3>Tip: "+order['tip']+"</h3>\n" +
-            "       <h3>Order Status: "+s+"</h3>\n" +
-            "       <h3>Delivery Fee: "+order['delivery_fee']+"</h3>\n" +
-            "    </div>" +
+            "<div id='order"+order['order_id']+"'>\n"+
+            "    <div>\n"+
+            "       <ul class=\"list-group\">"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Built-Time: "+order['built_time']+"</li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Message: "+order['user_message']+"</li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Status: "+s+"</li>"+
+            "       </ul>"+
+            "    </div>"+
             "</div>"
         );
         var subtotal = 0;
@@ -72,15 +72,35 @@ function showOrderCard(orders, dishes){
             if(dish['order_id'] == order['order_id']){
                 subtotal = subtotal + dish['dish_quantity']*dish['dish_price_that_time'];
                 $("#order"+order['order_id']).append(
-                    "<div>\n" +
-                    "    <h3>Dish: "+dish['name']+"*"+dish['dish_quantity']+", Dish Per Price: "+dish['dish_price_that_time']+"</h3>\n" +
+                    "<div>"+
+                    "   <ul class=\"list-group\">"+
+                    "       <li class=\"list-group-item d-flex justify-content-between align-items-center\">Dish: "+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
+                    "           <span class=\"badge badge-primary badge-pill\">*"+dish['dish_quantity']+"</span>"+
+                    "       </li>"+
+                    "   </ul>"+
                     "</div>"
                 );
             }
         }
+        var total = subtotal + Number(order['tip']) + Number(order['delivery_fee']);
         $("#order"+order['order_id']).append(
-            "<div>\n" +
-            "    <h3>Subtotal: "+subtotal+"</h3>\n" +
+            "<div id='order"+order['order_id']+"'>\n"+
+            "    <div>"+
+            "       <ul class=\"list-group\">"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Subtotal"+
+            "               <span class=\"badge badge-primary badge-pill\">"+subtotal.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "           </li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Tip"+
+            "               <span class=\"badge badge-primary badge-pill\">"+Number(order['tip']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "           </li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Delivery Fee"+
+            "               <span class=\"badge badge-primary badge-pill\">"+Number(order['delivery_fee']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "           </li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Total"+
+            "               <span class=\"badge badge-primary badge-pill\">"+total.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "           </li>"+
+            "       </ul>"+
+            "    </div>"+
             "</div>"
         );
     }
