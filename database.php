@@ -120,6 +120,6 @@ function checkOutDB($user_id, $user_msg, $cart, $tip, $delivery_fee) {
     $con = getConnection();
 
 
-    $q = "INSERT INTO restaurant.order(user_id,user_message,tip, subtotal,delivery_fee) VALUES ($user_id, $user_msg, $tip, 30.33, $delivery_fee)";
+    $q = "";
     mysqli_query($con, $q);
 }

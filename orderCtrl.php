@@ -11,7 +11,7 @@ session_start();
 // Answer User call
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     switch ($_POST['action']) {
-        case 'checkout': checkout($_POST['cart'],$_POST['tip']); break;
+        case 'checkout': checkout($_POST['cart'],$_POST['tip'],$_POST['msg']); break;
         default: break;
     }
 }
@@ -63,13 +63,69 @@ function getOrders() {
     return ((object)['arr1' => $all_info, 'arr2' => $dish_detail]);
 }
 
-function checkout($cart, $tip) {
-    // TODO: inspect cart check if there is any item which is unavailable or sold-out, in the meanwhile, add to the subtotal
-    $dishes = getDishesDB();
+/**
+ * It's a very complicated function
+ * @param $cart
+ * @param $tip
+ * @param $msg
+ */
+function checkout($cart, $tip, $msg) {
 
-    $subtotal = 0;
-    foreach($cart as $dish_id=>$quantity){
-
+    // Check login status
+    if(!isset($_SESSION['username'])) {
+        echo json_encode((object)['action' => 'checkout', 'result'=>false, 'error_code' => 1]);
+        exit(0);
     }
-    echo json_encode((object)['action' => 'checkout', 'error' => 0, 'debug'=>$_POST]);
+    $user_id = $_SESSION['user_id'];
+
+    // Check each item if they are available and enough inventory
+    $dishes = getDishesDB();
+    foreach($cart as $dish_id=>$quantity){
+        foreach ($dishes as $dish) {
+            if($dish['id']==$dish_id && ($dish['availability']==0 || $dish['inventory']<$quantity)) {
+                echo json_encode((object)['action' => 'checkout', 'result'=>false, 'error_code' => 1001]);
+                exit(0);
+            }
+        }
+    }
+
+    // Everything is okay after this line, then we go true
+    $subtotal = 0;
+    $delivery_fee = 5.00;
+    $con = getConnection();
+
+    // First, create an order and get the order number
+    $q = "INSERT INTO restaurant.order(user_id, user_message, tip, delivery_fee) VALUES ($user_id, '$msg', $tip, $delivery_fee)";
+    mysqli_query($con, $q);
+    $order_id = mysqli_insert_id($con);
+
+    // Then, traverse each item to get price to compute subtotal, meanwhile, update remain inventory
+    foreach($cart as $dish_id=>$quantity){
+        foreach ($dishes as $dish) {
+            if($dish['id']==$dish_id) {
+                $remain = $dish['inventory'] - $quantity;
+                $q = "UPDATE dish SET inventory=$remain WHERE id=$dish_id";
+                mysqli_query($con, $q);
+                $subtotal += $dish['price'] * $quantity;
+                $price = $dish['price'];
+                $q2 = "INSERT INTO ordered_dish_qty(order_id,dish_id,dish_quantity,dish_price_that_time) VALUES ($order_id,$dish_id,$quantity,$price)";
+                mysqli_query($con, $q2);
+            }
+        }
+    }
+    $subtotal = round($subtotal,2);
+
+    // Last, use the subtotal and delivery fee to update order
+    if($subtotal>=50) {
+        $delivery_fee = 0.00;
+        $q3 = "UPDATE restaurant.order SET delivery_fee=$delivery_fee WHERE order_id=$order_id";
+        mysqli_query($con, $q3);
+    }
+
+    // Empty Cart for this user
+    $q4 = "DELETE FROM cart WHERE user_id=$user_id";
+    mysqli_query($con, $q4);
+
+    // Return
+    echo json_encode((object)['action' => 'checkout', 'result'=>true, 'debug'=>$_POST,'user_id'=> $user_id, 'order_id' => $order_id, 'subtotal'=>$subtotal, 'delivery_fee'=>$delivery_fee]);
 }

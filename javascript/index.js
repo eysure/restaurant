@@ -2,6 +2,7 @@ let dishes = null;
 let cart = null;
 let tip = 2;
 let total = 0;
+let msg = null;
 
 $(document).ready(function() {
 
@@ -342,7 +343,6 @@ function checkOut() {
         $("#cart-view").mCustomScrollbar("scrollTo","bottom");
     });
 
-
     // Paypal link (Just kidding...)
     $("#paypal").on("click", function () {
        window.open("https://paypal.me/eysure/"+total.toFixed(2));
@@ -352,16 +352,19 @@ function checkOut() {
     $("#checkout-confirm-btn").on("click", function () {
         checkOutConfirm();
     });
+    $("#user-msg").on("input",function () {
+        msg = $(this).val();
+    })
 }
 
 function checkOutConfirm() {
-
     $.ajax({
         type: 'POST',
         data: {
             'action': 'checkout',
             'cart': cart,
             'tip': tip,
+            'msg': msg
         },
         url: 'orderCtrl.php',
         success: function (res) {
@@ -374,4 +377,22 @@ function checkOutConfirm() {
 
 function checkOut_res(res) {
     console.log(res);
+    if(!res['result']) {
+        switch (res['error_code']) {
+            case 1: alert("Sorry, you need to login before order."); break;
+            case 1001: alert("Sorry, one or more items you requested is unavailable now, please check again."); break;
+            case 2001: alert("Sorry, but our database report some error. And it's our fault. You can check it." + res['msg']); break;
+            default: alert("Sorry, order failed. And we don't know why."); break;
+        }
+    }
+    else {
+        // Just a simple modal will do.
+        cart = null;
+        tip = 2;
+        total = 0;
+        msg = null;
+        updateCart();
+        controlCartView(0);
+        $("#checkout-success-modal").modal('show');
+    }
 }

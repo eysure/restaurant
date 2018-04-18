@@ -96,6 +96,22 @@
             </div>
 
             <button id="checkout-confirm-btn" class="btn btn-primary container-fluid">Confirm</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="checkout-success-modal" tabindex="-1" role="dialog" aria-labelledby="checkout-success-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h2>Order Successfully created.</h2>
+                <h3>Enjoy your meal.</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="self.location='./order.php';">Go to My Orders</button>
+            </div>
         </div>
     </div>
 </div>
