@@ -47,7 +47,7 @@ function showOrderCard(orders, dishes){
         var s = null;
         switch(order['processed_status']){
             case '0':
-                s = "Processing............";
+                s = "Processing...";
                 break;
             case '1':
                 s = "Delivered.";
@@ -63,7 +63,10 @@ function showOrderCard(orders, dishes){
             "           <li class=\"bg-light list-group-item d-flex justify-content-between align-items-center\"><b>Order Built-Time</b>"+order['built_time']+"</li>"+
             "           <li class=\"bg-light list-group-item d-flex justify-content-between align-items-center\"><b>Message</b>"+order['user_message']+"</li>"+
             "           <li class=\"bg-light list-group-item d-flex justify-content-between align-items-center\"><b>Order Status</b>"+s+"</li>"+
-            "           <li class=\"bg-light list-group-item d-flex justify-content-between flex-column\" id='listed_dish"+order['order_id']+"'><b>Ordered Dishes</b></li>"+
+            "           <li class=\"bg-light list-group-item d-flex justify-content-between flex-row\">"+
+            "               <div><b>Ordered Dishes</b></div>"+
+            "               <div id='listed_dish"+order['order_id']+"'></div>"+
+            "           </li>"+
             "       </ul>"+
             "    </div>"+
             "</div>"
@@ -73,7 +76,7 @@ function showOrderCard(orders, dishes){
             if(dish['order_id'] == order['order_id']){
                 subtotal = subtotal + dish['dish_quantity']*dish['dish_price_that_time'];
                 $("#listed_dish"+order['order_id']).append(
-                    "<li>"+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
+                    "<li class='text-right'>"+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
                     "    <span class=\"badge badge-warning\">*"+dish['dish_quantity']+"</span>"+
                     "</li>"
                 );

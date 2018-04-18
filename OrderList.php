@@ -15,7 +15,7 @@
     </div>
     <br class="row container-fluid">
         <div class="container-fluid">
-            <h1 class="text-center">Order History</h1>
+            <h1 class="text-center font-weight-bold">Order History</h1>
         </div>
         </br>
     </div>
