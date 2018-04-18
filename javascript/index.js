@@ -15,7 +15,7 @@ $(document).ready(function() {
     });
 
     // Hook: Course detail ON/OFF
-    let course_detail = $('#course_detail');
+    let course_detail = $('#dish-detail');
     course_detail.on('show.bs.modal', function (event) {
         let card = $(event.relatedTarget);                    // Button that triggered the modal
         let id = card.data('id');                             // Extract info from data-* attributes
@@ -132,7 +132,7 @@ function receive(res) {
 function showDishCard(dishes) {
     for (let dish of dishes) {
         $("#dish-list").append(
-            "        <div class='card dish-card' data-toggle='modal' data-target='#course_detail' data-id='"+dish['id']+"'>\n" +
+            "        <div class='card dish-card' data-toggle='modal' data-target='#dish-detail' data-id='"+dish['id']+"'>\n" +
             "            <img class='card-img-top' src='"+dish['photo']+"' alt='food picture'>\n" +
             "            <div class='card-body'>\n" +
             "                <h4 class='card-title'>"+dish['name']+"</h4>\n" +

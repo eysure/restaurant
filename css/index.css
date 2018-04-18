@@ -117,7 +117,66 @@ button.no-border {
 
 .modal-body {
     padding: 32px;
+    background-color: #FDEFDC;
 }
+
+#dish-img {
+    display: block;
+    width: 100%;
+    max-height: 400px;
+}
+
+#detail-middle {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+#detail-price {
+    margin-top: -5px;
+    font-size: large;
+}
+
+#detail-qty-col {
+}
+
+#detail-qty-row {
+    height: 34px;
+}
+
+#detail-qty {
+    width: 130.344px;
+}
+
+.btn-number-left {
+    padding: 0 13px;
+    width: 41px;
+    background-color: #EC5E80;
+    border-color: #EC5E80;
+}
+
+.input-number {
+    border-color: #FDEFDC;
+}
+
+.btn-number-right {
+    padding: 0 13px;
+    width: 42px;
+    background-color: #B2D732;
+    border-color: #B2D732;
+}
+
+#detail-bottom {
+    margin-top: 0px;
+}
+
+.btn-left {
+    margin-right: 0px;
+}
+
+.btn-right {
+    margin-left: 0px;
+}
+
 
 .form-control.lined {
     border: 0;

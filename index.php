@@ -27,7 +27,7 @@
                         <?php include 'search.php'; ?>
                     </div>
                     <div id="dish-list-container" class="col">
-                        <?php include 'courseList.php'; ?>
+                        <?php include 'dish.php'; ?>
                     </div>
                 </div>
                 <div class="row">
