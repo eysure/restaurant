@@ -60,10 +60,10 @@ function showOrderCard(orders, dishes){
             "<div class='w-50 container-fluid'>"+
             "    <div>"+
             "       <ul class=\"list-group list-unstyled\" id='outer_listed_dish"+order['order_id']+"'>"+
-            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Built-Time: "+order['built_time']+"</li>"+
-            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Message: "+order['user_message']+"</li>"+
-            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Status: "+s+"</li>"+
-            "           <li class=\"list-group-item d-flex justify-content-between flex-column\" id='listed_dish"+order['order_id']+"'>Ordered Dishes:</li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\"><b>Order Built-Time</b>"+order['built_time']+"</li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\"><b>Message</b>"+order['user_message']+"</li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\"><b>Order Status</b>"+s+"</li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between flex-column\" id='listed_dish"+order['order_id']+"'><b>Ordered Dishes</b></li>"+
             "       </ul>"+
             "    </div>"+
             "</div>"
@@ -81,16 +81,16 @@ function showOrderCard(orders, dishes){
         }
         var total = subtotal + Number(order['tip']) + Number(order['delivery_fee']);
         $("#outer_listed_dish"+order['order_id']).append(
-            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Subtotal"+
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\"><b>Subtotal</b>"+
             "       <span class=\"badge badge-primary\">"+subtotal.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
             "   </li>"+
-            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Tip"+
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\"><b>Tip</b>"+
             "       <span class=\"badge badge-primary\">"+Number(order['tip']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
             "   </li>"+
-            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Delivery Fee"+
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\"><b>Delivery Fee</b>"+
             "       <span class=\"badge badge-primary\">"+Number(order['delivery_fee']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
             "   </li>"+
-            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Total"+
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\"><b>Total</b>"+
             "       <span class=\"badge badge-primary\">"+total.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
             "   </li>"+
             "</br>"
