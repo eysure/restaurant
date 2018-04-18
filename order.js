@@ -58,17 +58,14 @@ function showOrderCard(orders, dishes){
 
         $("#order-list").append(
             "<div class='w-50 container-fluid'>"+
-            "    <div>\n"+
-            "       <ul class=\"list-group\">"+
+            "    <div>"+
+            "       <ul class=\"list-group list-unstyled\" id='outer_listed_dish"+order['order_id']+"'>"+
             "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Built-Time: "+order['built_time']+"</li>"+
             "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Message: "+order['user_message']+"</li>"+
             "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Status: "+s+"</li>"+
+            "           <li class=\"list-group-item d-flex justify-content-between flex-column\" id='listed_dish"+order['order_id']+"'>Ordered Dishes:</li>"+
             "       </ul>"+
             "    </div>"+
-            "</div>"+
-            "<div class='w-50 container-fluid' id='order"+order['order_id']+"'>"+
-            "   <ul class=\"list-group\" id='listed_dish"+order['order_id']+"'>"+
-            "   </ul>"+
             "</div>"
         );
         var subtotal = 0;
@@ -76,32 +73,26 @@ function showOrderCard(orders, dishes){
             if(dish['order_id'] == order['order_id']){
                 subtotal = subtotal + dish['dish_quantity']*dish['dish_price_that_time'];
                 $("#listed_dish"+order['order_id']).append(
-                    "<li class=\"list-group-item d-flex justify-content-between align-items-center\">Dish: "+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
-                    "   <span class=\"badge badge-primary badge-pill\">*"+dish['dish_quantity']+"</span>"+
+                    "<li>"+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
+                    "    <span class=\"badge badge-warning\">*"+dish['dish_quantity']+"</span>"+
                     "</li>"
                 );
             }
         }
         var total = subtotal + Number(order['tip']) + Number(order['delivery_fee']);
-        $("#order"+order['order_id']).append(
-            "<div id='order"+order['order_id']+"'>\n"+
-            "    <div>"+
-            "       <ul class=\"list-group\">"+
-            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Subtotal"+
-            "               <span class=\"badge badge-primary badge-pill\">"+subtotal.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
-            "           </li>"+
-            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Tip"+
-            "               <span class=\"badge badge-primary badge-pill\">"+Number(order['tip']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
-            "           </li>"+
-            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Delivery Fee"+
-            "               <span class=\"badge badge-primary badge-pill\">"+Number(order['delivery_fee']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
-            "           </li>"+
-            "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Total"+
-            "               <span class=\"badge badge-primary badge-pill\">"+total.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
-            "           </li>"+
-            "       </ul>"+
-            "    </div>"+
-            "</div>"+
+        $("#outer_listed_dish"+order['order_id']).append(
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Subtotal"+
+            "       <span class=\"badge badge-primary\">"+subtotal.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "   </li>"+
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Tip"+
+            "       <span class=\"badge badge-primary\">"+Number(order['tip']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "   </li>"+
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Delivery Fee"+
+            "       <span class=\"badge badge-primary\">"+Number(order['delivery_fee']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "   </li>"+
+            "   <li class=\"list-group-item d-flex justify-content-between align-items-center\">Total"+
+            "       <span class=\"badge badge-primary\">"+total.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+
+            "   </li>"+
             "</br>"
         );
     }
