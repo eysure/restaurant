@@ -47,7 +47,7 @@ function showOrderCard(orders, dishes){
         var s = null;
         switch(order['processed_status']){
             case '0':
-                s = "Processing ............";
+                s = "Processing............";
                 break;
             case '1':
                 s = "Delivered.";
@@ -57,7 +57,7 @@ function showOrderCard(orders, dishes){
         }
 
         $("#order-list").append(
-            "<div id='order"+order['order_id']+"'>\n"+
+            "<div>"+
             "    <div>\n"+
             "       <ul class=\"list-group\">"+
             "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Built-Time: "+order['built_time']+"</li>"+
@@ -65,20 +65,20 @@ function showOrderCard(orders, dishes){
             "           <li class=\"list-group-item d-flex justify-content-between align-items-center\">Order Status: "+s+"</li>"+
             "       </ul>"+
             "    </div>"+
+            "</div>"+
+            "<div id='order"+order['order_id']+"'>"+
+            "   <ul class=\"list-group\" id='listed_dish"+order['order_id']+"'>"+
+            "   </ul>"+
             "</div>"
         );
         var subtotal = 0;
         for (let dish of dishes) {
             if(dish['order_id'] == order['order_id']){
                 subtotal = subtotal + dish['dish_quantity']*dish['dish_price_that_time'];
-                $("#order"+order['order_id']).append(
-                    "<div>"+
-                    "   <ul class=\"list-group\">"+
-                    "       <li class=\"list-group-item d-flex justify-content-between align-items-center\">Dish: "+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
-                    "           <span class=\"badge badge-primary badge-pill\">*"+dish['dish_quantity']+"</span>"+
-                    "       </li>"+
-                    "   </ul>"+
-                    "</div>"
+                $("#listed_dish"+order['order_id']).append(
+                    "<li class=\"list-group-item d-flex justify-content-between align-items-center\">Dish: "+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
+                    "   <span class=\"badge badge-primary badge-pill\">*"+dish['dish_quantity']+"</span>"+
+                    "</li>"
                 );
             }
         }
