@@ -42,7 +42,7 @@ function getOrders() {
     $all_info = [];
     $order_id = [];
     $dish_detail = [];
-    $query1 = "SELECT * FROM restaurant.order WHERE user_id = $u_id";
+    $query1 = "SELECT * FROM restaurant.order WHERE user_id = $u_id ORDER BY built_time DESC";
     $result1 = mysqli_query($con,$query1);
     while($row = mysqli_fetch_assoc($result1)){
         array_push($all_info, $row);
