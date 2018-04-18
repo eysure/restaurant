@@ -16,6 +16,7 @@ $(document).ready(function() {
 
     // Hook: Course detail ON/OFF
     let course_detail = $('#dish-detail');
+
     course_detail.on('show.bs.modal', function (event) {
         let card = $(event.relatedTarget);                    // Button that triggered the modal
         let id = card.data('id');                             // Extract info from data-* attributes
@@ -24,6 +25,23 @@ $(document).ready(function() {
 
         // Inflate the modal
         // TODO: Add the admin mode there
+
+        $('#detail-admin').empty();
+
+        let admin = true;
+        if (admin) {
+            $('#detail-admin').append('<div class="row" id="btn-line-space"></div>\n' +
+                '                        <div class="row">\n' +
+                '                            <div class="col">\n' +
+                '                                <div class="row">\n' +
+                '                                    <button id="edit" class="btn btn-danger btn-block">\n' +
+                '                                        <span>Edit this item</span>\n' +
+                '                                    </button>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                        </div>');
+        }
+
         $('#dish-name').text(thisDish['name']);
         $('#dish-img').attr("src",thisDish['photo']);
         $('#dish-description').text(thisDish['description']);

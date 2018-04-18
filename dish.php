@@ -9,13 +9,14 @@
 
 <div id="dish-list"></div>
 
+<!-- Dish Details Modal (User View) -->
 <div class="modal fade" role="dialog" id="dish-detail">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body" id="detail-body">
 
                 <div class="container " id="detail-top">
-                    <div class="row justify-content-center">
+                    <div class="row border justify-content-center">
                         <img src="#" alt="food picture" id="dish-img">
                     </div>
                 </div>
@@ -26,11 +27,9 @@
                         <h5 class="modal-title" id="dish-name"></h5>
                     </div>
 
-
                     <div class="row" id="detail-description">
                         <p id="dish-description"></p>
                     </div>
-
 
                     <div class="row" id="detail-price-qty">
                         <div class="col-6">
@@ -44,13 +43,13 @@
                             <div class="row justify-content-end" id="detail-qty-row">
                                 <div class="input-group p-0" id="detail-qty">
                                     <span class="input-group-btn input-group-prepend">
-                                        <button class="btn btn-danger btn-number-left" type="button" data-type="minus" data-field="quant[2]">
+                                        <button class="btn btn-danger btn-number btn-number-left" type="button" data-type="minus" data-field="quant[2]">
                                             <h4>-</h4>
                                         </button>
                                     </span>
                                     <input id="dish-quantity" type="text" name="quant[2]" class="form-control input-number text-center" value="1" min="1" max="10">
                                     <span class="input-group-btn input-group-append">
-                                        <button class="btn btn-success btn-number-right" type="button" data-type="plus" data-field="quant[2]">
+                                        <button class="btn btn-success btn-number btn-number-right" type="button" data-type="plus" data-field="quant[2]">
                                             <h4>+</h4>
                                         </button>
                                     </span>
@@ -60,28 +59,41 @@
                     </div>
                 </div>
 
+                <hr id="detail-divider"/>
+
                 <div class="container" id="detail-bottom">
+
                     <div class="row" id="detail-buttons">
 
-                        <div class="col-8">
+                        <div class="col-3">
                             <div class="row btn-left">
-                                <button id="add-to-cart" class="btn btn-primary btn-block">Add to bag</button>
+                                <button id="cancel" class="btn btn-block" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-9">
                             <div class="row btn-right">
-                                <button class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                                <button id="add-to-cart" class="btn btn-block">
+                                    <span>Add to cart</span>
+                                </button>
                             </div>
                         </div>
                     </div>
+
+                    <div id="detail-admin">
+
+                    </div>
+
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
+
 <script src="javascript/quantity.js"></script>
+<script src="javascript/admin.js"></script>
 
 <!-- PAGINATION -->
 <nav>
