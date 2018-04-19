@@ -28,9 +28,8 @@ function order_receive(res) {
 }
 
 function showOrderCard(orders, dishes){
-    if(orders.length == 0){
-        window.alert("You don't have any order record!");
-        window.location.replace("index.php");
+    if(orders.length === 0){
+        $("#order-list").append("<h4 class=\"list-group list-unstyled\">You don't have any order yet.</h4>");
     }
     for (let order of orders) {
         //Processing status
