@@ -73,6 +73,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row" id="detail-cal">
+                        <span id="dish-cal"></span>
+                        <span>cal.</span>
+                    </div>
+
                 </div>
 
                 <hr class="detail-divider"/>

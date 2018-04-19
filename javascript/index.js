@@ -39,6 +39,7 @@ $(document).ready(function() {
         $('#dish-description').text(thisDish['description']);
         $('#dish-price').text(thisDish['price']);
         $('#dish-inv').text(thisDish['inventory']);
+        $('#dish-cal').text(thisDish['calorie']);
         if (thisDish['vegetarian'] === "1") $('#detail-veg').show();
 
         // Add to cart
