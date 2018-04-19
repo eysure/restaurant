@@ -29,7 +29,7 @@
 
                         <div class="row form-group">
                             <label for="">Description</label>
-                            <textarea class="form-control" id="dish-description-admin" name="" rows="2">description...</textarea>
+                            <textarea class="form-control" id="dish-description-admin" name="" rows="2" placeholder="description..."></textarea>
                         </div>
 
                         <div class="row form-group">

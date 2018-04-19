@@ -59,6 +59,7 @@ $(document).ready(function() {
         $('#add-to-cart').off('click');
         $('#dish-quantity').val(1);                             // Reset the quantity counter
         tmp_dish_id = 0;
+
     });
 
     // Hook: Course detail (admin) ON/OFF
@@ -66,8 +67,21 @@ $(document).ready(function() {
         if (tmp_dish_id === 0) {
             // console.log('tmp_dish_id');
             // console.log(tmp_dish_id);
+
+            // Reset contents
             $('#dish-img-admin').attr("src","assets/img/logo.png");
+            $('#dish-name-admin').val('');
+            $('#dish-description-admin').val('');
+            $('#dish-cat-admin').val('');
+            $('#dish-price-admin').val('');
+            $('#dish-cal-admin').val('');
+            $('#veg-yes').checked = false;
+            $('#veg-no').checked = false;
+            $('#dish-inventory-admin').val('');
+            $('#dish-avail-admin').val('');
             $('#update').html('Add this food');
+            
+            // Click adding button
             $('#update').on('click', function () {
                 addDish();
             });
@@ -96,8 +110,6 @@ $(document).ready(function() {
                 updateDish(thisDish);
             });
         }
-
-
     });
 
     course_detail_admin.on('hide.bs.modal', function () {
@@ -502,6 +514,7 @@ function checkOut_res(res) {
 }
 
 function addDish() {
+    console.log('here1');
     $.ajax({
         type: 'POST',
         data: {
@@ -523,6 +536,7 @@ function addDish() {
         },
         timeout: 5000
     });
+    console.log('here2');
 }
 
 function addDish_res(res) {
