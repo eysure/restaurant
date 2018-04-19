@@ -20,16 +20,6 @@ function order_receive(res) {
         console.error("JSON parse error");
     }
 
-    // Checking if there is an error in server-side
-    switch (res['error']) {
-        case 1: {
-            alert("Please login to see your order history.");
-            window.location = "./index.php";
-            return;
-        }
-        default: break;
-    }
-
     // Show orders to front-end
     switch (res['action']) {
         case 'getOrders': showOrderCard(res['data']['arr1'],res['data']['arr2']); break;
@@ -44,7 +34,7 @@ function showOrderCard(orders, dishes){
     }
     for (let order of orders) {
         //Processing status
-        var s = null;
+        let s = null;
         switch(order['processed_status']){
             case '0':
                 s = "Processing...";
@@ -57,7 +47,7 @@ function showOrderCard(orders, dishes){
         }
 
         $("#order-list").append(
-            "<div class='w-50 container-fluid'>"+
+            "<div class='container-fluid'>"+
             "    <div>"+
             "       <ul class=\"list-group list-unstyled\" id='outer_listed_dish"+order['order_id']+"'>"+
             "           <li class=\"bg-light list-group-item d-flex justify-content-between align-items-center\"><b>Order Built-Time</b>"+order['built_time']+"</li>"+
@@ -71,18 +61,18 @@ function showOrderCard(orders, dishes){
             "    </div>"+
             "</div>"
         );
-        var subtotal = 0;
+        let subtotal = 0;
         for (let dish of dishes) {
-            if(dish['order_id'] == order['order_id']){
+            if(dish['order_id'] === order['order_id']){
                 subtotal = subtotal + dish['dish_quantity']*dish['dish_price_that_time'];
                 $("#listed_dish"+order['order_id']).append(
                     "<li class='text-right'>"+dish['name']+" ("+Number(dish['dish_price_that_time']).toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"/serving)"+
-                    "    <span class=\"badge badge-warning\">*"+dish['dish_quantity']+"</span>"+
+                    "    <span class=\"badge badge-warning\">&times;"+dish['dish_quantity']+"</span>"+
                     "</li>"
                 );
             }
         }
-        var total = subtotal + Number(order['tip']) + Number(order['delivery_fee']);
+        let total = subtotal + Number(order['tip']) + Number(order['delivery_fee']);
         $("#outer_listed_dish"+order['order_id']).append(
             "   <li class=\"bg-light list-group-item d-flex justify-content-between align-items-center\"><b>Subtotal</b>"+
             "       <span class=\"badge badge-primary\">"+subtotal.toLocaleString('en-US', {style: 'currency',currency: 'USD'})+"</span>"+

@@ -507,3 +507,7 @@ function updateDish_res(res) {
         }
     }
 }
+
+function showOrder() {
+    $("#order-list-modal").modal("show");
+}

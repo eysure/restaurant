@@ -7,19 +7,18 @@
  */
 ?>
 
-<div class="container-fluid">
-    <div class="row">
-        </br>
-        </br>
-        </br>
-    </div>
-    <br class="row container-fluid">
-        <div class="container-fluid">
-            <h1 class="text-center font-weight-bold">Order History</h1>
+<div id="order-list-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">My orders</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body modal-white">
+                <div id="order-list"></div>
+            </div>
         </div>
-        </br>
-    </div>
-    <div class="row container-fluid mw-50">
-        <div id = "order-list" class="container-fluid"></div>
     </div>
 </div>

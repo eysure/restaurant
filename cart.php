@@ -110,7 +110,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="self.location='./order.php';">Go to My Orders</button>
+                <button type="button" class="btn btn-primary" onclick="showOrder()">Show My Orders</button>
             </div>
         </div>
     </div>

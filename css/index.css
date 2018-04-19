@@ -119,6 +119,10 @@ button.no-border {
     padding: 32px;
     background-color: #FDEFDC;
 }
+.modal-body.modal-white {
+    padding: 8px;
+    background-color: white;
+}
 
 #veg-img {
     height: 40px;

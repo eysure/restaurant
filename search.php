@@ -28,7 +28,7 @@
             <div id="category">
                 <h1>Category</h1>
                 <ul class="cleandot">
-                    <li><input class="checkbox" type="checkbox" name="Combo"onchange="filter(this)"> Combo</li>
+                    <li><input class="checkbox" type="checkbox" name="Combo" onchange="filter(this)"> Combo</li>
                     <li><input class="checkbox" type="checkbox" name="Meat" onchange="filter(this)"> Meat</li>
                     <li><input class="checkbox" type="checkbox" name="Seafood" onchange="filter(this)"> Seafood</li>
                     <li><input class="checkbox" type="checkbox" name="Vegetable" onchange="filter(this)"> Vegetable</li>

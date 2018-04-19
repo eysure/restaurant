@@ -7,6 +7,7 @@
     <title>Dalao Hotpot</title>
     <script src="javascript/index.js"></script>
     <script src="javascript/search.js"></script>
+    <script src="javascript/order.js"></script>
 </head>
 <body>
 <!-- Header(Navigation bar) -->
@@ -38,6 +39,8 @@
         </div>
     </div>
 </div>
+
+<?php include 'orderList.php' ?>
 
 </body>
 </html>

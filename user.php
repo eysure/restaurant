@@ -36,7 +36,7 @@ function insertUserButton() {
                 <button class='user-btn btn btn-outline-light dropdown-toggle no-border' id='user-btn' data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class='material-icons'>account_circle</i><span>".$_SESSION['username']."</span></button>
                 <div class=\"dropdown-menu\" aria-labelledby=\"user-btn\">
                     ".showRole()."
-                    <a class=\"dropdown-item\" href='order.php'><i class='material-icons'>description</i>My orders</a>
+                    <button class=\"dropdown-item\" data-toggle='modal' data-target='#order-list-modal'><i class='material-icons'>description</i>My orders</button>
                     <div class=\"dropdown-divider\"></div>
                     ".showCustomizedBar()."
                     <a class='dropdown-item' href='#' onclick='return sendAjax(\"logout\")'><i class='material-icons'>exit_to_app</i>Logout</a>
@@ -82,7 +82,7 @@ function insertLoginModal() {
         <div class='modal fade' id='loginModal' tabindex='-1' role='dialog' aria-labelledby='loginModalLabel' aria-hidden='true'>
             <div class='modal-dialog modal-lg' role='document'>
                 <div class='modal-content'>
-                    <div class='modal-body'>
+                    <div class='modal-body modal-white'>
                     <div class='container-fluid'>
                         <div class='row'>
                         <div id='login-welcome' class='col'>
@@ -138,7 +138,7 @@ function insertSignUpModal() {
                         </button>
                     </div>
                 
-                    <div class='modal-body'>
+                    <div class='modal-body modal-white'>
                         <div class='container-fluid'>
                         
                         <div class='alert alert-secondary alert-dismissible fade show'>
