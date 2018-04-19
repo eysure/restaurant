@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         case 'getDishes': echo json_encode((object)['action' => $_POST['action'], 'data' => getDishes()]); break;
         case 'getCart': echo json_encode((object)['action' => $_POST['action'], 'data' => getCart()]); break;
         case 'addToCart': addToCart($_POST['dish'],$_POST['quantity']); break;
+        case 'addDish': addDish($_POST['dish']); break;
         case 'updateDish': updateDish($_POST['dish']); break;
         default: break;
     }
@@ -57,6 +58,19 @@ function getCart() {
     }
     else {
         return getCartDB($_SESSION['user_id']);
+    }
+}
+
+function addDish($dish) {
+    if(!isset($_SESSION['username'])) {
+        echo json_encode((object)['action' => 'addDish', 'result' => false, 'error'=>1]);
+    }
+    else if(!isset($_SESSION['role']) || $_SESSION['role']!=1) {
+        echo json_encode((object)['action' => 'addDish', 'result'=>false, 'error'=>2]);
+    }
+    else {
+        $error = addDishDB($dish);
+        echo json_encode((object)['action' => 'addDish', 'result'=>true, 'mysql_error'=>$error]);
     }
 }
 

@@ -67,6 +67,10 @@ $(document).ready(function() {
             // console.log('tmp_dish_id');
             // console.log(tmp_dish_id);
             $('#dish-img-admin').attr("src","assets/img/logo.png");
+            $('#update').html('Add this food');
+            $('#update').on('click', function () {
+                addDish();
+            });
 
         } else {
             let thisDish = getDishByID(tmp_dish_id);
@@ -177,6 +181,7 @@ function receive(res) {
             updateCart();
             break;
         }
+        case 'addDish': addDish_res(res); break;
         case 'updateDish': updateDish_res(res); break;
         case 'addToCart': addToCart_res(res); break;
         case 'checkout': checkOut_res(res); break;
@@ -477,6 +482,44 @@ function checkOut_res(res) {
         updateCart();
         controlCartView(0);
         $("#checkout-success-modal").modal('show');
+    }
+}
+
+function addDish() {
+    $.ajax({
+        type: 'POST',
+        data: {
+            action: 'addDish',
+            dish: {
+                'name': $('#dish-name-admin').val(),
+                'description': $('#dish-description-admin').val(),
+                'category': $('#dish-cat-admin').val(),
+                'price': $('#dish-price-admin').val(),
+                'calorie': $('#dish-cal-admin').val(),
+                'vegetarian': $('#veg-yes:checked').val() === "on",
+                'inventory': $('#dish-inventory-admin').val(),
+                'availability': $('#dish-avail-admin').val()
+            }
+        },
+        url: 'dishCtrl.php',
+        success: function(res) {
+            receive(res);
+        },
+        timeout: 5000
+    });
+}
+
+function addDish_res(res) {
+    if(res['result']) {
+        alert("Food is successfully added!");
+        location.reload(false);
+    }
+    else{
+        switch (res['error']) {
+            case 1:
+            case 2: alert("Sorry, you need to login as admin to add food"); break;
+            default: alert("Sorry, adding food failed, and we don't know why"); break;
+        }
     }
 }
 

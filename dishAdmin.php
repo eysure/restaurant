@@ -87,9 +87,7 @@
 
                             <div class="col-9">
                                 <div class="row btn-right">
-                                    <button id="update" class="btn btn-primary btn-block">
-                                        <span>Update</span>
-                                    </button>
+                                    <button id="update" class="btn btn-primary btn-block">Update</button>
                                 </div>
                             </div>
                         </div>

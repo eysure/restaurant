@@ -119,6 +119,31 @@ function getCartDB($user_id) {
 }
 
 /**
+ * Database - Add a dish
+ * @param $dish
+ * @return boolean: success or not
+ */
+function addDishDB($dish) {
+    $con = getConnection();
+
+    $name = $dish['name'];
+    $desc = $dish['description'];
+    $cat = $dish['category'];
+    $price = $dish['price'];
+    $cal = $dish['calorie'];
+    $veg = $dish['veg']?1:0;
+    $inv = $dish['inventory'];
+    $avail = $dish['availability'];
+
+    $q = "INSERT INTO dish (name, description, category, price, calorie, vegetarian, inventory, availability)
+          VALUES ($name, $desc, $cat, $price, $cal, $veg, $inv, $avail)";
+    mysqli_query($con, $q);
+
+    //test
+    return mysqli_erro($con);
+}
+
+/**
  * Database - Update a dish
  * @param $dish
  * @return boolean: success or not
@@ -136,7 +161,9 @@ function updateDishDB($dish) {
     $inv = $dish['inventory'];
     $avail = $dish['availability'];
 
-    $q = "UPDATE dish SET name='$name', description='$desc', category='$cat', price=$price, calorie=$cal, vegetarian=$veg, inventory=$inv, availability=$avail WHERE id=$id";
+    $q = "UPDATE dish 
+          SET name='$name', description='$desc', category='$cat', price=$price, calorie=$cal, vegetarian=$veg, inventory=$inv, availability=$avail 
+          WHERE id=$id";
     mysqli_query($con, $q);
 
     //test
