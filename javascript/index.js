@@ -39,7 +39,7 @@ $(document).ready(function() {
         $('#dish-description').text(thisDish['description']);
         $('#dish-price').text(thisDish['price']);
         $('#dish-inv').text(thisDish['inventory']);
-        if (thisDish['vegetarian'] === 1) $('#detail-veg').show();
+        if (thisDish['vegetarian'] === "1") $('#detail-veg').show();
 
         // Add to cart
         $('#add-to-cart').on('click', function () {
@@ -51,7 +51,7 @@ $(document).ready(function() {
         // Admin control
         if ($('#role-flag').data('role')===1) {
             $('#detail-admin').show();                          // Show edit button row
-            tmp_dish_id = thisDish['id'];
+            tmp_dish_id = thisDish['id'];                       // Send dish ID to edit page to inflate the edit modal
         }
     });
 
