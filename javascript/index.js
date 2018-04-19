@@ -18,8 +18,8 @@ $(document).ready(function() {
     // Scroll paging
     // TODO: test
     $(window).scroll(function() {
-        let pixelToButtom = $(window).scrollTop() + $(window).height() - $(document).height();
-        if(pixelToButtom>-200) graduallyShowDishCard(6, dishesRemain);
+        let pixelToBottom = $(window).scrollTop() + $(window).height() - $(document).height();
+        if(pixelToBottom>-200) graduallyShowDishCard(6, dishesRemain);
     });
 
     // Hook: Course detail ON/OFF
@@ -37,7 +37,7 @@ $(document).ready(function() {
         $('#dish-description').text(thisDish['description']);
         $('#dish-price').text(thisDish['price']);
         $('#dish-inv').text(thisDish['inventory']);
-        if (thisDish['vegetarian'] == 1) $('#detail-veg').show();
+        if (thisDish['vegetarian'] === 1) $('#detail-veg').show();
 
         // Add to cart
         $('#add-to-cart').on('click', function () {
@@ -481,7 +481,7 @@ function updateDish(dish) {
                 'category': $('#dish-cat-admin').val(),
                 'price': $('#dish-price-admin').val(),
                 'calorie': $('#dish-cal-admin').val(),
-                'vegetarian': $('#veg-yes:checked').val()=="on",
+                'vegetarian': $('#veg-yes:checked').val()==="on",
                 'inventory': $('#dish-inventory-admin').val(),
                 'availability': $('#dish-avail-admin').val()
             }

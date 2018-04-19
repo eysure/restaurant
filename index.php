@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<?php include 'orderList.php' ?>
+<?php include 'OrderList.php' ?>
 
 </body>
 </html>
