@@ -24,7 +24,16 @@
                 <div class="container detail-middle">
 
                     <div class="row" id="detail-name">
-                        <h5 class="modal-title" id="dish-name"></h5>
+                        <div class="col">
+                            <div class="row">
+                                <h5 class="modal-title" id="dish-name"></h5>
+                            </div>
+                        </div>
+                        <div class="col" id="detail-veg" style="display: none;">
+                            <div class="row justify-content-end">
+                                <img id="veg-img" src="assets/img/vegetarian-mark-60.png" alt="vegetarian">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row" id="detail-description">
@@ -32,14 +41,21 @@
                     </div>
 
                     <div class="row" id="detail-price-qty">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="row" id="detail-price">
                                 <strong>$</strong>
                                 <strong id="dish-price"></strong>
                             </div>
                         </div>
 
-                        <div class="col-12 col-sm-6" id="detail-qty-col">
+                        <div class="col-4">
+                            <div class="row justify-content-end" id="detail-inv">
+                                <em id="dish-inv"></em>
+                                <em>left</em>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4" id="detail-qty-col">
                             <div class="row justify-content-end" id="detail-qty-row">
                                 <div class="input-group p-0" id="detail-qty">
                                     <span class="input-group-btn input-group-prepend">
