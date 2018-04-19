@@ -5,6 +5,8 @@ let total = 0;
 let msg = null;
 let dishesRemain = [];
 
+let tmp_dish_id = 0;
+
 $(document).ready(function() {
 
     // Cart view initialize
@@ -49,7 +51,7 @@ $(document).ready(function() {
         // Admin control
         if ($('#role-flag').data('role')===1) {
             $('#detail-admin').show();                          // Show edit button row
-            $('#edit').attr("data-id",thisDish['id']);          // Transmit id to dish-detail-admin
+            tmp_dish_id = thisDish['id'];
         }
     });
 
@@ -59,9 +61,8 @@ $(document).ready(function() {
     });
 
     // Hook: Course detail (admin) ON/OFF
-    course_detail_admin.on('show.bs.modal', function (event) {
-        let card = $(event.relatedTarget);                    // Button that triggered the modal
-        let thisDish = getDishByID(card.data('id'));
+    course_detail_admin.on('show.bs.modal', function () {
+        let thisDish = getDishByID(tmp_dish_id);
 
         $('#dish-img-admin').attr("src",thisDish['photo']);
         $('#dish-name-admin').val(thisDish['name']);
