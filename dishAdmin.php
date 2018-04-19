@@ -73,7 +73,7 @@
                         </div>
                     </div>
 
-                    <hr id="detail-divider"/>
+                    <hr class="detail-divider"/>
 
                     <div class="container detail-bottom">
 

@@ -178,7 +178,7 @@ button.no-border {
     border-color: #B8E614;
 }
 
-#detail-divider {
+.detail-divider {
     border-color: lightgrey;
 }
 
@@ -478,11 +478,11 @@ div#search-bar-container.col-2 {
     max-width: 240px;
 }
 
-#addItem {
+#addFood {
     margin: 30px 0px 0px 10px;
 }
 
-#addBtn {
+#addFoodBtn {
     font-size: xx-large;
     color: #FDEFDC;
     background-color: #850523;

@@ -4,17 +4,14 @@ $(document).ready(function() {
         filter($(this));
     });
 
-    if (true) {
-        $('#addItem').show();
+    if($('#role-flag').data('role')===1) {
+        $('#addFood').show();
     }
 
-    $('#addBtn').on('click', function () {
+    $('#addFoodBtn').on('click', function () {
         console.log('addbtn clicked');
     });
-    //
-    // $('#dish-detail-admin').on('show.bs.modal', function (event) {
-    //
-    // });
+
 });
 
 // check filters

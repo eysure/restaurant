@@ -58,32 +58,42 @@ $(document).ready(function() {
     course_detail.on('hide.bs.modal', function () {
         $('#add-to-cart').off('click');
         $('#dish-quantity').val(1);                             // Reset the quantity counter
+        tmp_dish_id = 0;
     });
 
     // Hook: Course detail (admin) ON/OFF
     course_detail_admin.on('show.bs.modal', function () {
-        let thisDish = getDishByID(tmp_dish_id);
+        if (tmp_dish_id === 0) {
+            // console.log('tmp_dish_id');
+            // console.log(tmp_dish_id);
+            $('#dish-img-admin').attr("src","assets/img/logo.png");
 
-        $('#dish-img-admin').attr("src",thisDish['photo']);
-        $('#dish-name-admin').val(thisDish['name']);
-        $('#dish-description-admin').val(thisDish['description']);
-        $('#dish-cat-admin').val(thisDish['category']);
-        $('#dish-price-admin').val(thisDish['price']);
-        $('#dish-cal-admin').val(thisDish['calorie']);
-        let veg = thisDish['vegetarian'];
-        if (veg === 1) {
-            document.getElementById('veg-yes').checked = true;
         } else {
-            document.getElementById('veg-no').checked = true;
+            let thisDish = getDishByID(tmp_dish_id);
+
+            $('#dish-img-admin').attr("src",thisDish['photo']);
+            $('#dish-name-admin').val(thisDish['name']);
+            $('#dish-description-admin').val(thisDish['description']);
+            $('#dish-cat-admin').val(thisDish['category']);
+            $('#dish-price-admin').val(thisDish['price']);
+            $('#dish-cal-admin').val(thisDish['calorie']);
+            let veg = thisDish['vegetarian'];
+            if (veg === 1) {
+                document.getElementById('veg-yes').checked = true;
+            } else {
+                document.getElementById('veg-no').checked = true;
+            }
+
+            $('#dish-inventory-admin').val(thisDish['inventory']);
+            $('#dish-avail-admin').val(thisDish['availability']);
+
+            // Click 'Update' button
+            $('#update').on('click', function () {
+                updateDish(thisDish);
+            });
         }
 
-        $('#dish-inventory-admin').val(thisDish['inventory']);
-        $('#dish-avail-admin').val(thisDish['availability']);
 
-        // Click 'Update' button
-        $('#update').on('click', function () {
-            updateDish(thisDish);
-        });
     });
 
     course_detail_admin.on('hide.bs.modal', function () {

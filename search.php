@@ -10,9 +10,13 @@
 ?>
 <container>
     <div class="col">
-        <div class="row">
-            <div class="col" id="addItem" style="display: none">
-                <button class="btn" id="addBtn" data-toggle="modal" data-target="#dish-detail-admin">+  Food</button>
+        <div class="row" >
+            <div class="col">
+                <div class="row" id="addFood" style="display: none">
+                    <button class="btn" id="addFoodBtn" data-toggle="modal" data-target="#dish-detail-admin">
+                        <span>+  Food</span>
+                    </button>
+                </div>
             </div>
         </div>
 
