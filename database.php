@@ -132,13 +132,13 @@ function updateDishDB($dish) {
     $cat = $dish['category'];
     $price = $dish['price'];
     $cal = $dish['calorie'];
-    $veg = $dish['veg'];
+    $veg = $dish['veg']?1:0;
     $inv = $dish['inventory'];
     $avail = $dish['availability'];
-    $q = "UPDATE dish SET name=$name, description=$desc, category=$cat, price=$price, calorie=$cal, vegetarian=$veg, inventory=$inv, availability=$avail WHERE id=$id";
+
+    $q = "UPDATE dish SET name='$name', description='$desc', category='$cat', price=$price, calorie=$cal, vegetarian=$veg, inventory=$inv, availability=$avail WHERE id=$id";
     mysqli_query($con, $q);
 
     //test
-    $qTest = "SELECT * FROM dish WHERE id=$id";
-    return ($qTest === $dish);
+    return mysqli_error($con);
 }

@@ -17,9 +17,10 @@ $(document).ready(function() {
     });
 
     // Scroll paging
+    // TODO: test
     $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() > $(document).height() - 200)
-            graduallyShowDishCard(6, dishesRemain);
+        let pixelToButtom = $(window).scrollTop() + $(window).height() - $(document).height();
+        if(pixelToButtom>-200) graduallyShowDishCard(6, dishesRemain);
     });
 
     // Hook: Course detail ON/OFF
@@ -82,42 +83,12 @@ $(document).ready(function() {
 
         // Click 'Update' button
         $('#update').on('click', function () {
-
-            let updatedDish = thisDish;
-
-            console.log('update button clicked');
-            //adminModal.modal('hide');
-            //userModal.modal('show');
-
-            updatedDish['name'] = $('#dish-name-admin').val();
-            updatedDish['description'] = $('#dish-description-admin').val();
-            updatedDish['category'] = $('#dish-cat-admin').val();
-            updatedDish['price'] = $('#dish-price-admin').val();
-            updatedDish['calorie'] = $('#dish-calorie-admin').val();
-            updatedDish['vegetarian'] = $('#veg-yes').checked;
-            updatedDish['inventory'] = $('#dish-inventory-admin').val();
-            updatedDish['availability'] = $('#dish-avail-admin').val();
-
-            console.log(updatedDish);
-
-            //update(null, updatedDish);
-
-            $.ajax({
-                type: 'POST',
-                data: {
-                    action: 'updateDish',
-                    dish: updatedDish
-                },
-                url: 'dishCtrl.php',
-                success: function(res) {
-                    receiveAjaxResponse(res);
-                },
-                timeout: 5000,
-                error: function(res) {
-                    errorAjax();
-                }
-            });
+            updateDish(thisDish);
         });
+    });
+
+    course_detail_admin.on('hide.bs.modal', function () {
+        $('#update').off('click');
     });
 
     // Hook: Cart Tip Button or customize
@@ -197,6 +168,7 @@ function receive(res) {
             updateCart();
             break;
         }
+        case 'updateDish': updateDish_res(res); break;
         case 'addToCart': addToCart_res(res); break;
         case 'checkout': checkOut_res(res); break;
         default: break;
@@ -499,45 +471,41 @@ function checkOut_res(res) {
     }
 }
 
-// function updateDish(updatedDish) {
-//     console.log('update button clicked');
-//     // adminModal.modal('hide');
-//     // userModal.modal('show');
-//
-//     updatedDish['name'] = $('#dish-name-admin').val();
-//     updatedDish['description'] = $('#dish-description-admin').val();
-//     updatedDish['category'] = $('#dish-cat-admin').val();
-//     updatedDish['price'] = $('#dish-price-admin').val();
-//     updatedDish['calorie'] = $('#dish-calorie-admin').val();
-//     updatedDish['vegetarian'] = $('#veg-yes').checked;
-//     updatedDish['inventory'] = $('#dish-inventory-admin').val();
-//     updatedDish['availability'] = $('#dish-avail-admin').val();
-//
-//     console.log(updatedDish);
-//
-//     update(null, updatedDish);
-// }
+function updateDish(dish) {
+    $.ajax({
+        type: 'POST',
+        data: {
+            action: 'updateDish',
+            dish: {
+                'id': dish['id'],
+                'name': $('#dish-name-admin').val(),
+                'description': $('#dish-description-admin').val(),
+                'category': $('#dish-cat-admin').val(),
+                'price': $('#dish-price-admin').val(),
+                'calorie': $('#dish-cal-admin').val(),
+                'vegetarian': $('#veg-yes:checked').val()=="on",
+                'inventory': $('#dish-inventory-admin').val(),
+                'availability': $('#dish-avail-admin').val()
+            }
+        },
+        url: 'dishCtrl.php',
+        success: function(res) {
+            receive(res);
+        },
+        timeout: 5000
+    });
+}
 
-// /**
-//  * Send update dish ajax to dishCtrl.php
-//  * @param action: update
-//  * @param data
-//  * @returns object
-//  */
-// function update(action,data) {
-//     $.ajax({
-//         type: 'POST',
-//         data: {
-//             action: 'updateDish',
-//             dish: data
-//         },
-//         url: 'dishCtrl.php',
-//         success: function(res) {
-//             receiveAjaxResponse(res);
-//         },
-//         timeout: 5000,
-//         error: function(res) {
-//             errorAjax();
-//         }
-//     });
-// }
+function updateDish_res(res) {
+    if(res['result']) {
+        alert("Update successful!");
+        location.reload(false);
+    }
+    else {
+        switch (res['error']) {
+            case 1:
+            case 2: alert("Sorry, you need to login as admin to update dish"); break;
+            default: alert("Sorry, update failed, and we don't know why"); break;
+        }
+    }
+}

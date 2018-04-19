@@ -61,10 +61,14 @@ function getCart() {
 }
 
 function updateDish($dish) {
-    if($_SESSION['role'] == 1) {
-
-        updateDishDB($dish);
-    } else {
-
+    if(!isset($_SESSION['username'])) {
+        echo json_encode((object)['action' => 'updateDish', 'result'=>false, 'error'=>1]);
+    }
+    else if(!isset($_SESSION['role']) || $_SESSION['role']!=1) {
+        echo json_encode((object)['action' => 'updateDish', 'result'=>false, 'error'=>2]);
+    }
+    else {
+        $error = updateDishDB($dish);
+        echo json_encode((object)['action' => 'updateDish', 'result'=>true, 'mysql_error'=>$error]);
     }
 }

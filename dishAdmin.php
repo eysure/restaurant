@@ -12,7 +12,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body detail-body">
-                <form action="">
+                <div>
                     <div class="container detail-top">
                         <div class="row border justify-content-center">
                             <img class="detail-img" src="#" alt="food picture" id="dish-img-admin">
@@ -28,7 +28,7 @@
 
                         <div class="row form-group">
                             <label for="">Description</label>
-                            <textarea class="form-control" id="dish-description-admin" name="" id="" rows="2">description...</textarea>
+                            <textarea class="form-control" id="dish-description-admin" name="" rows="2">description...</textarea>
                         </div>
 
                         <div class="row form-group">
@@ -95,7 +95,7 @@
 
                     </div>
 
-                </form>
+                </div>
 
             </div>
         </div>
