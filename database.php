@@ -117,3 +117,28 @@ function getCartDB($user_id) {
     while($row = mysqli_fetch_assoc($r)) $cart_item[$row['dish_id']] = $row['dish_qty'];
     return $cart_item;
 }
+
+/**
+ * Database - Update a dish
+ * @param $dish
+ * @return boolean: success or not
+ */
+function updateDishDB($dish) {
+    $con = getConnection();
+
+    $id = $dish['id'];
+    $name = $dish['name'];
+    $desc = $dish['description'];
+    $cat = $dish['category'];
+    $price = $dish['price'];
+    $cal = $dish['calorie'];
+    $veg = $dish['veg'];
+    $inv = $dish['inventory'];
+    $avail = $dish['availability'];
+    $q = "UPDATE dish SET name=$name, description=$desc, category=$cat, price=$price, calorie=$cal, vegetarian=$veg, inventory=$inv, availability=$avail WHERE id=$id";
+    mysqli_query($con, $q);
+
+    //test
+    $qTest = "SELECT * FROM dish WHERE id=$id";
+    return ($qTest === $dish);
+}

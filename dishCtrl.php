@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         case 'getDishes': echo json_encode((object)['action' => $_POST['action'], 'data' => getDishes()]); break;
         case 'getCart': echo json_encode((object)['action' => $_POST['action'], 'data' => getCart()]); break;
         case 'addToCart': addToCart($_POST['dish'],$_POST['quantity']); break;
+        case 'updateDish': updateDish($_POST['dish']); break;
         default: break;
     }
 }
@@ -56,5 +57,14 @@ function getCart() {
     }
     else {
         return getCartDB($_SESSION['user_id']);
+    }
+}
+
+function updateDish($dish) {
+    if($_SESSION['role'] == 1) {
+
+        updateDishDB($dish);
+    } else {
+
     }
 }

@@ -81,7 +81,43 @@ $(document).ready(function() {
         $('#dish-avail-admin').val(thisDish['availability']);
 
         // Click 'Update' button
-        //$('#update').on('click', updateDish(course_detail, course_detail_admin, thisDish));
+        $('#update').on('click', function () {
+
+            let updatedDish = thisDish;
+
+            console.log('update button clicked');
+            //adminModal.modal('hide');
+            //userModal.modal('show');
+
+            updatedDish['name'] = $('#dish-name-admin').val();
+            updatedDish['description'] = $('#dish-description-admin').val();
+            updatedDish['category'] = $('#dish-cat-admin').val();
+            updatedDish['price'] = $('#dish-price-admin').val();
+            updatedDish['calorie'] = $('#dish-calorie-admin').val();
+            updatedDish['vegetarian'] = $('#veg-yes').checked;
+            updatedDish['inventory'] = $('#dish-inventory-admin').val();
+            updatedDish['availability'] = $('#dish-avail-admin').val();
+
+            console.log(updatedDish);
+
+            //update(null, updatedDish);
+
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'updateDish',
+                    dish: updatedDish
+                },
+                url: 'dishCtrl.php',
+                success: function(res) {
+                    receiveAjaxResponse(res);
+                },
+                timeout: 5000,
+                error: function(res) {
+                    errorAjax();
+                }
+            });
+        });
     });
 
     // Hook: Cart Tip Button or customize
@@ -463,45 +499,45 @@ function checkOut_res(res) {
     }
 }
 
-function updateDish(userModal, adminModal, updatedDish) {
-    console.log('update button clicked');
-    adminModal.modal('hide');
-    userModal.modal('show');
+// function updateDish(updatedDish) {
+//     console.log('update button clicked');
+//     // adminModal.modal('hide');
+//     // userModal.modal('show');
+//
+//     updatedDish['name'] = $('#dish-name-admin').val();
+//     updatedDish['description'] = $('#dish-description-admin').val();
+//     updatedDish['category'] = $('#dish-cat-admin').val();
+//     updatedDish['price'] = $('#dish-price-admin').val();
+//     updatedDish['calorie'] = $('#dish-calorie-admin').val();
+//     updatedDish['vegetarian'] = $('#veg-yes').checked;
+//     updatedDish['inventory'] = $('#dish-inventory-admin').val();
+//     updatedDish['availability'] = $('#dish-avail-admin').val();
+//
+//     console.log(updatedDish);
+//
+//     update(null, updatedDish);
+// }
 
-    updatedDish['name'] = $('#dish-name-admin').val();
-    updatedDish['description'] = $('#dish-description-admin').val();
-    updatedDish['category'] = $('#dish-cat-admin').val();
-    updatedDish['price'] = $('#dish-price-admin').val();
-    updatedDish['calorie'] = $('#dish-calorie-admin').val();
-    updatedDish['vegetarian'] = $('#veg-yes').checked;
-    updatedDish['inventory'] = $('#dish-inventory-admin').val();
-    updatedDish['availability'] = $('#dish-avail-admin').val();
-
-    console.log(updatedDish);
-
-    //updateDish('update', updatedDishData);
-}
-
-/**
- * Send update dish ajax to dishCtrl.php
- * @param action: update
- * @param data
- * @returns object
- */
-function updateDishData(action,data=null) {
-    $.ajax({
-        type: 'POST',
-        data: {
-            action: action,
-            data: data
-        },
-        url: 'user.php',
-        success: function(res) {
-            receiveAjaxResponse(res);
-        },
-        timeout: 5000,
-        error: function(res) {
-            errorAjax();
-        }
-    });
-}
+// /**
+//  * Send update dish ajax to dishCtrl.php
+//  * @param action: update
+//  * @param data
+//  * @returns object
+//  */
+// function update(action,data) {
+//     $.ajax({
+//         type: 'POST',
+//         data: {
+//             action: 'updateDish',
+//             dish: data
+//         },
+//         url: 'dishCtrl.php',
+//         success: function(res) {
+//             receiveAjaxResponse(res);
+//         },
+//         timeout: 5000,
+//         error: function(res) {
+//             errorAjax();
+//         }
+//     });
+// }
