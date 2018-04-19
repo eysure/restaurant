@@ -1,5 +1,3 @@
-<?php?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,9 +22,8 @@
                     </div>
                 </div>
             </div>
-
-            <?php include 'cart.php' ?>
         </div>
+        <?php include 'cart.php' ?>
     </div>
 </body>
 </html>

@@ -1,5 +1,3 @@
-let orders = null;
-
 $(document).ready(function() {
     $.ajax({
         type: 'POST',
@@ -20,8 +18,6 @@ function order_receive(res) {
         console.log(res);
     } catch(err) {
         console.error("JSON parse error");
-        console.log(err);
-        console.log(res);
     }
 
     // Checking if there is an error in server-side
@@ -42,6 +38,10 @@ function order_receive(res) {
 }
 
 function showOrderCard(orders, dishes){
+    if(orders.length == 0){
+        window.alert("You don't have any order record!");
+        window.location.replace("index.php");
+    }
     for (let order of orders) {
         //Processing status
         var s = null;

@@ -36,8 +36,6 @@
                 </div>
             </div>
         </div>
-
-        <?php include 'cart.php' ?>
     </div>
 </div>
 
