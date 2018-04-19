@@ -595,6 +595,10 @@ div#search-bar-container.col-2 {
     display: grid;
 }
 
+.dish-card-na {
+    filter: brightness(0.3);
+}
+
 /* ---------------------------------------------------
     Order History
 ----------------------------------------------------- */

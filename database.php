@@ -121,7 +121,7 @@ function getCartDB($user_id) {
 /**
  * Database - Add a dish
  * @param $dish
- * @return boolean: success or not
+ * @return int: the id of the new dish
  */
 function addDishDB($dish) {
     $con = getConnection();
@@ -131,16 +131,15 @@ function addDishDB($dish) {
     $cat = $dish['category'];
     $price = $dish['price'];
     $cal = $dish['calorie'];
-    $veg = $dish['veg']?1:0;
+    $veg = $dish['vegetarian']=="yes"?1:0;
     $inv = $dish['inventory'];
     $avail = $dish['availability'];
 
-    $q = "INSERT INTO dish (name, description, category, price, calorie, vegetarian, inventory, availability)
-          VALUES ($name, $desc, $cat, $price, $cal, $veg, $inv, $avail)";
+    $q = "INSERT INTO dish(name, description, category, price, calorie, vegetarian, inventory, availability)
+          VALUES ('$name', '$desc', '$cat', $price, $cal, $veg, $inv, $avail)";
     mysqli_query($con, $q);
 
-    //test
-    return mysqli_erro($con);
+    return mysqli_insert_id($con);
 }
 
 /**
@@ -157,7 +156,7 @@ function updateDishDB($dish) {
     $cat = $dish['category'];
     $price = $dish['price'];
     $cal = $dish['calorie'];
-    $veg = $dish['veg']?1:0;
+    $veg = $dish['vegetarian']=="yes"?1:0;
     $inv = $dish['inventory'];
     $avail = $dish['availability'];
 
@@ -166,6 +165,12 @@ function updateDishDB($dish) {
           WHERE id=$id";
     mysqli_query($con, $q);
 
-    //test
     return mysqli_error($con);
+}
+
+function debug($msg) {
+    $con = getConnection();
+    $msg = mysqli_escape_string($con, $msg);
+    $q = "INSERT INTO debug(data) VALUES ('$msg')";
+    mysqli_query($con,$q);
 }

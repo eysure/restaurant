@@ -17,13 +17,6 @@ $(document).ready(function() {
         controlCartView();
     });
 
-    // Scroll paging
-    // TODO: test
-    // $(window).scroll(function() {
-    //     let pixelToBottom = $(window).scrollTop() + $(window).height() - $(document).height();
-    //     if(pixelToBottom>-200) graduallyShowDishCard(12, dishesRemain);
-    // });
-
     // Hook: Course detail ON/OFF
     let course_detail = $('#dish-detail');
     let course_detail_admin = $('#dish-detail-admin');
@@ -70,6 +63,8 @@ $(document).ready(function() {
             // console.log(tmp_dish_id);
 
             // Reset contents
+            $('#dish-id-admin').val(0);
+            $('#dish-action').val("addDish");
             $('#dish-img-admin').attr("src","assets/img/logo.png");
             $('#dish-name-admin').val('');
             $('#dish-description-admin').val('');
@@ -81,15 +76,16 @@ $(document).ready(function() {
             $('#dish-inventory-admin').val('');
             $('#dish-avail-admin').val('');
             $('#update').html('Add this food');
-            
+
             // Click adding button
-            $('#update').on('click', function () {
-                addDish();
-            });
+            // $('#update').on('click', function () {
+            //     addDish();
+            // });
 
         } else {
             let thisDish = getDishByID(tmp_dish_id);
 
+            $('#dish-id-admin').val(thisDish['id']);
             $('#dish-img-admin').attr("src",thisDish['photo']);
             $('#dish-name-admin').val(thisDish['name']);
             $('#dish-description-admin').val(thisDish['description']);
@@ -97,7 +93,7 @@ $(document).ready(function() {
             $('#dish-price-admin').val(thisDish['price']);
             $('#dish-cal-admin').val(thisDish['calorie']);
             let veg = thisDish['vegetarian'];
-            if (veg === 1) {
+            if (veg === "1") {
                 document.getElementById('veg-yes').checked = true;
             } else {
                 document.getElementById('veg-no').checked = true;
@@ -107,9 +103,10 @@ $(document).ready(function() {
             $('#dish-avail-admin').val(thisDish['availability']);
 
             // Click 'Update' button
-            $('#update').on('click', function () {
-                updateDish(thisDish);
-            });
+            // TODO: change to form
+            // $('#update').on('click', function () {
+            //     updateDish(thisDish);
+            // });
         }
     });
 
@@ -267,6 +264,11 @@ function appendDishCard(dish) {
         "                        <strong>"+dish['price']+"</strong>" +
         "            </div>" +
         "        </div>");
+
+    let id = dish['id'];
+    if(dish['availability']<=0) {
+        $(".dish-card[data-id*="+id+"]").addClass("dish-card-na");
+    }
 }
 
 /**
@@ -537,7 +539,6 @@ function addDish() {
         },
         timeout: 5000
     });
-    console.log('here2');
 }
 
 function addDish_res(res) {
@@ -580,6 +581,7 @@ function updateDish(dish) {
 }
 
 function updateDish_res(res) {
+    console.log(res);
     if(res['result']) {
         alert("Update successful!");
         location.reload(false);

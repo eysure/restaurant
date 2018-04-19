@@ -46,6 +46,6 @@ include "user.php";
         </div>
     </div>
 </nav>
-<div id="cart-btn"><i class="material-icons">shopping_cart</i><span id="cart-amount"><?php echo $cart?></span></div>
+<div id="cart-btn"><i class="material-icons">shopping_cart</i><span id="cart-amount"></span></div>
 </div></div>
 <?php insertLoginModal(); ?>

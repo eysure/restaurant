@@ -71,6 +71,8 @@ function getOrders() {
  */
 function checkout($cart, $tip, $msg) {
 
+    $msg = htmlspecialchars($msg);
+
     // Check login status
     if(!isset($_SESSION['username'])) {
         echo json_encode((object)['action' => 'checkout', 'result'=>false, 'error_code' => 1]);
@@ -94,9 +96,17 @@ function checkout($cart, $tip, $msg) {
     $delivery_fee = 5.00;
     $con = getConnection();
 
+    // Data cleaning
+    $msg = mysqli_escape_string($con,$msg);
+
     // First, create an order and get the order number
     $q = "INSERT INTO restaurant.order(user_id, user_message, tip, delivery_fee) VALUES ($user_id, '$msg', $tip, $delivery_fee)";
     mysqli_query($con, $q);
+    $mysql_error = mysqli_error($con);
+    if($mysql_error){
+        echo json_encode((object)['action'=> 'checkout', 'result'=>false, 'mysql_error'=>$mysql_error]);
+        exit(0);
+    }
     $order_id = mysqli_insert_id($con);
 
     // Then, traverse each item to get price to compute subtotal, meanwhile, update remain inventory
@@ -106,10 +116,21 @@ function checkout($cart, $tip, $msg) {
                 $remain = $dish['inventory'] - $quantity;
                 $q = "UPDATE dish SET inventory=$remain WHERE id=$dish_id";
                 mysqli_query($con, $q);
+                $mysql_error = mysqli_error($con);
+                if($mysql_error){
+                    echo json_encode((object)['action'=> 'checkout', 'result'=>false, 'mysql_error'=>$mysql_error]);
+                    exit(0);
+                }
+
                 $subtotal += $dish['price'] * $quantity;
                 $price = $dish['price'];
                 $q2 = "INSERT INTO ordered_dish_qty(order_id,dish_id,dish_quantity,dish_price_that_time) VALUES ($order_id,$dish_id,$quantity,$price)";
                 mysqli_query($con, $q2);
+                $mysql_error = mysqli_error($con);
+                if($mysql_error){
+                    echo json_encode((object)['action'=> 'checkout', 'result'=>false, 'mysql_error'=>$mysql_error]);
+                    exit(0);
+                }
             }
         }
     }
@@ -120,11 +141,21 @@ function checkout($cart, $tip, $msg) {
         $delivery_fee = 0.00;
         $q3 = "UPDATE restaurant.order SET delivery_fee=$delivery_fee WHERE order_id=$order_id";
         mysqli_query($con, $q3);
+        $mysql_error = mysqli_error($con);
+        if($mysql_error){
+            echo json_encode((object)['action'=> 'checkout', 'result'=>false, 'mysql_error'=>$mysql_error]);
+            exit(0);
+        }
     }
 
     // Empty Cart for this user
     $q4 = "DELETE FROM cart WHERE user_id=$user_id";
     mysqli_query($con, $q4);
+    $mysql_error = mysqli_error($con);
+    if($mysql_error){
+        echo json_encode((object)['action'=> 'checkout', 'result'=>false, 'mysql_error'=>$mysql_error]);
+        exit(0);
+    }
 
     // Return
     echo json_encode((object)['action' => 'checkout', 'result'=>true, 'debug'=>$_POST,'user_id'=> $user_id, 'order_id' => $order_id, 'subtotal'=>$subtotal, 'delivery_fee'=>$delivery_fee]);
