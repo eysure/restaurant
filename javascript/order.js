@@ -1,4 +1,11 @@
 $(document).ready(function() {
+    $('#order-list-modal').on('show.bs.modal', function(e) {
+        $("#order-list").empty().append("<h4 class=\"list-group list-unstyled\">Loading...</h4>");
+        updateOrder();
+    });
+});
+
+function updateOrder() {
     $.ajax({
         type: 'POST',
         data: {
@@ -10,12 +17,11 @@ $(document).ready(function() {
         },
         timeout: 5000
     });
-});
+}
 
 function order_receive(res) {
     try {
         res = JSON.parse(res);
-        console.log(res);
     } catch(err) {
         console.error("JSON parse error");
     }
@@ -28,6 +34,8 @@ function order_receive(res) {
 }
 
 function showOrderCard(orders, dishes){
+    $("#order-list").empty();
+
     if(orders.length === 0){
         $("#order-list").append("<h4 class=\"list-group list-unstyled\">You don't have any order yet.</h4>");
     }
