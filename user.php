@@ -55,9 +55,9 @@ function insertUserButton() {
 function showRole() {
     $role = $_SESSION['role'];
     switch ($role) {
-        case 1: return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>Admin</h6>";
-        case 0: return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>User</h6>";
-        case 1024: return "<h6 class='dropdown-header'><i class='material-icons'>supervisor_account</i>Developer</h6>";
+        case 1:    return "<h6 id='role-flag' data-role='1'    class='dropdown-header'><i class='material-icons'>supervisor_account</i>Admin</h6>";
+        case 0:    return "<h6 id='role-flag' data-role='0'    class='dropdown-header'><i class='material-icons'>supervisor_account</i>User</h6>";
+        case 1024: return "<h6 id='role-flag' data-role='1024' class='dropdown-header'><i class='material-icons'>supervisor_account</i>Developer</h6>";
         default: break;
     }
 }

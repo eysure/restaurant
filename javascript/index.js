@@ -3,7 +3,6 @@ let cart = null;
 let tip = 2;
 let total = 0;
 let msg = null;
-
 let dishesRemain = [];
 
 $(document).ready(function() {
@@ -27,9 +26,6 @@ $(document).ready(function() {
     let course_detail = $('#dish-detail');
     let course_detail_admin = $('#dish-detail-admin');
 
-    // TODO: ADMIN ARBITRARY
-    let admin = true;
-
     // Control when detail is shown
     course_detail.on('show.bs.modal', function (event) {
         let card = $(event.relatedTarget);                    // Button that triggered the modal
@@ -49,7 +45,7 @@ $(document).ready(function() {
         });
 
         // Admin control
-        if (admin) {
+        if ($('#role-flag').data('role')===1) {
             $('#detail-admin').show();                          // Show edit button row
             $('#edit').attr("data-id",thisDish['id']);          // Transmit id to dish-detail-admin
         }

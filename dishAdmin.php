@@ -16,6 +16,7 @@
                     <div class="container detail-top">
                         <div class="row border justify-content-center">
                             <img class="detail-img" src="#" alt="food picture" id="dish-img-admin">
+                            <input class='form-control' id="dish-img-upload-admin" type="file">
                         </div>
                     </div>
 
