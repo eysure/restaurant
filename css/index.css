@@ -582,6 +582,15 @@ div#search-bar-container.col-2 {
     }
 }
 
+.btn-more {
+    width: 50%;
+    margin: 32px;
+    font-weight: 500;
+    padding: 16px;
+    justify-content: center;
+    display: grid;
+}
+
 /* ---------------------------------------------------
     Order History
 ----------------------------------------------------- */

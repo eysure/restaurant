@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
     $('#searchInput').on('input', function() {
         filter($(this));
@@ -15,7 +14,7 @@ $(document).ready(function() {
 });
 
 // check filters
-function filter(input){
+function filter(){
 
     $("#dish-list").empty();
 
@@ -37,7 +36,8 @@ function filter(input){
     checkSearch(dishesFiltered);
 
     // show filtered dishes
-    showAllDishCard(dishesFiltered);
+    dishesRemain = dishesFiltered;
+    graduallyShowDishCard(12);
 
 }
 

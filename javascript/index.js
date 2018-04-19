@@ -19,10 +19,10 @@ $(document).ready(function() {
 
     // Scroll paging
     // TODO: test
-    $(window).scroll(function() {
-        let pixelToBottom = $(window).scrollTop() + $(window).height() - $(document).height();
-        if(pixelToBottom>-200) graduallyShowDishCard(6, dishesRemain);
-    });
+    // $(window).scroll(function() {
+    //     let pixelToBottom = $(window).scrollTop() + $(window).height() - $(document).height();
+    //     if(pixelToBottom>-200) graduallyShowDishCard(12, dishesRemain);
+    // });
 
     // Hook: Course detail ON/OFF
     let course_detail = $('#dish-detail');
@@ -172,7 +172,7 @@ function receive(res) {
         case 'getDishes': {
             dishes = res['data'];
             dishesRemain = dishes.slice();
-            graduallyShowDishCard(6, dishesRemain);
+            graduallyShowDishCard(12, dishesRemain);
             requestCart();
             break;
         }
@@ -201,9 +201,25 @@ function showAllDishCard(dishes) {
  * @param count: how many card to show every time
  * @param dishesToShow: the buffer list
  */
-function graduallyShowDishCard(count=6, dishesToShow) {
+function graduallyShowDishCard(count=12) {
+    $("#btn-more-container").remove();
+
+    let j = 0;
     for(let i=0;i<count;i++) {
-        if(dishesToShow[i])appendDishCard(dishesToShow.shift());
+        if (dishesRemain[i]) appendDishCard(dishesRemain[i]);
+        else j=i;
+    }
+
+    dishesRemain = dishesRemain.slice(j?j:count);
+
+    if(!j){
+        // append more button
+        $("#dish-list").after(
+            "<nav id='btn-more-container' aria-label=\"Page navigation example\">\n" +
+            "  <ul class=\"pagination justify-content-center\">\n" +
+            "<button onclick='graduallyShowDishCard(12,dishesRemain)' class='btn btn-warning btn-more'>Load Next page</button>" +
+            "  </ul>" +
+            "</nav>");
     }
 }
 
