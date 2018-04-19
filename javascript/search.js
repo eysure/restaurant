@@ -3,6 +3,18 @@ $(document).ready(function() {
     $('#searchInput').on('input', function() {
         filter($(this));
     });
+
+    if (true) {
+        $('#addItem').show();
+    }
+
+    $('#addBtn').on('click', function () {
+        console.log('addbtn clicked');
+    });
+    //
+    // $('#dish-detail-admin').on('show.bs.modal', function (event) {
+    //
+    // });
 });
 
 // check filters

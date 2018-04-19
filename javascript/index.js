@@ -40,6 +40,8 @@ $(document).ready(function() {
         $('#dish-name').text(thisDish['name']);
         $('#dish-description').text(thisDish['description']);
         $('#dish-price').text(thisDish['price']);
+        $('#dish-inv').text(thisDish['inventory']);
+        if (thisDish['vegetarian'] == 1) $('#detail-veg').show();
 
         // Add to cart
         $('#add-to-cart').on('click', function () {
