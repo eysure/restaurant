@@ -24,16 +24,16 @@ include "user.php";
 	    			<a class="nav-link" href="./index.php"><img class="logo-img" src="assets/img/logo.png" alt="Dalao Hotpot"><span class="sr-only">(current)</span></a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a id="navbar-menu" class="nav-link" href="#">Menu</a>
+	    			<a id="navbar-menu" class="nav-link" href="./index.php">Menu</a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a class="nav-link" href="#footer-container">Location and Hours</a>
+	    			<a class="nav-link" href="./index.php#footer-container">Location and Hours</a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a class="nav-link" href="#footer-container">About</a>
+	    			<a class="nav-link" href="./index.php#footer-container">About</a>
 	    		</li>
 	    		<li class="nav-item">
-	    			<a class="nav-link" href="#footer-container">Contact</a>
+	    			<a class="nav-link" href="./index.php#footer-container">Contact</a>
 	    		</li>
 	    	</ul>
 	    </div>

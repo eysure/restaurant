@@ -28,7 +28,7 @@ function filter(input){
     checkSearch(dishesFiltered);
 
     // show filtered dishes
-    showDishCard(dishesFiltered);
+    showAllDishCard(dishesFiltered);
 
 }
 

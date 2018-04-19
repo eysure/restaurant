@@ -4,6 +4,8 @@ let tip = 2;
 let total = 0;
 let msg = null;
 
+let dishesRemain = [];
+
 $(document).ready(function() {
 
     // Cart view initialize
@@ -14,69 +16,53 @@ $(document).ready(function() {
         controlCartView();
     });
 
+    // Scroll paging
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() > $(document).height() - 200)
+            graduallyShowDishCard(6, dishesRemain);
+    });
+
     // Hook: Course detail ON/OFF
     let course_detail = $('#dish-detail');
     let course_detail_admin = $('#dish-detail-admin');
-    let thisDish = null;
 
+    // TODO: ADMIN ARBITRARY
+    let admin = true;
+
+    // Control when detail is shown
     course_detail.on('show.bs.modal', function (event) {
-
         let card = $(event.relatedTarget);                    // Button that triggered the modal
-        let id = card.data('id');                             // Extract info from data-* attributes
-
-        thisDish = getDishByID(id);
+        let thisDish = getDishByID(card.data('id'));
 
         // Inflate the modal
-        // TODO: Add the admin mode there
-
-        $('#detail-admin').empty();
-
-        let admin = true;
-        console.log(admin);
-
-        if (admin) {
-            $('#detail-admin').append('<div class="row" id="btn-line-space"></div>\n' +
-                '                        <div class="row">\n' +
-                '                            <div class="col">\n' +
-                '                                <div class="row">\n' +
-                '                                    <button id="edit" class="btn btn-danger btn-block">\n' +
-                '                                        <span>Edit this item</span>\n' +
-                '                                    </button>\n' +
-                '                                </div>\n' +
-                '                            </div>\n' +
-                '                        </div>');
-
-        }
-
         $('#dish-img').attr("src",thisDish['photo']);
         $('#dish-name').text(thisDish['name']);
         $('#dish-description').text(thisDish['description']);
         $('#dish-price').text(thisDish['price']);
 
-        let counter = $('#dish-quantity');
-        counter.val(1);                                         // Reset the quantity counter
-
         // Add to cart
         $('#add-to-cart').on('click', function () {
-            addToCart(thisDish,counter.val());
+            addToCart(thisDish,$('#dish-quantity').val());
             course_detail.modal('hide');                        // Close the modal
             controlCartView(1);                                 // Open the cart view
         });
 
-        // Click 'Edit' button
-        $('#edit').on('click', editDish(course_detail, course_detail_admin));
-
+        // Admin control
+        if (admin) {
+            $('#detail-admin').show();                          // Show edit button row
+            $('#edit').attr("data-id",thisDish['id']);          // Transmit id to dish-detail-admin
+        }
     });
 
     course_detail.on('hide.bs.modal', function () {
         $('#add-to-cart').off('click');
+        $('#dish-quantity').val(1);                             // Reset the quantity counter
     });
 
-
     // Hook: Course detail (admin) ON/OFF
-    course_detail_admin.on('show.bs.modal', function () {
-
-        //$('body').attr('overflow', 'hidden');
+    course_detail_admin.on('show.bs.modal', function (event) {
+        let card = $(event.relatedTarget);                    // Button that triggered the modal
+        let thisDish = getDishByID(card.data('id'));
 
         $('#dish-img-admin').attr("src",thisDish['photo']);
         $('#dish-name-admin').val(thisDish['name']);
@@ -85,7 +71,7 @@ $(document).ready(function() {
         $('#dish-price-admin').val(thisDish['price']);
         $('#dish-cal-admin').val(thisDish['calorie']);
         let veg = thisDish['vegetarian'];
-        if (veg == 1) {
+        if (veg === 1) {
             document.getElementById('veg-yes').checked = true;
         } else {
             document.getElementById('veg-no').checked = true;
@@ -98,9 +84,7 @@ $(document).ready(function() {
         //$('#update').on('click', updateDish(course_detail, course_detail_admin, thisDish));
     });
 
-
-
-    // Hook: Tip Button or customize
+    // Hook: Cart Tip Button or customize
     $('button.tip-opt').each(function () {
         $(this).on('click', function () {
             if(!$(this).hasClass('active')){
@@ -167,7 +151,9 @@ function receive(res) {
     switch (res['action']) {
         case 'getDishes': {
             dishes = res['data'];
-            showDishCard(dishes);
+            dishesRemain = dishes.slice();
+            graduallyShowDishCard(6, dishesRemain);
+            requestCart();
             break;
         }
         case 'getCart': {
@@ -183,22 +169,26 @@ function receive(res) {
 
 /**
  * Show all cards of dishes to the dish list
- * TODO: Need to be changed to pagination
  */
-function showDishCard(dishes) {
-    for (let dish of dishes) {
-        $("#dish-list").append(
-            "        <div class='card dish-card' data-toggle='modal' data-target='#dish-detail' data-id='"+dish['id']+"'>\n" +
-            "            <img class='card-img-top' src='"+dish['photo']+"' alt='food picture'>\n" +
-            "            <div class='card-body'>\n" +
-            "                <h4 class='card-title'>"+dish['name']+"</h4>\n" +
-            "                        <strong>$</strong>\n" +
-            "                        <strong>"+dish['price']+"</strong>\n" +
-            "            </div>\n" +
-            "        </div>");
-    }
+function showAllDishCard(dishes) {
+    for (let dish of dishes) appendDishCard(dish);
+}
 
-    // Request Cart
+/**
+ * Only if user scroll to button of page then show dish card. Use to paging
+ * @param count: how many card to show every time
+ * @param dishesToShow: the buffer list
+ */
+function graduallyShowDishCard(count=6, dishesToShow) {
+    for(let i=0;i<count;i++) {
+        if(dishesToShow[i])appendDishCard(dishesToShow.shift());
+    }
+}
+
+/**
+ * Request cart data after dishes data is loaded
+ */
+function requestCart() {
     $.ajax({
         type: 'POST',
         data: {
@@ -210,6 +200,22 @@ function showDishCard(dishes) {
         },
         timeout: 5000
     });
+}
+
+/**
+ * Append a dish card to dish list
+ * @param dish: dish want to append
+ */
+function appendDishCard(dish) {
+    $("#dish-list").append(
+        "        <div class='card dish-card' data-toggle='modal' data-target='#dish-detail' data-id='"+dish['id']+"'>" +
+        "            <img class='card-img-top' src='"+dish['photo']+"' alt='food picture'>" +
+        "            <div class='card-body'>" +
+        "                <h4 class='card-title'>"+dish['name']+"</h4>" +
+        "                        <strong>$</strong>" +
+        "                        <strong>"+dish['price']+"</strong>" +
+        "            </div>" +
+        "        </div>");
 }
 
 /**
@@ -289,35 +295,39 @@ function updateCart() {
         let subTotal = 0.00;
         $.each(cart,function(dish_id ,quantity) {
             let thisDish = getDishByID(dish_id);
-            cartList.append(
-                "<div class='cart-item'>" +
-                "   <div class='row' style='align-items: center'>" +
-                "       <div class='col-3'>" +
-                "           <img class='ci-img' src='"+thisDish['photo']+"'>" +
-                "       </div>" +
-                "       <div class='col'>" +
-                "           <div class='ci-first-line d-flex justify-content-between'>" +
-                "               <strong>"+thisDish['name']+" </strong>"+
-                "           </div>" +
-                "           <div class='ci-second-line d-flex justify-content-between'>" +
-                "               <div id='ci-price'>$ "+thisDish['price']+"</div>"+
-                "               <div>" +
-                "                   <div data-id='"+thisDish['id']+"' class='ci-counter input-group input-group-sm'>"+
-                "                       <div class='input-group-prepend'>" +
-                "                           <button class='btn btn-outline-secondary ci-btn btn-dec' style='line-height: 0'>-</button>" +
-                "                       </div>" +
-                "                       <input class='ci-counter-input input-group-text' value='"+quantity+"' type='text'>" +
-                "                       <div class='input-group-append'>" +
-                "                           <button class='btn btn-outline-secondary ci-btn btn-add' style='line-height: 0'>+</button>" +
-                "                       </div>" +
-                "                   </div>" +
-                "               </div>" +
-                "           </div>" +
-                "       </div>" +
-                "   </div>" +
-                "</div>"
-            );
-            subTotal += parseFloat(thisDish['price']) * quantity;
+            if(thisDish==null)
+                cartList.append("<div class='cart-item'>An item unavailable anymore</div>");
+            else {
+                cartList.append(
+                    "<div class='cart-item'>" +
+                    "   <div class='row' style='align-items: center'>" +
+                    "       <div class='col-3'>" +
+                    "           <img class='ci-img' src='"+thisDish['photo']+"'>" +
+                    "       </div>" +
+                    "       <div class='col'>" +
+                    "           <div class='ci-first-line d-flex justify-content-between'>" +
+                    "               <strong>"+thisDish['name']+" </strong>"+
+                    "           </div>" +
+                    "           <div class='ci-second-line d-flex justify-content-between'>" +
+                    "               <div id='ci-price'>$ "+thisDish['price']+"</div>"+
+                    "               <div>" +
+                    "                   <div data-id='"+thisDish['id']+"' class='ci-counter input-group input-group-sm'>"+
+                    "                       <div class='input-group-prepend'>" +
+                    "                           <button class='btn btn-outline-secondary ci-btn btn-dec' style='line-height: 0'>-</button>" +
+                    "                       </div>" +
+                    "                       <input class='ci-counter-input input-group-text' value='"+quantity+"' type='text'>" +
+                    "                       <div class='input-group-append'>" +
+                    "                           <button class='btn btn-outline-secondary ci-btn btn-add' style='line-height: 0'>+</button>" +
+                    "                       </div>" +
+                    "                   </div>" +
+                    "               </div>" +
+                    "           </div>" +
+                    "       </div>" +
+                    "   </div>" +
+                    "</div>"
+                );
+                subTotal += parseFloat(thisDish['price']) * quantity;
+            }
         });
 
         // Compute fees
@@ -451,13 +461,6 @@ function checkOut_res(res) {
         controlCartView(0);
         $("#checkout-success-modal").modal('show');
     }
-}
-
-
-function editDish(userModal, adminModal) {
-    console.log('edit button clicked');
-    userModal.modal('hide');
-    adminModal.modal('show');
 }
 
 function updateDish(userModal, adminModal, updatedDish) {

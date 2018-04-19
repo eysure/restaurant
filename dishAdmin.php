@@ -14,9 +14,9 @@
             <div class="modal-body detail-body">
                 <form action="">
                     <div class="container detail-top">
-<!--                        <div class="row border justify-content-center">-->
-<!--                            <img class="detail-img" src="#" alt="food picture" id="dish-img-admin">-->
-<!--                        </div>-->
+                        <div class="row border justify-content-center">
+                            <img class="detail-img" src="#" alt="food picture" id="dish-img-admin">
+                        </div>
                     </div>
 
                     <div class="container detail-middle">

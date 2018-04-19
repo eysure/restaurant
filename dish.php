@@ -64,7 +64,6 @@
                 <div class="container detail-bottom">
 
                     <div class="row detail-buttons">
-
                         <div class="col-3">
                             <div class="row btn-left">
                                 <button class="btn btn-block cancel" data-dismiss="modal">Cancel</button>
@@ -80,8 +79,17 @@
                         </div>
                     </div>
 
-                    <div id="detail-admin">
-
+                    <div id="detail-admin" style="display: none;">
+                        <div class="row" id="btn-line-space"></div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <button id="edit" class="btn btn-danger btn-block" data-toggle="modal" data-target="#dish-detail-admin">
+                                        <span>Edit this item</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -93,12 +101,3 @@
 
 
 <script src="javascript/quantity.js"></script>
-
-<!-- PAGINATION -->
-<nav>
-    <ul class="pagination justify-content-center">
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-    </ul>
-</nav>
